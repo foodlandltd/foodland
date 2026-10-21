@@ -1815,6 +1815,15 @@ async function renderCategories() {
 }
 
 async function renderPromosSection() {
+   // WYMUSZENIE LISTY 4 PROMOCJI
+  if (!adminState.images) adminState.images = {};
+  adminState.images.promocje = [
+    { id: 'promo_1', name: 'gazetka1', fileId: null, size: 100, order: 0, active: true },
+    { id: 'promo_2', name: 'gazetka2', fileId: null, size: 100, order: 1, active: true },
+    { id: 'promo_3', name: 'gazetka3', fileId: null, size: 100, order: 2, active: true },
+    { id: 'promo_4', name: 'gazetka4', fileId: null, size: 100, order: 3, active: true }
+  ];
+  // KONIEC WYMUSZANIA 
   const list = document.getElementById('promoList');
   if (!list) return;
 
