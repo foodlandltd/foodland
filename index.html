@@ -461,9 +461,9 @@ input:checked + .slider:before { transform: translateX(20px); }
       <div class="contact-content glass">
         <div class="contact-grid">
           <div class="contact-data">
-            <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street E, NE28 7RN Wallsend</span></div></div> <div class="contact-item"><div class="icon">🕒</div><div><strong data-i18n="contact.hours">Godziny otwarcia</strong><br><span id="contact-hours-val">Pon-Pt: 9:00–19:00<br>Sob: 9:00–18:00<br>Ndz: 10:00–16:00</span></div></div> <div class="contact-item"><div class="icon">📞</div><div><strong data-i18n="contact.phone">Telefon</strong><br><span id="contact-phone-val">+44 1234 567 890</span></div></div>
+            <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street E, NE28 7RN Wallsend</span></div></div> <div class="contact-item"><div class="icon">🕒</div><div><strong data-i18n="contact.hours">Godziny otwarcia</strong><br><span id="contact-hours-val">Pon-Pt: 9:00–19:00<br>Sob: 9:00–18:00<br>Ndz: 10:00–16:00</span></div></div>
             <div class="contact-item"><div class="icon">📞</div><div><strong data-i18n="contact.phone">Telefon</strong><br><span id="contact-phone-val">+44 1234 567 890</span></div></div>
-            <div class="contact-item"><a href="https://www.facebook.com" target="_blank" style="display:flex;align-items:center;gap:1rem;"><div class="icon" style="background:#1877f2;">f</div><div><strong>Facebook</strong><br><span data-i18n="contact.facebook">Odwiedź naszą stronę</span></div></a></div>
+            <div class="contact-item"><a href="https://www.facebook.com/foodlandshopsWallsend/" target="_blank" style="display:flex;align-items:center;gap:1rem;"><div class="icon" style="background:#1877f2;">f</div><div><strong>Facebook</strong><br><span data-i18n="contact.facebook">Odwiedź naszą stronę</span></div></a></div>
             <div class="refer-box">
               <h4 data-i18n="refer.title">Poleć nas znajomemu</h4>
               <p data-i18n="refer.desc">Wpisz adres e-mail znajomego – wyślemy mu link do naszej strony.</p>
@@ -1421,7 +1421,12 @@ function showRouteOnMap(lang) {
 
 /* ===== HOLIDAY BANNER ===== */
 function updateHolidayBanner() {
-    // AWARYJNE WYŚWIETLANIE BANERA (dla Androida)
+   setTimeout(() => {
+    const w = document.getElementById('holidayBannerWrapper');
+    const b = document.getElementById('holidayBanner');
+    if (w && b) { w.style.display = 'flex'; if(!b.textContent.trim()) b.textContent = 'Nadchodzi: Halloween za 11 dni'; }
+}, 1000);
+  // AWARYJNE WYŚWIETLANIE BANERA (dla Androida)
   setTimeout(() => {
       const wrapperAwaryjny = document.getElementById('holidayBannerWrapper');
       const bannerAwaryjny = document.getElementById('holidayBanner');
