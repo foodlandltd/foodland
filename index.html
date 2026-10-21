@@ -87,7 +87,7 @@ body.admin-open .header { right: var(--admin-width); }
 .logo-wrapper{position:fixed;top:8px;left:2vw;z-index:10000;}
 .logo-img{height:160px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));}
 
-.lang-switch{display:flex;align-items:center;gap:.15rem;background:var(--panel-inner);padding:4px;border-radius:var(--radius-pill); z-index: 99999 !important; position: relative;}
+.lang-switch{display:flex;align-items:center;gap:.15rem;background:var(--panel-inner);padding:4px;border-radius:var(--radius-pill);}
   padding:.35rem .7rem;
   font-size:.75rem;
   font-weight:700;
@@ -340,36 +340,37 @@ input:checked + .slider:before { transform: translateX(20px); }
   .contact-grid{grid-template-columns:1fr;}
 }
 @media(max-width:600px){
-  .logo-img{height:50px;} /* Zmniejszamy logo */
-  .header-left-spacer{width:0px;} /* Usuwamy pustą przestrzeń */
-  .hero{padding-top:10rem;}
-
-  /* Ukrywamy menu */
-  .nav { display: none !important; }
-
-  /* Ustawiamy nagłówek w jednej linii */
-  .header { 
-    padding: 0 0.5rem !important; 
-    height: 60px !important; 
-    justify-content: space-between !important; 
+  /* Ustawiamy nagłówek jako elastyczny kontener z zawijaniem */
+  .header {
+    height: auto !important;
+    padding: 10px 5px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px !important;
   }
-
-  /* Prawa strona: języki i święta w jednej linii, mniejsze */
+  .header-left-spacer { display: none !important; } /* Usuwamy puste miejsce */
+  .logo-wrapper { position: relative !important; top: 0; left: 0; } /* Logo w normalnym miejscu */
+  .logo-img { height: 60px !important; }
+  
+  .nav { 
+    width: 100%; 
+    order: 3; /* Menu ląduje na samym dole */
+    justify-content: center;
+  }
+  .nav ul { gap: 1rem !important; }
+  
   .header-actions { 
-    padding-right: 0 !important; 
-    flex-direction: row !important; 
+    order: 2; 
+    width: 100%; 
+    flex-direction: column !important; 
     align-items: center !important; 
-    gap: 0.3rem !important; 
+    padding-right: 0 !important;
   }
-  .lang-switch { 
-    transform: scale(0.7); 
-    transform-origin: right center; 
-  }
-  #holidayBannerWrapper { 
-    transform: scale(0.75); 
-    transform-origin: right center; 
-    max-width: 150px; /* Ograniczamy szerokość banera */
-  }
+  
+  #holidayBannerWrapper { display: flex !important; justify-content: center; width: 100%; }
+  .lang-switch { margin-bottom: 5px; }
+  
+  .hero{padding-top: 12rem;}
 }
 </style>
 <link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
