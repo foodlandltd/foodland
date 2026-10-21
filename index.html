@@ -434,11 +434,11 @@ input:checked + .slider:before { transform: translateX(20px); }
     </div>
   </section>
 
-  <section id="eventBannerSection" style="display: block;">
-    <div class="section-content">
-      <img id="eventBannerImg" src="blob:https://www.foodlandshops.co.uk/83c07b7f-5c2d-4917-878e-fb6ff55dce0b" alt="Event">
-    </div>
-  </section>
+ <section id="eventBannerSection" style="display: block;">
+  <div class="section-content">
+    <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event">
+  </div>
+</section>
 
   <section class="categories" id="kategorie">
     <div class="section-content">
@@ -462,8 +462,12 @@ input:checked + .slider:before { transform: translateX(20px); }
         <h2 class="font-logo" data-i18n="promo.title">Aktualne promocje</h2>
         <button id="zoomToggleBtn" class="zoom-btn-header" data-i18n="promo.zoom.on">Lupa: Włączona</button>
       </div>
-      <div class="promo-list" id="promoList"><div class="promo-banner-container" id="promoContainer1" data-zoom-bound="1"><img class="promo-img-base loaded" alt="1" id="promoImg1" loading="eager" decoding="async" src="blob:https://www.foodlandshops.co.uk/2c6c9d7c-b880-4353-93ef-000103928085"><div class="zoom-lens" id="zoomLens1" style="display: none; background-image: url(&quot;blob:https://www.foodlandshops.co.uk/2c6c9d7c-b880-4353-93ef-000103928085&quot;); background-repeat: no-repeat;"></div></div><div class="promo-banner-container" id="promoContainer2" data-zoom-bound="1"><img class="promo-img-base loaded" alt="2" id="promoImg2" loading="eager" decoding="async" src="blob:https://www.foodlandshops.co.uk/63e1f400-53ef-4a78-8e1c-c4d922dcce17"><div class="zoom-lens" id="zoomLens2" style="display: none; background-image: url(&quot;blob:https://www.foodlandshops.co.uk/63e1f400-53ef-4a78-8e1c-c4d922dcce17&quot;); background-repeat: no-repeat;"></div></div><div class="promo-banner-container" id="promoContainer3" data-zoom-bound="1"><img class="promo-img-base loaded" alt="3" id="promoImg3" loading="eager" decoding="async" src="blob:https://www.foodlandshops.co.uk/befe93ef-3fc2-468c-b23c-94300cf102fe"><div class="zoom-lens" id="zoomLens3" style="display: none; background-image: url(&quot;blob:https://www.foodlandshops.co.uk/befe93ef-3fc2-468c-b23c-94300cf102fe&quot;); background-repeat: no-repeat;"></div></div><div class="promo-banner-container" id="promoContainer4" data-zoom-bound="1"><img class="promo-img-base loaded" alt="4" id="promoImg4" loading="eager" decoding="async" src="blob:https://www.foodlandshops.co.uk/6b7c42b2-cd7d-4bb5-97c6-e0f69edb8c7b"><div class="zoom-lens" id="zoomLens4" style="display: none; background-image: url(&quot;blob:https://www.foodlandshops.co.uk/6b7c42b2-cd7d-4bb5-97c6-e0f69edb8c7b&quot;); background-repeat: no-repeat;"></div></div></div>
-    </div>
+      <div class="promo-list" id="promoList">
+  <div class="promo-banner-container"><img class="promo-img-base" src="./images/promocje/gazetka1.jpg" alt="Gazetka 1"></div>
+  <div class="promo-banner-container"><img class="promo-img-base" src="./images/promocje/gazetka2.jpg" alt="Gazetka 2"></div>
+  <div class="promo-banner-container"><img class="promo-img-base" src="./images/promocje/gazetka3.jpg" alt="Gazetka 3"></div>
+  <div class="promo-banner-container"><img class="promo-img-base" src="./images/promocje/gazetka4.jpg" alt="Gazetka 4"></div>
+</div>
   </section>
 
   <section class="contact" id="kontakt">
@@ -1876,6 +1880,7 @@ async function renderCategories() {
 }
 
 async function renderPromosSection() {
+  return; // Zatrzymujemy skrypt, bo promocje są już w HTML
    // WYMUSZENIE LISTY 4 PROMOCJI
   if (!adminState.images) adminState.images = {};
   adminState.images.promocje = [
@@ -1955,6 +1960,7 @@ async function renderPromosSection() {
 }
 
 async function renderEventBanner() {
+  return; // Zatrzymujemy skrypt, bo baner jest już w HTML
   const section = document.getElementById('eventBannerSection');
   const img = document.getElementById('eventBannerImg');
   if (!section || !img) return;
