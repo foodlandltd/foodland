@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
+<html lang="pl" style="--bg-page: #fcfaf8; --topbar-bg: rgba(255,255,255,0.75); --footer-bg: rgba(255,255,255,0.95); --text-main: #2a2a2a; --btn-bg: #d0021b; --section-title-size: 2rem; --glass-blur: 2px; --sticky-header-padding: 1.8rem 2.9988rem; --header-font-size: 0.8rem; --header-height: 140px;"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FoodLand – Polski Sklep w Wallsend | Świeże produkty codziennie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Playfair+Display:ital,wght@0,700;0,900;1,700&amp;display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -329,8 +327,8 @@ input:checked + .slider:before { transform: translateX(20px); }
   .hero{padding-top:14rem;}
 }
 </style>
-</head>
-<body>
+<link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
+<body class="admin-open">
 
 <header class="header">
   <div class="header-left-spacer"></div>
@@ -349,18 +347,69 @@ input:checked + .slider:before { transform: translateX(20px); }
       <button data-lang="ro">RO</button>
     </div>
     
-    <div id="holidayBannerWrapper">
-      <div id="holidayBanner"></div>
-      <div id="holidayDropdown"></div>
+    <div id="holidayBannerWrapper" style="display: flex;">
+      <div id="holidayBanner">Nadchodzi: Halloween za 11 dni</div>
+      <div id="holidayDropdown">
+        <div class="holiday-item" data-country="uk" tabindex="0" aria-label="Halloween">
+          <div class="holiday-item-header">
+            <div class="holiday-name-wrap">
+              <span class="holiday-flag-badge" data-country="uk"></span>
+              <span>Halloween</span>
+            </div>
+            <span class="holiday-days">11 dni</span>
+            <span class="holiday-chevron" aria-hidden="true">▾</span>
+          </div>
+          <div class="holiday-item-desc">
+            <div>
+              <div class="holiday-date-line"><span>📅</span><span>31 października 2026 · UK</span></div>
+              <p>Halloween obchodzone jest 31 października, w wigilię Wszystkich Świętych.</p>
+              <a href="https://en.wikipedia.org/wiki/Halloween" target="_blank" rel="noopener noreferrer" class="holiday-link">Dowiedz się więcej (UK) →</a>
+            </div>
+          </div>
+        </div>
+        <div class="holiday-item" data-country="uk" tabindex="0" aria-label="Guy Fawkes Night">
+          <div class="holiday-item-header">
+            <div class="holiday-name-wrap">
+              <span class="holiday-flag-badge" data-country="uk"></span>
+              <span>Guy Fawkes Night</span>
+            </div>
+            <span class="holiday-days">16 dni</span>
+            <span class="holiday-chevron" aria-hidden="true">▾</span>
+          </div>
+          <div class="holiday-item-desc">
+            <div>
+              <div class="holiday-date-line"><span>📅</span><span>5 listopada 2026 · UK</span></div>
+              <p>Noc Ognisk obchodzona 5 listopada upamiętnia udaremniony zamach na parlament angielski w 1605 roku.</p>
+              <a href="https://en.wikipedia.org/wiki/Guy_Fawkes_Night" target="_blank" rel="noopener noreferrer" class="holiday-link">Dowiedz się więcej (UK) →</a>
+            </div>
+          </div>
+        </div>
+        <div class="holiday-item" data-country="pl" tabindex="0" aria-label="Narodowe Święto Niepodległości">
+          <div class="holiday-item-header">
+            <div class="holiday-name-wrap">
+              <span class="holiday-flag-badge" data-country="pl"></span>
+              <span>Narodowe Święto Niepodległości</span>
+            </div>
+            <span class="holiday-days">22 dni</span>
+            <span class="holiday-chevron" aria-hidden="true">▾</span>
+          </div>
+          <div class="holiday-item-desc">
+            <div>
+              <div class="holiday-date-line"><span>📅</span><span>11 listopada 2026 · Polska</span></div>
+              <p>Święto państwowe obchodzone 11 listopada dla upamiętnienia odzyskania przez Polskę niepodległości w 1918 roku.</p>
+              <a href="https://pl.wikipedia.org/wiki/Narodowe_Święto_Niepodległości" target="_blank" rel="noopener noreferrer" class="holiday-link">Dowiedz się więcej (Polska) →</a>
+            </div>
+          </div>
+        </div></div>
     </div>
   </div>
 </header>
 
 <div class="logo-wrapper">
-  <a href="#"><img src="./images/logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'"></a>
+  <a href="#"><img src="./images/logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'" style="display: block;"></a>
 </div>
 
-<div id="mainContent">
+<div id="mainContent" style="--theme-saturate: 1; --theme-brightness: 1;">
   <section class="hero">
     <div class="section-content">
       <div class="hero-copy">
@@ -381,16 +430,16 @@ input:checked + .slider:before { transform: translateX(20px); }
     </div>
   </section>
 
-  <section id="eventBannerSection">
+  <section id="eventBannerSection" style="display: block;">
     <div class="section-content">
-      <img id="eventBannerImg" src="" alt="Event">
+      <img id="eventBannerImg" src="blob:https://www.foodlandshops.co.uk/83c07b7f-5c2d-4917-878e-fb6ff55dce0b" alt="Event">
     </div>
   </section>
 
   <section class="categories" id="kategorie">
     <div class="section-content">
       <div class="sticky-header glass" id="headerKategorie"><h2 class="font-logo" data-i18n="cat.title">Co znajdziesz w FoodLand</h2></div>
-      <div class="cat-grid" id="catGrid"></div>
+      <div class="cat-grid" id="catGrid" data-ratio="16/9" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));"><div class="cat-card"><div class="cat-card-inner"><img alt="Wędliny" src="blob:https://www.foodlandshops.co.uk/821126f4-11a2-4fbf-9216-0bca581e4746"><div class="overlay"><h3>Wędliny</h3></div></div></div><div class="cat-card"><div class="cat-card-inner"><img alt="Warzywa" src="blob:https://www.foodlandshops.co.uk/70bcdb7c-a61d-408d-ba9b-b7cadf025928"><div class="overlay"><h3>Warzywa</h3></div></div></div><div class="cat-card"><div class="cat-card-inner"><img alt="Nabiał" src="blob:https://www.foodlandshops.co.uk/cc27b8fd-a09c-4a85-a897-14dca22ad663"><div class="overlay"><h3>Nabiał</h3></div></div></div><div class="cat-card"><div class="cat-card-inner"><img alt="Pieczywo" src="blob:https://www.foodlandshops.co.uk/6b924d9d-a9b2-4ee6-9f45-dd4fddf634a5"><div class="overlay"><h3>Pieczywo</h3></div></div></div><div class="cat-card"><div class="cat-card-inner"><img alt="Ciasta" src="blob:https://www.foodlandshops.co.uk/7b294d33-0b48-4724-8190-bf2f7cd8a9cc"><div class="overlay"><h3>Ciasta</h3></div></div></div><div class="cat-card"><div class="cat-card-inner"><img alt="Ciastka" src="blob:https://www.foodlandshops.co.uk/1d9b0229-e7d9-48b9-851b-88c14b7de31c"><div class="overlay"><h3>Ciastka</h3></div></div></div><div class="cat-card"><div class="cat-card-inner"><img alt="Miód" src="blob:https://www.foodlandshops.co.uk/39140625-fd37-4968-8083-8ec529e4ceec"><div class="overlay"><h3>Miód</h3></div></div></div><div class="cat-card"><div class="cat-card-inner"><img alt="Mrożonki" src="blob:https://www.foodlandshops.co.uk/19a18483-01fc-447a-afdf-41adbb4dbdb1"><div class="overlay"><h3>Mrożonki</h3></div></div></div><div class="cat-card"><div class="cat-card-inner"><img alt="okazje" src="blob:https://www.foodlandshops.co.uk/df539743-951b-456b-8687-e092b4291235"><div class="overlay"><h3>okazje</h3></div></div></div></div>
     </div>
   </section>
 
@@ -400,7 +449,7 @@ input:checked + .slider:before { transform: translateX(20px); }
         <h2 class="font-logo" data-i18n="promo.title">Aktualne promocje</h2>
         <button id="zoomToggleBtn" class="zoom-btn-header" data-i18n="promo.zoom.on">Lupa: Włączona</button>
       </div>
-      <div class="promo-list" id="promoList"></div>
+      <div class="promo-list" id="promoList"><div class="promo-banner-container" id="promoContainer1" data-zoom-bound="1"><img class="promo-img-base loaded" alt="1" id="promoImg1" loading="eager" decoding="async" src="blob:https://www.foodlandshops.co.uk/2c6c9d7c-b880-4353-93ef-000103928085"><div class="zoom-lens" id="zoomLens1" style="display: none; background-image: url(&quot;blob:https://www.foodlandshops.co.uk/2c6c9d7c-b880-4353-93ef-000103928085&quot;); background-repeat: no-repeat;"></div></div><div class="promo-banner-container" id="promoContainer2" data-zoom-bound="1"><img class="promo-img-base loaded" alt="2" id="promoImg2" loading="eager" decoding="async" src="blob:https://www.foodlandshops.co.uk/63e1f400-53ef-4a78-8e1c-c4d922dcce17"><div class="zoom-lens" id="zoomLens2" style="display: none; background-image: url(&quot;blob:https://www.foodlandshops.co.uk/63e1f400-53ef-4a78-8e1c-c4d922dcce17&quot;); background-repeat: no-repeat;"></div></div><div class="promo-banner-container" id="promoContainer3" data-zoom-bound="1"><img class="promo-img-base loaded" alt="3" id="promoImg3" loading="eager" decoding="async" src="blob:https://www.foodlandshops.co.uk/befe93ef-3fc2-468c-b23c-94300cf102fe"><div class="zoom-lens" id="zoomLens3" style="display: none; background-image: url(&quot;blob:https://www.foodlandshops.co.uk/befe93ef-3fc2-468c-b23c-94300cf102fe&quot;); background-repeat: no-repeat;"></div></div><div class="promo-banner-container" id="promoContainer4" data-zoom-bound="1"><img class="promo-img-base loaded" alt="4" id="promoImg4" loading="eager" decoding="async" src="blob:https://www.foodlandshops.co.uk/6b7c42b2-cd7d-4bb5-97c6-e0f69edb8c7b"><div class="zoom-lens" id="zoomLens4" style="display: none; background-image: url(&quot;blob:https://www.foodlandshops.co.uk/6b7c42b2-cd7d-4bb5-97c6-e0f69edb8c7b&quot;); background-repeat: no-repeat;"></div></div></div>
     </div>
   </section>
 
@@ -424,7 +473,7 @@ input:checked + .slider:before { transform: translateX(20px); }
             </div>
           </div>
           <div class="map-wrap">
-            <iframe id="mapFrame" src="https://maps.google.com/maps?q=145%20High%20St%20E,%20Wallsend%20NE28%207RL,%20UK&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" style="width:100%; height:100%; border:0;"></iframe>
+            <iframe id="mapFrame" src="https://maps.google.com/maps?q=145%20High%20St%20E%2C%20Wallsend%20NE28%207RL%2C%20UK&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed&amp;hl=pl" allowfullscreen="" loading="lazy" style="width:100%; height:100%; border:0;"></iframe>
             <button id="mapRouteBtn" class="map-btn-route" data-i18n="map.route">🚗 Wyznacz trasę do sklepu</button>
           </div>
         </div>
@@ -440,13 +489,13 @@ input:checked + .slider:before { transform: translateX(20px); }
 </div>
 
 <!-- MODAL LOGOWANIA -->
-<div id="adminLoginModal" class="admin-modal" hidden>
+<div id="adminLoginModal" class="admin-modal" hidden="">
   <form class="admin-box" onsubmit="event.preventDefault();">
     <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:1.5rem;" data-i18n="admin.login.title">Panel administratora</h3>
     <input id="adminUser" placeholder="Login" data-i18n-placeholder="admin.login.user" autocomplete="username">
     <input id="adminPass" type="password" placeholder="Hasło" data-i18n-placeholder="admin.login.pass" autocomplete="current-password">
     <div class="forgot-link" id="forgotPassLink" data-i18n="admin.login.forgot">Zapomniałem hasła</div>
-    <p id="adminErr" style="color:#d0021b;font-size:.85rem;font-weight:600;" hidden data-i18n="admin.login.err">Błędne dane logowania.</p>
+    <p id="adminErr" style="color:#d0021b;font-size:.85rem;font-weight:600;" hidden="" data-i18n="admin.login.err">Błędne dane logowania.</p>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.4rem;">
       <button id="adminLoginBtn" class="btn btn-primary" data-i18n="admin.login.btn">Zaloguj</button>
       <button id="adminCloseBtn" class="btn btn-secondary" data-i18n="admin.login.cancel">Anuluj</button>
@@ -455,12 +504,12 @@ input:checked + .slider:before { transform: translateX(20px); }
 </div>
 
 <!-- MODAL ODBLOKOWANIA HASŁA -->
-<div id="forgotModal" class="admin-modal" hidden>
+<div id="forgotModal" class="admin-modal" hidden="">
   <div class="admin-box">
     <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;" data-i18n="admin.forgot.title">Odzyskiwanie hasła</h3>
     <p style="font-size:0.8rem;color:#666;" data-i18n="admin.forgot.desc">Podaj zapisany adres e-mail administratora. Wyślemy na niego aktualny login i hasło.</p>
     <input id="forgotEmail" type="email" placeholder="admin@email.com" data-i18n-placeholder="admin.forgot.email">
-    <p id="forgotMsg" style="font-size:0.8rem;font-weight:600;" hidden></p>
+    <p id="forgotMsg" style="font-size:0.8rem;font-weight:600;" hidden=""></p>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.4rem;">
       <button id="forgotSendBtn" class="btn btn-primary" data-i18n="admin.forgot.send">Wyślij</button>
       <button id="forgotCloseBtn" class="btn btn-secondary" data-i18n="admin.forgot.cancel">Anuluj</button>
@@ -468,22 +517,22 @@ input:checked + .slider:before { transform: translateX(20px); }
   </div>
 </div>
 
-<div id="adminPanel" class="admin-panel" hidden>
+<div id="adminPanel" class="admin-panel">
   <header class="admin-panel-head">
     <strong data-i18n="admin.panel.title">Panel administratora</strong>
     <button id="adminPanelClose" style="font-size:1.2rem;color:#555;">✕</button>
   </header>
   <nav class="admin-tabs" id="adminTabs">
-    <button data-tab="texts" class="active" data-i18n="admin.tab.texts">Teksty</button>
-    <button data-tab="themes" data-i18n="admin.tab.themes">Motywy</button>
-    <button data-tab="images" data-i18n="admin.tab.images">Zdjęcia</button>
-    <button data-tab="security" data-i18n="admin.tab.security">Bezpieczeństwo</button>
-    <button data-tab="stats" data-i18n="admin.tab.stats">Statystyki</button>
-    <button data-tab="html" data-i18n="admin.tab.html">Kod HTML</button>
+    <button data-tab="texts" class="" data-i18n="admin.tab.texts">Teksty</button>
+    <button data-tab="themes" data-i18n="admin.tab.themes" class="">Motywy</button>
+    <button data-tab="images" data-i18n="admin.tab.images" class="">Zdjęcia</button>
+    <button data-tab="security" data-i18n="admin.tab.security" class="">Bezpieczeństwo</button>
+    <button data-tab="stats" data-i18n="admin.tab.stats" class="">Statystyki</button>
+    <button data-tab="html" data-i18n="admin.tab.html" class="active">Kod HTML</button>
   </nav>
   <div class="admin-panel-body">
     
-    <div class="admin-tabpage active" data-page="texts">
+    <div class="admin-tabpage" data-page="texts">
       <div class="admin-section-title" data-i18n="admin.section.lang">Język edycji</div>
       <div style="display:flex;gap:.3rem;margin-bottom:1rem;">
         <button class="lang-edit-btn active" data-lang="pl" style="padding:.3rem .6rem;border-radius:6px;border:none;background:#d0021b;color:#fff;font-weight:700;cursor:pointer;">PL</button>
@@ -493,49 +542,229 @@ input:checked + .slider:before { transform: translateX(20px); }
       </div>
       <p style="font-size:0.7rem;color:#888;margin-bottom:0.5rem;" data-i18n="admin.texts.info">Edycja dotyczy wybranego języka. Po zapisie tekst zostanie automatycznie zaktualizowany we wszystkich językach.</p>
       
-      <div class="admin-section-title" data-i18n="admin.section.stats">Statystyki (Liczby)</div>
+      <div class="admin-section-title" data-i18n="admin.section.stats">Statystyki</div>
       <div class="admin-field"><label data-i18n="admin.stats.1">Statystyka 1</label><input type="text" id="stat1-val-input"></div>
       <div class="admin-field"><label data-i18n="admin.stats.2">Statystyka 2</label><input type="text" id="stat2-val-input"></div>
       <div class="admin-field"><label data-i18n="admin.stats.3">Statystyka 3</label><input type="text" id="stat3-val-input"></div>
 
       <div class="admin-section-title" data-i18n="admin.section.maintexts">Teksty główne</div>
-      <div id="adminFields" style="display:flex;flex-direction:column;gap:.8rem;"></div>
+      <div id="adminFields" style="display:flex;flex-direction:column;gap:.8rem;"><div class="admin-field"><label>nav.categories (PL)</label><textarea rows="2" data-key="nav.categories">Kategorie</textarea></div><div class="admin-field"><label>nav.promos (PL)</label><textarea rows="2" data-key="nav.promos">Promocje</textarea></div><div class="admin-field"><label>nav.contact (PL)</label><textarea rows="2" data-key="nav.contact">Kontakt</textarea></div><div class="admin-field"><label>hero.title1 (PL)</label><textarea rows="2" data-key="hero.title1">Polskie smaki</textarea></div><div class="admin-field"><label>hero.title2 (PL)</label><textarea rows="2" data-key="hero.title2">w Wallsend</textarea></div><div class="admin-field"><label>hero.lead (PL)</label><textarea rows="2" data-key="hero.lead">Serdecznie zapraszamy do naszego polskiego sklepu w Wallsend k. Newcastle. Znajdziecie tu 1500+ produktów, świeże wędliny, sery, pieczywo, pierogi oraz polskie leki i warzywa. Darmowy parking do 2 godzin tuż obok.</textarea></div><div class="admin-field"><label>hero.cta (PL)</label><textarea rows="2" data-key="hero.cta">Zobacz ofertę</textarea></div><div class="admin-field"><label>hero.stat1 (PL)</label><textarea rows="2" data-key="hero.stat1">Produktów</textarea></div><div class="admin-field"><label>hero.stat2 (PL)</label><textarea rows="2" data-key="hero.stat2">Darmowy parking</textarea></div><div class="admin-field"><label>hero.stat3 (PL)</label><textarea rows="2" data-key="hero.stat3">Dni w tygodniu</textarea></div><div class="admin-field"><label>cat.title (PL)</label><textarea rows="2" data-key="cat.title">Co znajdziesz w FoodLand</textarea></div><div class="admin-field"><label>cat.pieczywo (PL)</label><textarea rows="2" data-key="cat.pieczywo">Pieczywo</textarea></div><div class="admin-field"><label>cat.pierogi (PL)</label><textarea rows="2" data-key="cat.pierogi">Pierogi</textarea></div><div class="admin-field"><label>cat.slodycze (PL)</label><textarea rows="2" data-key="cat.slodycze">Słodycze</textarea></div><div class="admin-field"><label>cat.warzywa (PL)</label><textarea rows="2" data-key="cat.warzywa">Warzywa</textarea></div><div class="admin-field"><label>cat.wedliny (PL)</label><textarea rows="2" data-key="cat.wedliny">Wędliny</textarea></div><div class="admin-field"><label>cat.napoje (PL)</label><textarea rows="2" data-key="cat.napoje">Napoje</textarea></div><div class="admin-field"><label>promo.title (PL)</label><textarea rows="2" data-key="promo.title">Aktualne promocje</textarea></div><div class="admin-field"><label>promo.zoom.on (PL)</label><textarea rows="2" data-key="promo.zoom.on">Lupa: Włączona</textarea></div><div class="admin-field"><label>promo.zoom.off (PL)</label><textarea rows="2" data-key="promo.zoom.off">Lupa: Wyłączona</textarea></div><div class="admin-field"><label>contact.title (PL)</label><textarea rows="2" data-key="contact.title">Kontakt</textarea></div><div class="admin-field"><label>contact.address (PL)</label><textarea rows="2" data-key="contact.address">Adres</textarea></div><div class="admin-field"><label>contact.phone (PL)</label><textarea rows="2" data-key="contact.phone">Telefon</textarea></div><div class="admin-field"><label>contact.facebook (PL)</label><textarea rows="2" data-key="contact.facebook">Odwiedź naszą stronę</textarea></div><div class="admin-field"><label>refer.title (PL)</label><textarea rows="2" data-key="refer.title">Poleć nas znajomemu</textarea></div><div class="admin-field"><label>refer.desc (PL)</label><textarea rows="2" data-key="refer.desc">Wpisz adres e-mail znajomego – wyślemy mu link do naszej strony.</textarea></div><div class="admin-field"><label>refer.send (PL)</label><textarea rows="2" data-key="refer.send">Poleć</textarea></div><div class="admin-field"><label>refer.emailPlaceholder (PL)</label><textarea rows="2" data-key="refer.emailPlaceholder">znajomy@email.com</textarea></div><div class="admin-field"><label>footer.rights (PL)</label><textarea rows="2" data-key="footer.rights">Wszelkie prawa zastrzeżone.</textarea></div></div>
     </div>
     
     <div class="admin-tabpage" data-page="themes">
-      <div class="admin-section-title" data-i18n="admin.section.themes">Motywy (Jasny/Średni/Ciemny)</div>
-      <div id="themeRows" style="display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;"></div>
+      <div class="admin-section-title" data-i18n="admin.section.themes">Motywy</div>
+      <div id="themeRows" style="display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;"><div class="theme-row">
+      <span class="theme-label">Domyślny</span>
+      <button class="theme-mode-btn active" data-theme="default" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="default" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="default" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="default" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="default__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="default__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Boże Narodzenie</span>
+      <button class="theme-mode-btn " data-theme="christmas" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="christmas" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="christmas" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="christmas" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="christmas__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="christmas__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Wielkanoc</span>
+      <button class="theme-mode-btn " data-theme="easter" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="easter" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="easter" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="easter" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="easter__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="easter__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Halloween</span>
+      <button class="theme-mode-btn " data-theme="halloween" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="halloween" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="halloween" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="halloween" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="halloween__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="halloween__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Walentynki</span>
+      <button class="theme-mode-btn " data-theme="valentines" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="valentines" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="valentines" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="valentines" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="valentines__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="valentines__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Dzień Niepodległości PL</span>
+      <button class="theme-mode-btn " data-theme="independence_pl" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="independence_pl" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="independence_pl" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="independence_pl" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="independence_pl__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="independence_pl__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Dzień Niepodległości RO</span>
+      <button class="theme-mode-btn " data-theme="independence_ro" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="independence_ro" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="independence_ro" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="independence_ro" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="independence_ro__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="independence_ro__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Guy Fawkes Night (UK)</span>
+      <button class="theme-mode-btn " data-theme="guy_fawkes" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="guy_fawkes" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="guy_fawkes" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="guy_fawkes" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="guy_fawkes__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="guy_fawkes__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Dzień Św. Andrzeja</span>
+      <button class="theme-mode-btn " data-theme="st_andrew" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="st_andrew" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="st_andrew" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="st_andrew" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="st_andrew__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="st_andrew__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Dzień Matki</span>
+      <button class="theme-mode-btn " data-theme="mothers_day" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="mothers_day" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="mothers_day" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="mothers_day" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="mothers_day__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="mothers_day__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Dzień Ojca</span>
+      <button class="theme-mode-btn " data-theme="fathers_day" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="fathers_day" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="fathers_day" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="fathers_day" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="fathers_day__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="fathers_day__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Nowy Rok</span>
+      <button class="theme-mode-btn " data-theme="new_year" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="new_year" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="new_year" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="new_year" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="new_year__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="new_year__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Trzech Króli</span>
+      <button class="theme-mode-btn " data-theme="epiphany" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="epiphany" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="epiphany" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="epiphany" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="epiphany__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="epiphany__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Boże Ciało</span>
+      <button class="theme-mode-btn " data-theme="corpus_christi" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="corpus_christi" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="corpus_christi" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="corpus_christi" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="corpus_christi__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="corpus_christi__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Wszystkich Świętych</span>
+      <button class="theme-mode-btn " data-theme="all_saints" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="all_saints" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="all_saints" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="all_saints" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="all_saints__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="all_saints__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Dzień Kobiet</span>
+      <button class="theme-mode-btn " data-theme="women_day" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="women_day" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="women_day" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="women_day" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="women_day__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="women_day__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Dzień Dziecka</span>
+      <button class="theme-mode-btn " data-theme="children_day" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="children_day" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="children_day" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="children_day" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="children_day__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="children_day__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Święto Dziękczynienia</span>
+      <button class="theme-mode-btn " data-theme="thanksgiving" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="thanksgiving" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="thanksgiving" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="thanksgiving" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="thanksgiving__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="thanksgiving__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Święto Pracy</span>
+      <button class="theme-mode-btn " data-theme="labour_day" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="labour_day" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="labour_day" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="labour_day" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="labour_day__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="labour_day__light"><span>1</span></div>
+    </div>
+    </div><div class="theme-row">
+      <span class="theme-label">Dzień Ziemi</span>
+      <button class="theme-mode-btn " data-theme="earth_day" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn " data-theme="earth_day" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn " data-theme="earth_day" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="earth_day" data-mode="light">
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="earth_day__light"><span>1</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="earth_day__light"><span>1</span></div>
+    </div>
+    </div></div>
 
       <div class="admin-section-title" data-i18n="admin.section.layout">Układ i efekty</div>
       
       <div class="admin-field">
         <label data-i18n="admin.layout.title">Rozmiar tytułów</label>
         <input type="range" id="titleSizeRange" min="1.5" max="4" step="0.1" style="width:100%;">
-        <span id="titleSizeVal" style="font-size:0.7rem; color:#666;">2.6rem</span>
+        <span id="titleSizeVal" style="font-size:0.7rem; color:#666;">2rem</span>
       </div>
       
       <div class="admin-field">
-        <label data-i18n="admin.layout.blur">Rozmycie tła (Glassmorphism)</label>
+        <label data-i18n="admin.layout.blur">Rozmycie tła</label>
         <input type="range" id="blurRange" min="0" max="20" step="1" style="width:100%;">
-        <span id="blurVal" style="font-size:0.7rem; color:#666;">0px</span>
+        <span id="blurVal" style="font-size:0.7rem; color:#666;">2px</span>
       </div>
       
       <div class="admin-field">
         <label data-i18n="admin.layout.sticky">Wielkość okienek sekcji (padding)</label>
         <input type="range" id="stickyPadRange" min="0" max="5" step="0.1" style="width:100%;">
-        <span id="stickyPadVal" style="font-size:0.7rem; color:#666;">1.5rem</span>
+        <span id="stickyPadVal" style="font-size:0.7rem; color:#666;">1.8rem</span>
       </div>
 
       <div class="admin-field">
         <label>Rozmiar czcionki w topbarze</label>
         <input type="range" id="headerFontSizeRange" min="0.6" max="1.5" step="0.05" style="width:100%;">
-        <span id="headerFontSizeVal" style="font-size:0.7rem; color:#666;">0.95rem</span>
+        <span id="headerFontSizeVal" style="font-size:0.7rem; color:#666;">0.8rem</span>
       </div>
 
       <div class="admin-field">
         <label>Wysokość / padding topbaru</label>
         <input type="range" id="headerHeightRange" min="40" max="150" step="5" style="width:100%;">
-        <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">80px</span>
+        <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">140px</span>
       </div>
 
     </div>
@@ -553,7 +782,29 @@ input:checked + .slider:before { transform: translateX(20px); }
         </select>
       </div>
 
-      <div id="imgList" style="display:flex;flex-direction:column;gap:0.6rem;"></div>
+      <div id="imgList" style="display:flex;flex-direction:column;gap:0.6rem;"><div class="img-item">
+      <img src="blob:https://www.foodlandshops.co.uk/febdbe44-deda-488a-857e-0a74ac3b61f6" alt="halloween2026" onerror="this.style.opacity=0.2">
+      <div class="img-meta">
+        <strong>halloween2026</strong>
+        <small>IndexedDB (Blob)</small>
+      </div>
+      <div class="toggle-switch">
+        <input type="checkbox" id="toggle_img_1792607420075_ozgca" checked="">
+        <label for="toggle_img_1792607420075_ozgca" class="slider"></label>
+      </div>
+      <button class="btn-delete" title="Usuń zdjęcie">🗑️</button>
+    </div><div class="img-item">
+      <img src="blob:https://www.foodlandshops.co.uk/ba914c75-e7bb-414e-b1da-7cd63e1d9684" alt="christmas2026" onerror="this.style.opacity=0.2">
+      <div class="img-meta">
+        <strong>christmas2026</strong>
+        <small>IndexedDB (Blob)</small>
+      </div>
+      <div class="toggle-switch">
+        <input type="checkbox" id="toggle_img_1792607437181_455ws" checked="">
+        <label for="toggle_img_1792607437181_455ws" class="slider"></label>
+      </div>
+      <button class="btn-delete" title="Usuń zdjęcie">🗑️</button>
+    </div></div>
 
       <div class="admin-section-title" data-i18n="admin.images.add">Dodaj nowe zdjęcie</div>
       <div class="admin-field">
@@ -561,7 +812,7 @@ input:checked + .slider:before { transform: translateX(20px); }
         <input type="file" id="imgUpload" accept="image/*">
       </div>
       <div class="admin-field">
-        <label data-i18n="admin.images.name">Nazwa / podpis (wyświetlany)</label>
+        <label data-i18n="admin.images.name">Nazwa / podpis</label>
         <input type="text" id="imgNewName" placeholder="np. Pieczywo">
       </div>
       <button id="imgAddBtn" class="btn btn-primary" style="padding:0.6rem;font-size:0.85rem;" data-i18n="admin.images.addBtn">Dodaj zdjęcie</button>
@@ -592,8 +843,8 @@ input:checked + .slider:before { transform: translateX(20px); }
       <div class="admin-field">
         <label data-i18n="admin.sec.pass">Nowe hasło</label>
         <div class="password-wrapper">
-          <input type="password" id="secPass" placeholder="••••••" autocomplete="new-password">
-          <button type="button" class="toggle-password-btn" id="toggleSecPassBtn" title="Pokaż/Ukryj hasło">👁️</button>
+          <input type="text" id="secPass" placeholder="••••••" autocomplete="new-password" aria-autocomplete="list">
+          <button type="button" class="toggle-password-btn" id="toggleSecPassBtn" title="Pokaż/Ukryj hasło">🙈</button>
         </div>
       </div>
       <div class="admin-field">
@@ -602,18 +853,18 @@ input:checked + .slider:before { transform: translateX(20px); }
       </div>
       <button id="secSaveBtn" class="btn btn-primary" style="padding:0.6rem;font-size:0.85rem;" data-i18n="admin.sec.save">Zapisz dane logowania</button>
       <button id="secSendMailBtn" class="btn btn-secondary" style="padding:0.6rem;font-size:0.85rem;" data-i18n="admin.sec.sendMail">Wyślij nowe hasło na e-mail</button>
-      <p id="secMsg" style="font-size:0.75rem;font-weight:600;min-height:1em;"></p>
+      <p id="secMsg" style="font-size: 0.75rem; font-weight: 600; min-height: 1em; color: rgb(0, 132, 61);">Otwarto nową kartę z gotową wiadomością e-mail (Gmail).</p>
       <p style="font-size:0.7rem;color:#888;margin-top:0.5rem;" data-i18n="admin.sec.info">Uwaga: dane są zapisywane w localStorage przeglądarki. Wysyłka e-mail odbywa się przez klienta pocztowego (mailto).</p>
     </div>
 
     <div class="admin-tabpage" data-page="stats">
       <div class="admin-section-title">Analityka Ruchu (Local Analytics)</div>
-      <div class="stat-grid" id="statsGrid"></div>
+      <div class="stat-grid" id="statsGrid"><div class="stat-box" style="grid-column: span 2; background: #e8f4ea; border-color: #c3e6cb;"><h3 style="font-size: 1.8rem; color: #00843d;">1</h3><p>Całkowite Wizyty</p></div><div class="stat-box"><h3>1</h3><p>Unikalni Użytkownicy</p></div><div class="stat-box"><h3>2</h3><p>Odsłony Strony</p></div><div class="stat-box"><h3>1</h3><p>Powroty</p></div><div class="stat-box"><h3>Chrome</h3><p>Najczęstsza Przeglądarka</p></div><div class="stat-box"><h3>Windows</h3><p>Najczęstszy System</p></div><div class="stat-box"><h3>Desktop</h3><p>Urządzenie</p></div><div class="stat-box"><h3>Bezpośredni</h3><p>Źródło Ruchu</p></div><div class="stat-box"><h3>pl</h3><p>Język przeglądarki</p></div><div class="stat-box"><h3>1920x1080</h3><p>Rozdzielczość</p></div><div class="stat-box"><h3>Europe/London</h3><p>Strefa czasowa</p></div><div class="stat-box"><h3>4g</h3><p>Typ połączenia</p></div><div class="stat-box"><h3>dark</h3><p>Motyw systemowy</p></div><div class="stat-box"><h3>13</h3><p>Kliknięcia</p></div><div class="stat-box"><h3>100%</h3><p>Maks. głębokość scrolla</p></div><div class="stat-box"><h3>100%</h3><p>Śr. głębokość scrolla</p></div><div class="stat-box"><h3>0</h3><p>Zgłoszenia formularza</p></div><div class="stat-box"><h3>0</h3><p>Wysłane polecenia</p></div><div class="stat-box"><h3>1</h3><p>Zmiany języka</p></div><div class="stat-box"><h3>0</h3><p>Logowania admina</p></div><div class="stat-box"><h3>0</h3><p>Błędy (JS)</p></div><div class="stat-box"><h3>21.10.2026, 16:32:40</h3><p>Pierwsza wizyta</p></div><div class="stat-box"><h3>21.10.2026, 19:19:35</h3><p>Ostatnia wizyta</p></div></div>
       <button id="sendReportBtn" class="report-btn">📧 Wyślij raport e-mail</button>
       <p style="font-size:0.7rem; color:#888; text-align:center; margin-top:1rem;">Dane zbierane lokalnie w przeglądarce użytkownika (LocalStorage).</p>
     </div>
     
-    <div class="admin-tabpage" data-page="html">
+    <div class="admin-tabpage active" data-page="html">
       <div class="admin-section-title">Zarządzanie wersjami</div>
       <div class="admin-field">
         <label>Nazwa nowej wersji</label>
@@ -631,7 +882,15 @@ input:checked + .slider:before { transform: translateX(20px); }
       <button id="importHtmlBtn" class="btn btn-primary" style="width:100%; padding:0.5rem; font-size:0.8rem;">Załaduj kod</button>
       
       <div class="admin-section-title" style="margin-top:1rem;">Historia wersji</div>
-      <div id="versionList" class="version-list"></div>
+      <div id="versionList" class="version-list">
+    <div class="version-item">
+      <span>index.html <small style="color:#888">(21.10.2026, 19:32:14)</small></span>
+      <div>
+        <button onclick="loadVersion(0)" style="background:#00843d;">Wczytaj</button>
+        <button onclick="deleteVersion(0)" style="background:#555;">X</button>
+      </div>
+    </div>
+  </div>
     </div>
   </div>
   <footer class="admin-panel-foot">
@@ -650,12 +909,6 @@ const translations = {
     'hero.stat1': 'Produktów', 'hero.stat2': 'Darmowy parking', 'hero.stat3': 'Dni w tygodniu',
     'cat.title': 'Co znajdziesz w FoodLand',
     'cat.pieczywo': 'Pieczywo', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Słodycze', 'cat.warzywa': 'Warzywa', 'cat.wedliny': 'Wędliny', 'cat.napoje': 'Napoje',
-    'cat.ciasta': 'Ciasta',
-    'cat.ciastka': 'Ciastka',
-    'cat.miody': 'Miody',
-    'cat.mrozonki': 'Mrożonki',
-    'cat.nabial': 'Nabiał',
-    'cat.okazje': 'Okazje',
     'contact.title': 'Kontakt', 'contact.address': 'Adres', 'contact.phone': 'Telefon', 'contact.facebook': 'Odwiedź naszą stronę',
     'map.route': '🚗 Wyznacz trasę do sklepu',
     'promo.title': 'Aktualne promocje', 
@@ -698,12 +951,6 @@ const translations = {
     'hero.cta': 'See offers',
     'hero.stat1': 'Products', 'hero.stat2': 'Free parking', 'hero.stat3': 'Days a week',
     'cat.title': 'What you will find at FoodLand',
-    'cat.ciasta': 'Cakes',
-    'cat.ciastka': 'Cookies',
-    'cat.miody': 'Honey',
-    'cat.mrozonki': 'Frozen Food',
-    'cat.nabial': 'Dairy',
-    'cat.okazje': 'Offers',
     'cat.pieczywo': 'Bread', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Sweets', 'cat.warzywa': 'Vegetables', 'cat.wedliny': 'Cold Cuts', 'cat.napoje': 'Drinks',
     'contact.title': 'Contact', 'contact.address': 'Address', 'contact.phone': 'Phone', 'contact.facebook': 'Visit our page',
     'map.route': '🚗 Get directions to the shop',
@@ -747,12 +994,6 @@ const translations = {
     'hero.cta': 'Переглянути пропозиції',
     'hero.stat1': 'Продуктів', 'hero.stat2': 'Безкоштовна парковка', 'hero.stat3': 'Днів на тиждень',
     'cat.title': 'Що ви знайдете у FoodLand',
-    'cat.ciasta': 'Торти',
-    'cat.ciastka': 'Печиво',
-    'cat.miody': 'Мед',
-    'cat.mrozonki': 'Заморозка',
-    'cat.nabial': 'Молочне',
-    'cat.okazje': 'Акції',
     'cat.pieczywo': 'Хліб', 'cat.pierogi': 'Вареники', 'cat.slodycze': 'Солодощі', 'cat.warzywa': 'Овочі', 'cat.wedliny': 'Ковбаси', 'cat.napoje': 'Напої',
     'contact.title': 'Контакти', 'contact.address': 'Адреса', 'contact.phone': 'Телефон', 'contact.facebook': 'Відвідайте нашу сторінку',
     'map.route': '🚗 Прокласти маршрут до магазину',
@@ -796,12 +1037,6 @@ const translations = {
     'hero.cta': 'Vezi ofertele',
     'hero.stat1': 'Produse', 'hero.stat2': 'Parcare gratuită', 'hero.stat3': 'Zile pe săptămână',
     'cat.title': 'Ce veți găsi la FoodLand',
-    'cat.ciasta': 'Torturi',
-    'cat.ciastka': 'Biscuiți',
-    'cat.miody': 'Miere',
-    'cat.mrozonki': 'Congelate',
-    'cat.nabial': 'Lactate',
-    'cat.okazje': 'Oferte',
     'cat.pieczywo': 'Pâine', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Dulciuri', 'cat.warzywa': 'Legume', 'cat.wedliny': 'Mezeluri', 'cat.napoje': 'Băuturi',
     'contact.title': 'Contact', 'contact.address': 'Adresă', 'contact.phone': 'Telefon', 'contact.facebook': 'Vizitați pagina noastră',
     'map.route': '🚗 Obține indicații către magazin',
@@ -1037,7 +1272,7 @@ function initImageGroups() {
     return;
   }
 
-  const defaultKategorie = ['pieczywo','ciasta','ciastka','miody','mrozonki','nabial','okazje','warzywa','wedliny'].map((n, i) => ({
+  const defaultKategorie = ['pieczywo','pierogi','slodycze','warzywa','wedliny','napoje'].map((n, i) => ({
     id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
   }));
   if (!adminState.images.kategorie || adminState.images.kategorie.length === 0) {
@@ -2477,5 +2712,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 });
 </script>
-</body>
-</html>
+
+
+<div></div></body></html>
