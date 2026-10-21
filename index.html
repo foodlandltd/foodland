@@ -74,7 +74,6 @@ body.admin-open #mainContent {
 }
 body.admin-open .header { right: var(--admin-width); }
 
-/* Miejsce na logo po lewej stronie */
 .header-left-spacer{width:260px;flex-shrink:0;}
 
 .nav{display:flex;align-items:center;justify-content:center;height:100%;flex:1;}
@@ -82,7 +81,6 @@ body.admin-open .header { right: var(--admin-width); }
 .nav a{font-size:var(--header-font-size);font-weight:700;display:flex;align-items:center;height:100%;color:var(--text-main);}
 .nav a:hover{color:var(--red)}
 
-/* Prawa strona nagłówka - układ pionowy */
 .header-actions{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:0.4rem;height:100%;padding-right:2vw;z-index:100;}
 
 .logo-wrapper{position:fixed;top:8px;left:2vw;z-index:10000;}
@@ -92,7 +90,6 @@ body.admin-open .header { right: var(--admin-width); }
 .lang-switch button{padding:.35rem .7rem;font-size:.75rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
 .lang-switch button.active{background:var(--card-bg);color:var(--red);box-shadow:var(--shadow-sm);}
 
-/* Baner świąt */
 #holidayBannerWrapper { position: relative; display: none; align-items: center; }
 #holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
 #holidayBanner {
@@ -158,7 +155,6 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .hero-stats div strong{display:block;font-size:1.8rem;font-weight:900;color:var(--red);}
 .hero-stats div span{font-size:.75rem;text-transform:uppercase;font-weight:700;color:var(--text-muted);}
 
-/* ==== KATEGORIE ==== */
 .cat-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
@@ -191,7 +187,6 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 #eventBannerSection { padding: 0 4vw; margin-top: -2rem; margin-bottom: 2rem; display: none; }
 #eventBannerImg { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); object-fit: contain; max-height: none; display: block; }
 
-/* ==== PROMOCJE – pionowa lista gazetek ==== */
 .promo-list { display: flex; flex-direction: column; gap: 2rem; }
 .promo-banner-container{
   position:relative;
@@ -235,7 +230,6 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .refer-box button { padding:0.6rem 1rem; border-radius:8px; background:var(--btn-bg); color:#fff; font-weight:700; font-size:0.8rem; }
 .refer-box .refer-msg { font-size:0.75rem; margin-top:0.5rem; color:var(--green); font-weight:600; min-height:1em; }
 
-/* Panel admina */
 .admin-panel{
   position:fixed;top:0;right:0;bottom:0;
   width:var(--admin-width);
@@ -286,7 +280,6 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .forgot-link { font-size:0.8rem; color:#d0021b; text-decoration:underline; cursor:pointer; text-align:right; }
 .forgot-link:hover { color:#a00015; }
 
-/* Lista zdjęć w panelu */
 .img-item {
   display: flex; gap: 0.6rem; align-items: center;
   background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,.05); border-radius: 8px;
@@ -306,7 +299,6 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 }
 .btn-delete:hover { background: #a00015; }
 
-/* Toggle */
 .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
@@ -315,7 +307,6 @@ input:checked + .slider { background-color: #00843d; }
 input:focus + .slider { box-shadow: 0 0 1px #00843d; }
 input:checked + .slider:before { transform: translateX(20px); }
 
-/* Password wrapper */
 .password-wrapper { position: relative; display: flex; align-items: center; }
 .password-wrapper input { padding-right: 40px !important; }
 .toggle-password-btn {
@@ -358,7 +349,6 @@ input:checked + .slider:before { transform: translateX(20px); }
       <button data-lang="ro">RO</button>
     </div>
     
-    <!-- Baner świąt przeniesiony pod języki -->
     <div id="holidayBannerWrapper">
       <div id="holidayBanner"></div>
       <div id="holidayDropdown"></div>
@@ -1010,12 +1000,11 @@ function saveAdminState() {
 function initImageGroups() {
   if (!adminState.images) adminState.images = { kategorie: [], promocje: [], event: [], logo: [] };
 
-  // FIX: Usuwamy stare wpisy, które mają pole `file` zamiast `fileId` (stary format ładujący z plików)
   if (adminState.imagesInitialized) {
     ['kategorie', 'promocje', 'event', 'logo'].forEach(group => {
       if (Array.isArray(adminState.images[group])) {
         adminState.images[group] = adminState.images[group].filter(item => {
-          if (item.file && !item.fileId) return false; // Usuń stare wpisy
+          if (item.file && !item.fileId) return false; 
           return true;
         });
       }
@@ -1024,7 +1013,6 @@ function initImageGroups() {
     return;
   }
 
-  // Pierwsza inicjalizacja – dodajemy TYLKO puste placeholdery (bez ładowania plików)
   const defaultKategorie = ['pieczywo','pierogi','slodycze','warzywa','wedliny','napoje'].map((n, i) => ({
     id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
   }));
@@ -1487,18 +1475,18 @@ async function renderCategories() {
   const grid = document.getElementById('catGrid');
   if (!grid) return;
 
-  // FIX: Zabezpieczenie przed duplikatami
   const myVersion = ++renderCategoriesVersion;
 
   let items = getGroupImages('kategorie').filter(img => img.active !== false);
   items.sort((a, b) => (a.order || 0) - (b.order || 0));
 
-  // Zbierz dane ZANIM wyczyścimy grid
   const prepared = [];
   for (const item of items) {
     const rawName = item.name || 'Kategoria';
     const title = translateCategoryName(rawName, currentLang);
     let imgSrc = '';
+    
+    // NOWA LOGIKA: Próbuj pobrać z IndexedDB, jeśli nie ma - użyj pliku z folderu images
     if (item.fileId) {
       try {
         const dbRecord = await getImageFromDB(item.fileId);
@@ -1507,10 +1495,15 @@ async function renderCategories() {
         }
       } catch (e) {}
     }
+    
+    if (!imgSrc) {
+        const safeName = rawName.toLowerCase().replace(/\s+/g, '');
+        imgSrc = `./images/kategorie/${safeName}.jpg`;
+    }
+
     prepared.push({ item, title, imgSrc });
   }
 
-  // Sprawdź, czy to nadal aktualne renderowanie
   if (myVersion !== renderCategoriesVersion) return;
 
   grid.innerHTML = '';
@@ -1533,7 +1526,7 @@ async function renderCategories() {
       this.onerror = null;
       this.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
     };
-    img.src = imgSrc || 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+    img.src = imgSrc;
 
     inner.appendChild(img);
 
@@ -1557,7 +1550,6 @@ async function renderPromosSection() {
   const list = document.getElementById('promoList');
   if (!list) return;
 
-  // FIX: Zabezpieczenie przed duplikatami
   const myVersion = ++renderPromosVersion;
 
   const activePromos = getGroupImages('promocje')
@@ -1573,6 +1565,13 @@ async function renderPromosSection() {
         if (dbRecord && dbRecord.blob) src = URL.createObjectURL(dbRecord.blob);
       } catch (e) {}
     }
+    
+    // NOWA LOGIKA: Fallback do folderu images/promocje
+    if (!src && promo.name) {
+        const safeName = promo.name.toLowerCase().replace(/\s+/g, '');
+        src = `./images/promocje/${safeName}.jpg`;
+    }
+
     prepared.push({ promo, src });
   }
 
@@ -1622,7 +1621,6 @@ async function renderEventBanner() {
   const img = document.getElementById('eventBannerImg');
   if (!section || !img) return;
 
-  // FIX: Zabezpieczenie przed duplikatami
   const myVersion = ++renderEventVersion;
 
   const activeEvents = getGroupImages('event')
@@ -1642,6 +1640,11 @@ async function renderEventBanner() {
       if (dbRecord && dbRecord.blob) src = URL.createObjectURL(dbRecord.blob);
     } catch (e) {}
   }
+  
+  // NOWA LOGIKA: Fallback do folderu images/event
+  if (!src) {
+      src = `./images/event/baner.jpg`;
+  }
 
   if (myVersion !== renderEventVersion) return;
 
@@ -1659,7 +1662,6 @@ async function renderLogo() {
   const logoImg = document.querySelector('.logo-img');
   if (!logoImg) return;
 
-  // FIX: Zabezpieczenie przed duplikatami
   const myVersion = ++renderLogoVersion;
 
   const activeLogos = getGroupImages('logo')
@@ -1678,6 +1680,11 @@ async function renderLogo() {
       const dbRecord = await getImageFromDB(logo.fileId);
       if (dbRecord && dbRecord.blob) src = URL.createObjectURL(dbRecord.blob);
     } catch (e) {}
+  }
+  
+  // NOWA LOGIKA: Fallback do folderu images
+  if (!src) {
+      src = `./images/logo.jpg`;
   }
 
   if (myVersion !== renderLogoVersion) return;
