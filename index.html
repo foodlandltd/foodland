@@ -181,7 +181,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .cat-grid[data-ratio="4/3"] .cat-card{aspect-ratio:4/3;}
 .cat-grid[data-ratio="3/4"] .cat-card{aspect-ratio:3/4;}
 .cat-grid[data-ratio="16/9"] .cat-card{aspect-ratio:16/9;}
-.cat-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85));display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;color:#fff;}
+.cat-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85));display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;color:#fff; text-transform: uppercase;}
 
 #eventBannerSection { padding: 0 4vw; margin-top: -2rem; margin-bottom: 2rem; display: none; }
 #eventBannerImg { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); object-fit: contain; max-height: none; display: block; }
@@ -1082,6 +1082,15 @@ const BASE_TRANSLATIONS = JSON.parse(JSON.stringify(translations));
 /* ===== SŁOWNIK KATEGORII ===== */
 const CATEGORY_DICTIONARY = [
   { pl: 'Pieczywo', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
+  { pl: 'Ciasta', en: 'Cakes', uk: 'Торти', ro: 'Torturi' },
+  { pl: 'Ciastka', en: 'Cookies', uk: 'Печиво', ro: 'Biscuiți' },
+  { pl: 'Miody', en: 'Honey', uk: 'Мед', ro: 'Miere' },
+  { pl: 'Mrożonki', en: 'Frozen Food', uk: 'Заморозка', ro: 'Congelate' },
+  { pl: 'Nabiał', en: 'Dairy', uk: 'Молочне', ro: 'Lactate' },
+  { pl: 'Okazje', en: 'Offers', uk: 'Акції', ro: 'Oferte' },
+  { pl: 'Warzywa', en: 'Vegetables', uk: 'Овочі', ro: 'Legume' },
+  { pl: 'Wędliny', en: 'Cold Cuts', uk: 'Ковбаси', ro: 'Mezeluri' },
+  { pl: 'Pieczywo', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
   { pl: 'Pierogi', en: 'Pierogi', uk: 'Вареники', ro: 'Pierogi' },
   { pl: 'Słodycze', en: 'Sweets', uk: 'Солодощі', ro: 'Dulciuri' },
   { pl: 'Warzywa', en: 'Vegetables', uk: 'Овочі', ro: 'Legume' },
@@ -1738,7 +1747,7 @@ async function renderCategories() {
 
   const myVersion = ++renderCategoriesVersion;
    // WYMUSZENIE NOWEJ LISTY KATEGORII
-  const noweKategorie = ['pieczywo','ciasta','ciastka','miody','mrozonki','nabial','okazje','warzywa','wedliny'].map((n, i) => ({
+  const noweKategorie = ['Pieczywo','Ciasta','Ciastka','Miody','Mrożonki','Nabiał','Okazje','Warzywa','Wędliny'].map((n, i) => ({
     id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
   }));
   
