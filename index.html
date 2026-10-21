@@ -461,7 +461,7 @@ input:checked + .slider:before { transform: translateX(20px); }
       <div class="contact-content glass">
         <div class="contact-grid">
           <div class="contact-data">
-            <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street East, Wallsend</span></div></div>
+            <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street E, NE28 7RN Wallsend</span></div></div> <div class="contact-item"><div class="icon">🕒</div><div><strong data-i18n="contact.hours">Godziny otwarcia</strong><br><span id="contact-hours-val">Pon-Pt: 9:00–19:00<br>Sob: 9:00–18:00<br>Ndz: 10:00–16:00</span></div></div> <div class="contact-item"><div class="icon">📞</div><div><strong data-i18n="contact.phone">Telefon</strong><br><span id="contact-phone-val">+44 1234 567 890</span></div></div>
             <div class="contact-item"><div class="icon">📞</div><div><strong data-i18n="contact.phone">Telefon</strong><br><span id="contact-phone-val">+44 1234 567 890</span></div></div>
             <div class="contact-item"><a href="https://www.facebook.com" target="_blank" style="display:flex;align-items:center;gap:1rem;"><div class="icon" style="background:#1877f2;">f</div><div><strong>Facebook</strong><br><span data-i18n="contact.facebook">Odwiedź naszą stronę</span></div></a></div>
             <div class="refer-box">
@@ -912,6 +912,10 @@ const translations = {
     'cat.title': 'Co znajdziesz w FoodLand',
     'cat.pieczywo': 'Pieczywo', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Słodycze', 'cat.warzywa': 'Warzywa', 'cat.wedliny': 'Wędliny', 'cat.napoje': 'Napoje',
     'contact.title': 'Kontakt', 'contact.address': 'Adres', 'contact.phone': 'Telefon', 'contact.facebook': 'Odwiedź naszą stronę',
+    'contact.hours': 'Godziny otwarcia',
+    'hours.weekdays': 'Pon-Pt: 9:00–19:00',
+    'hours.saturday': 'Sob: 9:00–18:00',
+    'hours.sunday': 'Ndz: 10:00–16:00',
     'map.route': '🚗 Wyznacz trasę do sklepu',
     'promo.title': 'Aktualne promocje', 
     'promo.zoom.on': 'Lupa: Włączona',
@@ -955,6 +959,10 @@ const translations = {
     'cat.title': 'What you will find at FoodLand',
     'cat.pieczywo': 'Bread', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Sweets', 'cat.warzywa': 'Vegetables', 'cat.wedliny': 'Cold Cuts', 'cat.napoje': 'Drinks',
     'contact.title': 'Contact', 'contact.address': 'Address', 'contact.phone': 'Phone', 'contact.facebook': 'Visit our page',
+    'contact.hours': 'Opening hours',
+    'hours.weekdays': 'Mon-Fri: 9:00–19:00',
+    'hours.saturday': 'Sat: 9:00–18:00',
+    'hours.sunday': 'Sun: 10:00–16:00',
     'map.route': '🚗 Get directions to the shop',
     'promo.title': 'Current promotions', 
     'promo.zoom.on': 'Magnifier: On',
@@ -998,6 +1006,10 @@ const translations = {
     'cat.title': 'Що ви знайдете у FoodLand',
     'cat.pieczywo': 'Хліб', 'cat.pierogi': 'Вареники', 'cat.slodycze': 'Солодощі', 'cat.warzywa': 'Овочі', 'cat.wedliny': 'Ковбаси', 'cat.napoje': 'Напої',
     'contact.title': 'Контакти', 'contact.address': 'Адреса', 'contact.phone': 'Телефон', 'contact.facebook': 'Відвідайте нашу сторінку',
+    'contact.hours': 'Години роботи',
+    'hours.weekdays': 'Пн-Пт: 9:00–19:00',
+    'hours.saturday': 'Сб: 9:00–18:00',
+    'hours.sunday': 'Нд: 10:00–16:00',   
     'map.route': '🚗 Прокласти маршрут до магазину',
     'promo.title': 'Поточні акції', 
     'promo.zoom.on': 'Лупа: Увімкнена',
@@ -1041,6 +1053,10 @@ const translations = {
     'cat.title': 'Ce veți găsi la FoodLand',
     'cat.pieczywo': 'Pâine', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Dulciuri', 'cat.warzywa': 'Legume', 'cat.wedliny': 'Mezeluri', 'cat.napoje': 'Băuturi',
     'contact.title': 'Contact', 'contact.address': 'Adresă', 'contact.phone': 'Telefon', 'contact.facebook': 'Vizitați pagina noastră',
+    'contact.hours': 'Program',
+    'hours.weekdays': 'Lun-Vin: 9:00–19:00',
+    'hours.saturday': 'Sâm: 9:00–18:00',
+    'hours.sunday': 'Dum: 10:00–16:00',
     'map.route': '🚗 Obține indicații către magazin',
     'promo.title': 'Promoții actuale', 
     'promo.zoom.on': 'Lupă: Pornită',
@@ -1365,7 +1381,15 @@ function applyStats(lang) {
 
 function applyContactData() {
   const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-  set('contact-address-val', adminState.contactData.address);
+   const hoursEl = document.getElementById('contact-hours-val');
+  if (hoursEl) {
+      const t = translations[currentLang] || translations['pl'];
+      const wd = t['hours.weekdays'] || 'Pon-Pt: 9:00–19:00';
+      const sat = t['hours.saturday'] || 'Sob: 9:00–18:00';
+      const sun = t['hours.sunday'] || 'Ndz: 10:00–16:00';
+      hoursEl.innerHTML = `${wd}<br>${sat}<br>${sun}`;
+  }
+  set('contact-address-val', '145 High Street E, NE28 7RN Wallsend');
   set('contact-phone-val', adminState.contactData.phone);
 }
 
@@ -1397,6 +1421,18 @@ function showRouteOnMap(lang) {
 
 /* ===== HOLIDAY BANNER ===== */
 function updateHolidayBanner() {
+    // AWARYJNE WYŚWIETLANIE BANERA (dla Androida)
+  setTimeout(() => {
+      const wrapperAwaryjny = document.getElementById('holidayBannerWrapper');
+      const bannerAwaryjny = document.getElementById('holidayBanner');
+      if (wrapperAwaryjny && bannerAwaryjny) {
+          wrapperAwaryjny.style.display = 'flex';
+          if (!bannerAwaryjny.textContent.trim()) {
+              bannerAwaryjny.textContent = 'Nadchodzi: Halloween za 11 dni';
+          }
+      }
+  }, 500);
+  // KONIEC AWARYJNEGO KODU
   const wrapper = document.getElementById('holidayBannerWrapper');
   const banner = document.getElementById('holidayBanner');
   const dropdown = document.getElementById('holidayDropdown');
