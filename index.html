@@ -88,8 +88,21 @@ body.admin-open .header { right: var(--admin-width); }
 .logo-img{height:160px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));}
 
 .lang-switch{display:flex;align-items:center;gap:.15rem;background:var(--panel-inner);padding:4px;border-radius:var(--radius-pill);}
-.lang-switch button{padding:.35rem .7rem;font-size:.75rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
-.lang-switch button.active{background:var(--card-bg);color:var(--red);box-shadow:var(--shadow-sm);}
+.lang-switch button{
+  padding:.35rem .7rem;
+  font-size:.75rem;
+  font-weight:700;
+  color:var(--text-muted);
+  border-radius:var(--radius-pill);
+  cursor: pointer;
+  z-index: 100;
+  position: relative;
+}
+.lang-switch button.active{
+  background:var(--card-bg);
+  color:var(--red);
+  box-shadow:var(--shadow-sm);
+}
 
 #holidayBannerWrapper { position: relative; display: none; align-items: center; }
 #holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
@@ -330,30 +343,24 @@ input:checked + .slider:before { transform: translateX(20px); }
   .header-left-spacer{width:120px;}
   .hero{padding-top:14rem;}
   
-  /* POPRAWKA: Zmniejszamy cały nagłówek, aby zmieścił się w jednej linii */
+  /* Naprawa nagłówka na telefonie */
   .header { 
     padding: 0 0.5rem !important; 
-    height: 60px !important; 
+    height: 70px !important; 
+    flex-wrap: nowrap !important;
   }
   .nav ul { 
     gap: 0.4rem !important; 
-    flex-wrap: nowrap !important; /* Wymuszamy jedną linię */
+    flex-wrap: nowrap !important; 
   }
   .nav a { 
-    font-size: 0.7rem !important; /* Mniejsza czcionka w menu */
+    font-size: 0.7rem !important; 
   }
   .header-actions { 
     padding-right: 0 !important; 
-    transform: scale(0.75); /* Zmniejszamy całą prawą stronę (języki + święta) */
+    transform: scale(0.8); 
     transform-origin: right center; 
   }
-}
-  
-  /* NOWE POPRAWKI DLA ANDROIDA */
-  .header { padding: 0 1rem !important; }
-  .nav ul { gap: 0.5rem !important; flex-wrap: wrap !important; justify-content: center; }
-  .header-actions { padding-right: 0 !important; }
-  #holidayBannerWrapper { transform: scale(0.85); transform-origin: right center; }
 }
 </style>
 <link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
