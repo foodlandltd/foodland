@@ -1419,103 +1419,37 @@ function showRouteOnMap(lang) {
   }
 }
 
-/* ===== HOLIDAY BANNER ===== */
+/* ===== HOLIDAY BANNER (NOWY, NIEZAWODNY) ===== */
 function updateHolidayBanner() {
-   setTimeout(() => {
-    const w = document.getElementById('holidayBannerWrapper');
-    const b = document.getElementById('holidayBanner');
-    if (w && b) { w.style.display = 'flex'; if(!b.textContent.trim()) b.textContent = 'Nadchodzi: Halloween za 11 dni'; }
-}, 1000);
-  // AWARYJNE WYŚWIETLANIE BANERA (dla Androida)
-  setTimeout(() => {
-      const wrapperAwaryjny = document.getElementById('holidayBannerWrapper');
-      const bannerAwaryjny = document.getElementById('holidayBanner');
-      if (wrapperAwaryjny && bannerAwaryjny) {
-          wrapperAwaryjny.style.display = 'flex';
-          if (!bannerAwaryjny.textContent.trim()) {
-              bannerAwaryjny.textContent = 'Nadchodzi: Halloween za 11 dni';
-          }
-      }
-  }, 500);
-  // KONIEC AWARYJNEGO KODU
   const wrapper = document.getElementById('holidayBannerWrapper');
   const banner = document.getElementById('holidayBanner');
   const dropdown = document.getElementById('holidayDropdown');
+  
   if (!wrapper || !banner || !dropdown) return;
 
+  // Uproszczona data Halloween (31 października)
   const today = new Date();
-  today.setHours(0,0,0,0);
-  const currentYear = today.getFullYear();
+  const halloween = new Date(today.getFullYear(), 9, 31); // 9 = październik
+  
+  if (halloween < today) {
+    halloween.setFullYear(today.getFullYear() + 1); // Jeśli minęło, ustaw na przyszły rok
+  }
 
-  let upcoming = [];
+  const diffTime = Math.abs(halloween - today);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  const addHoliday = (countryCode, countryName, dateStr, holidayKey) => {
-    const [month, day] = dateStr.split('-').map(Number);
-    let holidayDate = new Date(currentYear, month - 1, day);
-    if (holidayDate < today) holidayDate = new Date(currentYear + 1, month - 1, day);
-    const diffDays = Math.ceil(Math.abs(holidayDate - today) / (1000 * 60 * 60 * 24));
-    if (diffDays <= 30) {
-      upcoming.push({ countryCode, countryName, date: holidayDate, daysLeft: diffDays, key: holidayKey });
-    }
+  const translationsHoliday = {
+    pl: { name: 'Halloween', prefix: 'Nadchodzi:', suffix: 'za', days: 'dni' },
+    en: { name: 'Halloween', prefix: 'Upcoming:', suffix: 'in', days: 'days' },
+    uk: { name: 'Хелловін', prefix: 'Наближається:', suffix: 'через', days: 'днів' },
+    ro: { name: 'Halloween', prefix: 'Urmează:', suffix: 'în', days: 'zile' }
   };
 
-  addHoliday('pl', 'Polska', '05-03', 'holiday.pl.constitution');
-  addHoliday('pl', 'Polska', '11-11', 'holiday.pl.independence');
-  addHoliday('pl', 'Polska', '08-15', 'holiday.pl.army');
-  addHoliday('uk', 'UK', '04-23', 'holiday.uk.george');
-  addHoliday('uk', 'UK', '10-31', 'holiday.uk.halloween');
-  addHoliday('uk', 'UK', '11-05', 'holiday.uk.fawkes');
-  addHoliday('ua', 'Ukraina', '08-24', 'holiday.ua.independence');
-  addHoliday('ua', 'Ukraina', '10-14', 'holiday.ua.defenders');
-  addHoliday('ro', 'Rumunia', '12-01', 'holiday.ro.national');
-  addHoliday('ro', 'Rumunia', '11-30', 'holiday.ro.andrew');
+  const t = translationsHoliday[currentLang] || translationsHoliday['pl'];
 
-  upcoming.sort((a, b) => a.daysLeft - b.daysLeft);
-
-  if (upcoming.length > 0) {
-    const next = upcoming[0];
-    const holidayName = translations[currentLang]?.[next.key + '.name'] || next.key;
-    const msgTemplate = translations[currentLang]?.['holiday.upcoming'] || 'Upcoming: {name} in {days} days.';
-    banner.textContent = msgTemplate.replace('{name}', holidayName).replace('{days}', next.daysLeft);
-    wrapper.style.display = 'flex';
-
-    const daysText = translations[currentLang]?.['holiday.days'] || 'dni';
-    const localeMap = { pl: 'pl-PL', en: 'en-GB', uk: 'uk-UA', ro: 'ro-RO' };
-    const dateLocale = localeMap[currentLang] || 'pl-PL';
-
-    dropdown.innerHTML = upcoming.map(h => {
-      const name = translations[currentLang]?.[h.key + '.name'] || h.key;
-      const desc = translations[currentLang]?.[h.key + '.desc'] || '';
-      const url = translations[currentLang]?.[h.key + '.url'] || '#';
-      let countryTranslated = h.countryName;
-      if (currentLang === 'en') countryTranslated = h.countryCode === 'pl' ? 'Poland' : (h.countryCode === 'ro' ? 'Romania' : (h.countryCode === 'uk' ? 'UK' : 'Ukraine'));
-      if (currentLang === 'uk') countryTranslated = h.countryCode === 'pl' ? 'Польща' : (h.countryCode === 'ro' ? 'Румунія' : (h.countryCode === 'uk' ? 'Велика Британія' : 'Україна'));
-      if (currentLang === 'ro') countryTranslated = h.countryCode === 'pl' ? 'Polonia' : (h.countryCode === 'ro' ? 'România' : (h.countryCode === 'uk' ? 'Marea Britanie' : 'Ucraina'));
-      
-      const dateStr = h.date.toLocaleDateString(dateLocale, { day: 'numeric', month: 'long', year: 'numeric' });
-      
-      return `
-        <div class="holiday-item" data-country="${h.countryCode}" tabindex="0" aria-label="${name}">
-          <div class="holiday-item-header">
-            <div class="holiday-name-wrap">
-              <span class="holiday-flag-badge" data-country="${h.countryCode}"></span>
-              <span>${name}</span>
-            </div>
-            <span class="holiday-days">${h.daysLeft} ${daysText}</span>
-            <span class="holiday-chevron" aria-hidden="true">▾</span>
-          </div>
-          <div class="holiday-item-desc">
-            <div>
-              <div class="holiday-date-line"><span>📅</span><span>${dateStr} · ${countryTranslated}</span></div>
-              <p>${desc}</p>
-              <a href="${url}" target="_blank" rel="noopener noreferrer" class="holiday-link">Dowiedz się więcej (${countryTranslated}) →</a>
-            </div>
-          </div>
-        </div>`; 
-    }).join('');
-  } else {
-    wrapper.style.display = 'none';
-  }
+  wrapper.style.display = 'flex';
+  banner.textContent = `${t.prefix} ${t.name} ${t.suffix} ${diffDays} ${t.days}`;
+  dropdown.innerHTML = ''; 
 }
 
 function setLang(lang) {
