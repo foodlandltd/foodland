@@ -16,6 +16,7 @@ body{
 }
 
 img{max-width:100%;display:block;border-radius:inherit}
+#adminPanel:not([data-admin-active="true"]) { display: none !important; }
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;border:none;background:none;cursor:pointer}
 :root{
@@ -227,7 +228,8 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .refer-box input[type=email] { flex:1; min-width:180px; padding:0.6rem 0.8rem; border:1px solid #ccc; border-radius:8px; font-size:0.85rem; }
 .refer-box button { padding:0.6rem 1rem; border-radius:8px; background:var(--btn-bg); color:#fff; font-weight:700; font-size:0.8rem; }
 .refer-box .refer-msg { font-size:0.75rem; margin-top:0.5rem; color:var(--green); font-weight:600; min-height:1em; }
-
+#adminPanel { display: none !important; }
+#adminPanel[style*="display: block"], #adminPanel:not([hidden]) { display: flex !important; }
 .admin-panel{
   position:fixed;top:0;right:0;bottom:0;
   width:var(--admin-width);
@@ -2710,7 +2712,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       msg.style.color = '#00843d';
     });
   }
-    const adminPanel = document.getElementById('adminPanel');
+      const adminPanel = document.getElementById('adminPanel');
   if (adminPanel) adminPanel.hidden = true;
   document.body.classList.remove('admin-open');
 });
