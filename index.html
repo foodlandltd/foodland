@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoodLand – Polski Sklep w Wallsend | Świeże produkty codziennie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body, 'Inter', system-ui, sans-serif);
+  background: var(--bg-page, #fcfaf8);
+  color: var(--text-main, #2a2a2a);
+  line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+
+img{max-width:100%;display:block;border-radius:inherit}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;border:none;background:none;cursor:pointer}
+:root{
+  --red:#d0021b;--red-light:#fce8ea;--green:#00843d;
+  --bg-page:#fcfaf8;--text-main:#2a2a2a;--text-muted:#666;
+  --card-bg:#ffffff;--panel-bg:rgba(255,255,255,0.95);--panel-inner:#f5f5f5;
+  --topbar-bg:rgba(255,255,255,0.75);--footer-bg:rgba(255,255,255,0.95);
+  --btn-text:#ffffff;--btn-bg:#d0021b;
+  --font-heading:'Playfair Display', serif;--font-body:'Inter', system-ui, sans-serif;
+  --radius:20px;--radius-sm:12px;--radius-pill:100px;
+  --shadow-sm:0 4px 12px rgba(0,0,0,.05);--shadow:0 15px 35px rgba(0,0,0,.08);
+  --glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.35);
+  --glass-blur: 0px;
+  --section-title-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  --sticky-header-padding: 1.5rem 2.5rem;
+  
+  --header-height: 80px;
+  --header-font-size: 0.95rem;
+  --header-link-padding: 0 4vw;
+  
+  --admin-width: 380px;
+  --img-perspective: 0px;
+}
+.font-logo{font-family:var(--font-heading);font-weight:900;letter-spacing:-0.03em;}
+.glass{
+  background:var(--glass-bg) !important;
+  border:1px solid var(--glass-border);
+  box-shadow:0 15px 35px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.4);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+#mainContent {
+  transition: margin-right 0.3s ease;
+  min-height: 100vh;
+  position: relative;
+  filter: saturate(var(--theme-saturate, 1)) brightness(var(--theme-brightness, 1)) contrast(var(--theme-contrast, 1)) hue-rotate(var(--theme-hue, 0deg));
+}
+body.admin-open #mainContent {
+  margin-right: var(--admin-width);
+}
+
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  padding:var(--header-link-padding);
+  display:flex;align-items:center;justify-content:center;
+  height:var(--header-height);
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(15px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+  transition: right .3s ease;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+body.admin-open .header { right: var(--admin-width); }
+
+/* Miejsce na logo po lewej stronie */
+.header-left-spacer{width:260px;flex-shrink:0;}
+
+.nav{display:flex;align-items:center;justify-content:center;height:100%;flex:1;}
+.nav ul{list-style:none;display:flex;gap:2rem;align-items:center;margin:0;padding:0;height:100%;}
+.nav a{font-size:var(--header-font-size);font-weight:700;display:flex;align-items:center;height:100%;color:var(--text-main);}
+.nav a:hover{color:var(--red)}
+
+/* Prawa strona nagłówka - układ pionowy */
+.header-actions{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:0.4rem;height:100%;padding-right:2vw;z-index:100;}
+
+.logo-wrapper{position:fixed;top:8px;left:2vw;z-index:10000;}
+.logo-img{height:160px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));}
+
+.lang-switch{display:flex;align-items:center;gap:.15rem;background:var(--panel-inner);padding:4px;border-radius:var(--radius-pill);}
+.lang-switch button{padding:.35rem .7rem;font-size:.75rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
+.lang-switch button.active{background:var(--card-bg);color:var(--red);box-shadow:var(--shadow-sm);}
+
+/* Baner świąt */
+#holidayBannerWrapper { position: relative; display: none; align-items: center; }
+#holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
+#holidayBanner {
+  display: flex; align-items: center; gap: 0.5rem;
+  background: var(--red-light); color: var(--red);
+  padding: 0.25rem 0.8rem; border-radius: var(--radius-pill);
+  font-size: 0.7rem; font-weight: 700; cursor: help; white-space: nowrap;
+  animation: fadeIn 0.5s ease; border: 1px solid rgba(208, 2, 27, 0.2);
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+#holidayDropdown {
+  position: absolute; top: calc(100% + 10px); right: 0;
+  background: var(--card-bg); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow);
+  padding: 0.5rem; width: 380px; max-height: min(70vh, 520px);
+  overflow-y: auto; overscroll-behavior: contain; display: none;
+  flex-direction: column; gap: 0.5rem; z-index: 10000;
+}
+#holidayBannerWrapper:hover #holidayDropdown { display: flex; }
+.holiday-item { position: relative; display: flex; flex-direction: column; padding: 0.55rem 0.7rem 0.55rem 0.85rem; border-radius: 6px; background: var(--panel-inner); border: 1px solid transparent; transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease, background .25s ease; cursor: pointer; overflow: hidden; }
+.holiday-item::before { content: ''; position: absolute; inset: 0; opacity: 0.05; transition: opacity 0.3s ease; pointer-events: none; z-index: 0; background-size: cover; background-position: center; background-repeat: no-repeat; }
+.holiday-item[data-country="pl"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' preserveAspectRatio='none'%3E%3Crect width='10' height='3' fill='%23ffffff'/%3E%3Crect y='3' width='10' height='3' fill='%23dc143c'/%3E%3C/svg%3E"); }
+.holiday-item[data-country="uk"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' preserveAspectRatio='none'%3E%3CclipPath id='s'%3E%3Cpath d='M0,0 v30 h60 v-30 z'/%3E%3C/clipPath%3E%3CclipPath id='t'%3E%3Cpath d='M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23s)'%3E%3Cpath d='M0,0 v30 h60 v-30 z' fill='%23012169'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' clip-path='url(%23t)' stroke='%23C8102E' stroke-width='4'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23fff' stroke-width='10'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23C8102E' stroke-width='6'/%3E%3C/g%3E%3C/svg%3E"); }
+.holiday-item[data-country="ua"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' preserveAspectRatio='none'%3E%3Crect width='10' height='3' fill='%23005BBB'/%3E%3Crect y='3' width='10' height='3' fill='%23FFD500'/%3E%3C/svg%3E"); }
+.holiday-item[data-country="ro"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6' preserveAspectRatio='none'%3E%3Crect width='3' height='6' fill='%23002B7F'/%3E%3Crect x='3' width='3' height='6' fill='%23FCD116'/%3E%3Crect x='6' width='3' height='6' fill='%23CE1126'/%3E%3C/svg%3E"); }
+.holiday-item:hover::before { opacity: 0.18; }
+.holiday-item:hover { border-color: var(--red); background: var(--card-bg); box-shadow: 0 4px 14px rgba(0,0,0,0.10); transform: translateY(-1px); }
+.holiday-item > * { position: relative; z-index: 1; }
+.holiday-item-header { display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; font-weight: 800; font-size: 0.85rem; color: var(--text-main); }
+.holiday-name-wrap { display: flex; align-items: center; gap: 0.45rem; flex: 1; min-width: 0; }
+.holiday-name-wrap > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.holiday-flag-badge { width: 22px; height: 15px; border-radius: 2px; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(0,0,0,0.1); background-size: cover; background-position: center; background-repeat: no-repeat; }
+.holiday-flag-badge[data-country="pl"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' preserveAspectRatio='none'%3E%3Crect width='10' height='3' fill='%23ffffff'/%3E%3Crect y='3' width='10' height='3' fill='%23dc143c'/%3E%3C/svg%3E"); }
+.holiday-flag-badge[data-country="uk"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' preserveAspectRatio='none'%3E%3CclipPath id='s'%3E%3Cpath d='M0,0 v30 h60 v-30 z'/%3E%3C/clipPath%3E%3CclipPath id='t'%3E%3Cpath d='M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23s)'%3E%3Cpath d='M0,0 v30 h60 v-30 z' fill='%23012169'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' clip-path='url(%23t)' stroke='%23C8102E' stroke-width='4'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23fff' stroke-width='10'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23C8102E' stroke-width='6'/%3E%3C/g%3E%3C/svg%3E"); }
+.holiday-flag-badge[data-country="ua"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' preserveAspectRatio='none'%3E%3Crect width='10' height='3' fill='%23005BBB'/%3E%3Crect y='3' width='10' height='3' fill='%23FFD500'/%3E%3C/svg%3E"); }
+.holiday-flag-badge[data-country="ro"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6' preserveAspectRatio='none'%3E%3Crect width='3' height='6' fill='%23002B7F'/%3E%3Crect x='3' width='3' height='6' fill='%23FCD116'/%3E%3Crect x='6' width='3' height='6' fill='%23CE1126'/%3E%3C/svg%3E"); }
+.holiday-item-header .holiday-days { color: var(--red); font-size: 0.72rem; background: var(--red-light); padding: 2px 7px; border-radius: 4px; flex-shrink: 0; white-space: nowrap; font-weight: 800; }
+.holiday-chevron { flex-shrink: 0; font-size: 0.7rem; color: var(--text-muted); transition: transform .3s ease, color .3s ease; }
+.holiday-item:hover .holiday-chevron, .holiday-item:focus-within .holiday-chevron { transform: rotate(180deg); color: var(--red); }
+.holiday-item-desc { display: grid; grid-template-rows: 0fr; opacity: 0; margin-top: 0; transition: grid-template-rows .35s ease, opacity .25s ease, margin-top .25s ease; font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
+.holiday-item-desc > div { overflow: hidden; }
+.holiday-item:hover .holiday-item-desc, .holiday-item:focus-within .holiday-item-desc { grid-template-rows: 1fr; opacity: 1; margin-top: 0.5rem; }
+.holiday-date-line { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; font-weight: 800; color: var(--red); margin-bottom: 0.35rem; }
+.holiday-item-desc p { margin: 0 0 0.5rem 0; }
+.holiday-link { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--red); text-decoration: underline; margin-top: 0.2rem; cursor: pointer; }
+.holiday-link:hover { color: #a00015; }
+@media (max-width: 1150px) { #holidayBannerWrapper { display: none !important; } }
+
+section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
+.hero{padding-top:18rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
+.section-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;}
+.sticky-header{position:sticky;top:calc(var(--header-height) + 15px);z-index:3;padding:var(--sticky-header-padding);border-radius:var(--radius-pill);margin:0 auto 3rem auto;text-align:center;width:fit-content;max-width:100%;box-sizing:border-box;overflow-wrap:break-word;word-wrap:break-word;}
+.sticky-header h2{font-size:var(--section-title-size);font-weight:900;color:var(--text-main);}
+.hero-copy{max-width:850px;padding:4rem 3rem;border-radius:var(--radius);margin:0 auto;display:flex;flex-direction:column;align-items:center;background:var(--glass-bg);}
+.hero h1{font-size:clamp(2.4rem,5vw,4rem);line-height:1.1;margin-bottom:1.5rem;}
+.hero h1 .highlight{color:var(--red);}
+.hero-lead{font-size:1.15rem;line-height:1.8;margin-bottom:2.5rem;color:var(--text-muted);}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:1rem 2.2rem;border-radius:var(--radius-pill);font-weight:700;font-size:.95rem;}
+.btn-primary{background:var(--btn-bg);color:var(--btn-text);}
+.btn-secondary{background:var(--panel-inner);color:var(--text-main);}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;}
+.hero-stats{display:flex;gap:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.1);justify-content:center;width:100%;}
+.hero-stats div strong{display:block;font-size:1.8rem;font-weight:900;color:var(--red);}
+.hero-stats div span{font-size:.75rem;text-transform:uppercase;font-weight:700;color:var(--text-muted);}
+
+/* ==== KATEGORIE ==== */
+.cat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+  gap:1.5rem;
+  perspective:var(--img-perspective, 0px);
+}
+.cat-card{
+  position:relative;
+  border-radius:var(--radius);
+  overflow:hidden;
+  aspect-ratio:1/1;
+  box-shadow:var(--shadow-sm);
+  background:#eee;
+  transition:box-shadow .35s ease;
+  transform:scale(var(--card-scale, 1));
+  transform-origin:center;
+}
+.cat-card:hover{ box-shadow:0 25px 50px rgba(0,0,0,.25); }
+.cat-card-inner{
+  position:absolute; inset:0; border-radius:inherit; overflow:hidden;
+  transform-style:preserve-3d; transition:transform .35s ease; will-change:transform;
+}
+.cat-card img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; will-change:transform; }
+.cat-card:hover img{transform:scale(1.06);}
+.cat-grid[data-ratio="4/3"] .cat-card{aspect-ratio:4/3;}
+.cat-grid[data-ratio="3/4"] .cat-card{aspect-ratio:3/4;}
+.cat-grid[data-ratio="16/9"] .cat-card{aspect-ratio:16/9;}
+.cat-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85));display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;color:#fff;}
+
+#eventBannerSection { padding: 0 4vw; margin-top: -2rem; margin-bottom: 2rem; display: none; }
+#eventBannerImg { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); object-fit: contain; max-height: none; display: block; }
+
+/* ==== PROMOCJE – pionowa lista gazetek ==== */
+.promo-list { display: flex; flex-direction: column; gap: 2rem; }
+.promo-banner-container{
+  position:relative;
+  border-radius:var(--radius);
+  padding:1rem;
+  width:100%;
+  background:var(--glass-bg);
+  margin:0 auto;
+  min-height: 120px;
+}
+.promo-img-base{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:var(--radius-sm);
+  cursor:crosshair;
+  opacity:0;
+  transition:opacity 0.25s ease;
+}
+.promo-img-base.loaded { opacity: 1; }
+.zoom-lens{position:absolute;width:300px;height:300px;border-radius:var(--radius);border:4px solid #fff;box-shadow:0 20px 40px rgba(0,0,0,0.4);pointer-events:none;display:none;background-repeat:no-repeat;z-index:100;}
+.zoom-btn-header { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.8rem; background: var(--panel-inner); color: var(--text-main); border-radius: var(--radius-pill); font-weight: 700; cursor: pointer; }
+.promo-empty { text-align:center; color:var(--text-muted); padding: 2rem; font-size: .95rem; }
+
+.contact-content{padding:3rem;border-radius:var(--radius);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+.contact-item{display:flex;gap:1rem;padding:1rem;border-radius:var(--radius-sm);margin-bottom:0.8rem;background:var(--panel-inner);}
+.contact-item .icon{width:40px;height:40px;background:var(--red);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.map-wrap{border-radius:var(--radius);overflow:hidden;min-height:400px; position:relative; display:flex; flex-direction:column;}
+.map-wrap iframe{width:100%;height:100%;border:0; flex:1;}
+.map-btn-route { margin-top: 10px; background: var(--btn-bg); color: #fff; padding: 1rem; border-radius: var(--radius-sm); font-weight: 700; text-align: center; text-decoration: none; display: block; transition: background 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; }
+.map-btn-route:hover { background: #a00015; }
+
+.footer{padding:2rem 4vw;border-top:1px solid rgba(0,0,0,.1);position:relative;z-index:50;background:var(--footer-bg);text-align:center;}
+.footer p{font-size:.9rem;color:var(--text-muted);}
+.refer-box { margin-top: 1.5rem; padding: 1.2rem; border-radius: var(--radius-sm); background: var(--panel-inner); border: 1px solid rgba(0,0,0,.08); }
+.refer-box h4 { font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 800; }
+.refer-box p { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.7rem; }
+.refer-box .refer-row { display:flex; gap:0.5rem; flex-wrap:wrap; }
+.refer-box input[type=email] { flex:1; min-width:180px; padding:0.6rem 0.8rem; border:1px solid #ccc; border-radius:8px; font-size:0.85rem; }
+.refer-box button { padding:0.6rem 1rem; border-radius:8px; background:var(--btn-bg); color:#fff; font-weight:700; font-size:0.8rem; }
+.refer-box .refer-msg { font-size:0.75rem; margin-top:0.5rem; color:var(--green); font-weight:600; min-height:1em; }
+
+/* Panel admina */
+.admin-panel{
+  position:fixed;top:0;right:0;bottom:0;
+  width:var(--admin-width);
+  background:rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  box-shadow:-10px 0 30px rgba(0,0,0,.15);
+  z-index:10002;
+  display:flex;flex-direction:column;
+  border-left:1px solid rgba(255,255,255,0.4);
+  font-family:'Inter',sans-serif;color:#222;
+}
+.admin-panel[hidden]{display:none}
+.admin-panel-head{display:flex;align-items:center;padding:1rem;border-bottom:1px solid rgba(0,0,0,.05);background:rgba(255,255,255,0.5);flex-shrink:0;}
+.admin-panel-head strong{flex:1;font-size:1rem;}
+.admin-tabs{display:flex;gap:.2rem;padding:.5rem .5rem 0;border-bottom:1px solid rgba(0,0,0,.05);background:rgba(255,255,255,0.5);flex-wrap:wrap;flex-shrink:0;}
+.admin-tabs button{padding:.4rem .6rem;border-radius:8px 8px 0 0;font-weight:700;font-size:.75rem;background:transparent;color:#666;border:none;cursor:pointer;}
+.admin-tabs button.active{background:#fff;color:#d0021b;box-shadow:0 -2px 6px rgba(0,0,0,.05);}
+.admin-panel-body{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:1rem;}
+.admin-tabpage{display:none;flex-direction:column;gap:1rem;}
+.admin-tabpage.active{display:flex;}
+.admin-field label{display:block;font-size:.7rem;font-weight:700;color:#666;margin-bottom:.2rem;}
+.admin-field input,.admin-field textarea,.admin-field select{width:100%;padding:.5rem;border:1px solid #ccc;border-radius:6px;font:inherit;font-size:.85rem;background:rgba(255,255,255,0.8);}
+.admin-section-title{font-size:.75rem;font-weight:800;color:#888;margin-top:.5rem;padding-bottom:.3rem;border-bottom:1px solid rgba(0,0,0,.1);}
+.admin-panel-foot{display:flex;gap:.5rem;padding:1rem;border-top:1px solid rgba(0,0,0,.05);background:rgba(255,255,255,0.5);flex-shrink:0;}
+.btn-commit{background:#00843d;color:#fff;flex:1;padding:0.8rem;font-size:0.9rem;border-radius:8px;}
+.theme-row { display:flex; align-items:center; gap:0.4rem; background:rgba(255,255,255,0.7); padding:0.4rem; border-radius:6px; border:1px solid rgba(0,0,0,.05); margin-bottom: 0.3rem; flex-wrap: wrap;}
+.theme-row .theme-label { flex:1; font-size:0.75rem; font-weight:700; min-width: 120px;}
+.theme-row .theme-mode-btn { padding:0.25rem 0.5rem; font-size:0.65rem; border-radius:4px; border:1px solid #ccc; cursor:pointer; background:#fff; }
+.theme-row .theme-mode-btn.active { background:#d0021b; color:#fff; border-color:#d0021b; }
+.theme-sliders { display:flex; flex-direction:column; gap:0.3rem; padding:0.4rem; background:rgba(255,255,255,0.8); border-radius:6px; border:1px solid rgba(0,0,0,.05); width:100%; margin-top:0.3rem;}
+.theme-slider-row { display:flex; align-items:center; gap:0.5rem; font-size:0.7rem;}
+.theme-slider-row label { width:80px; font-weight:700; color:#555;}
+.theme-slider-row input[type=range] { flex:1;}
+.theme-slider-row span { width:45px; text-align:right; font-weight:700; color:#d0021b;}
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; }
+.stat-box { background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,.05); border-radius: 8px; padding: 0.7rem; text-align: center; }
+.stat-box h3 { font-size: 1.2rem; color: #d0021b; margin-bottom: 0.15rem; }
+.stat-box p { font-size: 0.65rem; color: #666; font-weight: 600; text-transform: uppercase; }
+.version-list { display: flex; flex-direction: column; gap: 0.5rem; max-height: 200px; overflow-y: auto; margin-top: 0.5rem; }
+.version-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.7); padding: 0.5rem; border-radius: 6px; border: 1px solid rgba(0,0,0,.05); font-size: 0.8rem; }
+.version-item button { padding: 0.2rem 0.5rem; font-size: 0.7rem; border-radius: 4px; cursor: pointer; background: #d0021b; color: #fff; border: none; }
+.admin-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:10005;}
+.admin-modal[hidden]{display:none}
+.admin-box{background:#fff;border-radius:16px;padding:2rem;width:min(400px,92vw);display:flex;flex-direction:column;gap:.8rem;}
+.admin-box input{padding:.8rem;border:1px solid #ddd;border-radius:8px;}
+.report-btn { background:#00843d; color:#fff; padding:0.6rem 1rem; border-radius:8px; font-weight:700; font-size:0.8rem; cursor:pointer; margin-top:0.5rem; width:100%;}
+.forgot-link { font-size:0.8rem; color:#d0021b; text-decoration:underline; cursor:pointer; text-align:right; }
+.forgot-link:hover { color:#a00015; }
+
+/* Lista zdjęć w panelu */
+.img-item {
+  display: flex; gap: 0.6rem; align-items: center;
+  background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,.05); border-radius: 8px;
+  padding: 0.5rem; font-size: 0.78rem;
+}
+.img-item img {
+  width: 54px; height: 54px; object-fit: cover; border-radius: 6px; flex-shrink: 0;
+  background: #eee;
+}
+.img-item .img-meta { flex: 1; display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.img-item .img-meta strong { font-size: 0.8rem; display: block; margin-bottom: 2px;}
+.img-item .img-meta small { font-size: 0.65rem; color: #888; word-break: break-all; }
+.btn-delete {
+  background: #d0021b; color: #fff; border: none; border-radius: 6px;
+  padding: 0.4rem 0.6rem; font-size: 0.7rem; font-weight: 700; cursor: pointer;
+  flex-shrink: 0; transition: background 0.2s;
+}
+.btn-delete:hover { background: #a00015; }
+
+/* Toggle */
+.toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: #00843d; }
+input:focus + .slider { box-shadow: 0 0 1px #00843d; }
+input:checked + .slider:before { transform: translateX(20px); }
+
+/* Password wrapper */
+.password-wrapper { position: relative; display: flex; align-items: center; }
+.password-wrapper input { padding-right: 40px !important; }
+.toggle-password-btn {
+  position: absolute; right: 10px; background: none; border: none; cursor: pointer;
+  font-size: 1.1rem; color: #666; padding: 0; display: flex; align-items: center; justify-content: center;
+}
+.toggle-password-btn:hover { color: #d0021b; }
+
+@media(max-width:900px){
+  body.admin-open #mainContent { margin-right: 0; }
+  body.admin-open .header { right: 0; }
+  .admin-panel { width: 100vw; }
+  .logo-img{height:100px;}
+  .header-left-spacer{width:160px;}
+  .contact-grid{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .logo-img{height:70px;}
+  .header-left-spacer{width:120px;}
+  .hero{padding-top:14rem;}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left-spacer"></div>
+  <nav class="nav">
+    <ul>
+      <li><a href="#kategorie" data-i18n="nav.categories">Kategorie</a></li>
+      <li><a href="#promocje" data-i18n="nav.promos">Promocje</a></li>
+      <li><a href="#kontakt" data-i18n="nav.contact">Kontakt</a></li>
+    </ul>
+  </nav>
+  <div class="header-actions">
+    <div class="lang-switch" id="lang">
+      <button data-lang="pl" class="active">PL</button>
+      <button data-lang="en">EN</button>
+      <button data-lang="uk">UA</button>
+      <button data-lang="ro">RO</button>
+    </div>
+    
+    <!-- Baner świąt przeniesiony pod języki -->
+    <div id="holidayBannerWrapper">
+      <div id="holidayBanner"></div>
+      <div id="holidayDropdown"></div>
+    </div>
+  </div>
+</header>
+
+<div class="logo-wrapper">
+  <a href="#"><img src="./images/logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'"></a>
+</div>
+
+<div id="mainContent">
+  <section class="hero">
+    <div class="section-content">
+      <div class="hero-copy">
+        <h1 class="font-logo">
+          <span data-i18n="hero.title1">Polskie smaki</span><br>
+          <span class="highlight" data-i18n="hero.title2">w Wallsend</span>
+        </h1>
+        <p class="hero-lead" data-i18n="hero.lead">Serdecznie zapraszamy do naszego polskiego sklepu w Wallsend k. Newcastle. Znajdziecie tu 1500+ produktów, świeże wędliny, sery, pieczywo, pierogi oraz polskie leki i warzywa. Darmowy parking do 2 godzin tuż obok.</p>
+        <div class="hero-actions">
+          <a href="#kategorie" class="btn btn-primary" data-i18n="hero.cta">Zobacz ofertę</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong id="stat1-val">1500+</strong><span id="stat1-label" data-i18n="hero.stat1">Produktów</span></div>
+          <div><strong id="stat2-val">2h</strong><span id="stat2-label" data-i18n="hero.stat2">Darmowy parking</span></div>
+          <div><strong id="stat3-val">7</strong><span id="stat3-label" data-i18n="hero.stat3">Dni w tygodniu</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="eventBannerSection">
+    <div class="section-content">
+      <img id="eventBannerImg" src="" alt="Event">
+    </div>
+  </section>
+
+  <section class="categories" id="kategorie">
+    <div class="section-content">
+      <div class="sticky-header glass" id="headerKategorie"><h2 class="font-logo" data-i18n="cat.title">Co znajdziesz w FoodLand</h2></div>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+  </section>
+
+  <section class="promos" id="promocje">
+    <div class="section-content">
+      <div class="sticky-header glass" style="margin-bottom:2rem;" id="headerPromocje">
+        <h2 class="font-logo" data-i18n="promo.title">Aktualne promocje</h2>
+        <button id="zoomToggleBtn" class="zoom-btn-header" data-i18n="promo.zoom.on">Lupa: Włączona</button>
+      </div>
+      <div class="promo-list" id="promoList"></div>
+    </div>
+  </section>
+
+  <section class="contact" id="kontakt">
+    <div class="section-content">
+      <div class="sticky-header glass" id="headerKontakt"><h2 class="font-logo" data-i18n="contact.title">Kontakt</h2></div>
+      <div class="contact-content glass">
+        <div class="contact-grid">
+          <div class="contact-data">
+            <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street East, Wallsend</span></div></div>
+            <div class="contact-item"><div class="icon">📞</div><div><strong data-i18n="contact.phone">Telefon</strong><br><span id="contact-phone-val">+44 1234 567 890</span></div></div>
+            <div class="contact-item"><a href="https://www.facebook.com" target="_blank" style="display:flex;align-items:center;gap:1rem;"><div class="icon" style="background:#1877f2;">f</div><div><strong>Facebook</strong><br><span data-i18n="contact.facebook">Odwiedź naszą stronę</span></div></a></div>
+            <div class="refer-box">
+              <h4 data-i18n="refer.title">Poleć nas znajomemu</h4>
+              <p data-i18n="refer.desc">Wpisz adres e-mail znajomego – wyślemy mu link do naszej strony.</p>
+              <div class="refer-row">
+                <input type="email" id="referEmail" placeholder="znajomy@email.com" data-i18n-placeholder="refer.emailPlaceholder">
+                <button id="referSendBtn" data-i18n="refer.send">Poleć</button>
+              </div>
+              <div class="refer-msg" id="referMsg"></div>
+            </div>
+          </div>
+          <div class="map-wrap">
+            <iframe id="mapFrame" src="https://maps.google.com/maps?q=145%20High%20St%20E,%20Wallsend%20NE28%207RL,%20UK&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" style="width:100%; height:100%; border:0;"></iframe>
+            <button id="mapRouteBtn" class="map-btn-route" data-i18n="map.route">🚗 Wyznacz trasę do sklepu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>© 2026 <span class="font-logo" style="color:var(--red);font-size:1.2rem;">FoodLand</span> shops. <span data-i18n="footer.rights">Wszelkie prawa zastrzeżone.</span></p>
+    </div>
+  </footer>
+</div>
+
+<!-- MODAL LOGOWANIA -->
+<div id="adminLoginModal" class="admin-modal" hidden>
+  <form class="admin-box" onsubmit="event.preventDefault();">
+    <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:1.5rem;" data-i18n="admin.login.title">Panel administratora</h3>
+    <input id="adminUser" placeholder="Login" data-i18n-placeholder="admin.login.user" autocomplete="username">
+    <input id="adminPass" type="password" placeholder="Hasło" data-i18n-placeholder="admin.login.pass" autocomplete="current-password">
+    <div class="forgot-link" id="forgotPassLink" data-i18n="admin.login.forgot">Zapomniałem hasła</div>
+    <p id="adminErr" style="color:#d0021b;font-size:.85rem;font-weight:600;" hidden data-i18n="admin.login.err">Błędne dane logowania.</p>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.4rem;">
+      <button id="adminLoginBtn" class="btn btn-primary" data-i18n="admin.login.btn">Zaloguj</button>
+      <button id="adminCloseBtn" class="btn btn-secondary" data-i18n="admin.login.cancel">Anuluj</button>
+    </div>
+  </form>
+</div>
+
+<!-- MODAL ODBLOKOWANIA HASŁA -->
+<div id="forgotModal" class="admin-modal" hidden>
+  <div class="admin-box">
+    <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;" data-i18n="admin.forgot.title">Odzyskiwanie hasła</h3>
+    <p style="font-size:0.8rem;color:#666;" data-i18n="admin.forgot.desc">Podaj zapisany adres e-mail administratora. Wyślemy na niego aktualny login i hasło.</p>
+    <input id="forgotEmail" type="email" placeholder="admin@email.com" data-i18n-placeholder="admin.forgot.email">
+    <p id="forgotMsg" style="font-size:0.8rem;font-weight:600;" hidden></p>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.4rem;">
+      <button id="forgotSendBtn" class="btn btn-primary" data-i18n="admin.forgot.send">Wyślij</button>
+      <button id="forgotCloseBtn" class="btn btn-secondary" data-i18n="admin.forgot.cancel">Anuluj</button>
+    </div>
+  </div>
+</div>
+
+<div id="adminPanel" class="admin-panel" hidden>
+  <header class="admin-panel-head">
+    <strong data-i18n="admin.panel.title">Panel administratora</strong>
+    <button id="adminPanelClose" style="font-size:1.2rem;color:#555;">✕</button>
+  </header>
+  <nav class="admin-tabs" id="adminTabs">
+    <button data-tab="texts" class="active" data-i18n="admin.tab.texts">Teksty</button>
+    <button data-tab="themes" data-i18n="admin.tab.themes">Motywy</button>
+    <button data-tab="images" data-i18n="admin.tab.images">Zdjęcia</button>
+    <button data-tab="security" data-i18n="admin.tab.security">Bezpieczeństwo</button>
+    <button data-tab="stats" data-i18n="admin.tab.stats">Statystyki</button>
+    <button data-tab="html" data-i18n="admin.tab.html">Kod HTML</button>
+  </nav>
+  <div class="admin-panel-body">
+    
+    <div class="admin-tabpage active" data-page="texts">
+      <div class="admin-section-title" data-i18n="admin.section.lang">Język edycji</div>
+      <div style="display:flex;gap:.3rem;margin-bottom:1rem;">
+        <button class="lang-edit-btn active" data-lang="pl" style="padding:.3rem .6rem;border-radius:6px;border:none;background:#d0021b;color:#fff;font-weight:700;cursor:pointer;">PL</button>
+        <button class="lang-edit-btn" data-lang="en" style="padding:.3rem .6rem;border-radius:6px;border:none;background:#eee;color:#555;font-weight:700;cursor:pointer;">EN</button>
+        <button class="lang-edit-btn" data-lang="uk" style="padding:.3rem .6rem;border-radius:6px;border:none;background:#eee;color:#555;font-weight:700;cursor:pointer;">UA</button>
+        <button class="lang-edit-btn" data-lang="ro" style="padding:.3rem .6rem;border-radius:6px;border:none;background:#eee;color:#555;font-weight:700;cursor:pointer;">RO</button>
+      </div>
+      <p style="font-size:0.7rem;color:#888;margin-bottom:0.5rem;" data-i18n="admin.texts.info">Edycja dotyczy wybranego języka. Po zapisie tekst zostanie automatycznie zaktualizowany we wszystkich językach.</p>
+      
+      <div class="admin-section-title" data-i18n="admin.section.stats">Statystyki (Liczby)</div>
+      <div class="admin-field"><label data-i18n="admin.stats.1">Statystyka 1</label><input type="text" id="stat1-val-input"></div>
+      <div class="admin-field"><label data-i18n="admin.stats.2">Statystyka 2</label><input type="text" id="stat2-val-input"></div>
+      <div class="admin-field"><label data-i18n="admin.stats.3">Statystyka 3</label><input type="text" id="stat3-val-input"></div>
+
+      <div class="admin-section-title" data-i18n="admin.section.maintexts">Teksty główne</div>
+      <div id="adminFields" style="display:flex;flex-direction:column;gap:.8rem;"></div>
+    </div>
+    
+    <div class="admin-tabpage" data-page="themes">
+      <div class="admin-section-title" data-i18n="admin.section.themes">Motywy (Jasny/Średni/Ciemny)</div>
+      <div id="themeRows" style="display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;"></div>
+
+      <div class="admin-section-title" data-i18n="admin.section.layout">Układ i efekty</div>
+      
+      <div class="admin-field">
+        <label data-i18n="admin.layout.title">Rozmiar tytułów</label>
+        <input type="range" id="titleSizeRange" min="1.5" max="4" step="0.1" style="width:100%;">
+        <span id="titleSizeVal" style="font-size:0.7rem; color:#666;">2.6rem</span>
+      </div>
+      
+      <div class="admin-field">
+        <label data-i18n="admin.layout.blur">Rozmycie tła (Glassmorphism)</label>
+        <input type="range" id="blurRange" min="0" max="20" step="1" style="width:100%;">
+        <span id="blurVal" style="font-size:0.7rem; color:#666;">0px</span>
+      </div>
+      
+      <div class="admin-field">
+        <label data-i18n="admin.layout.sticky">Wielkość okienek sekcji (padding)</label>
+        <input type="range" id="stickyPadRange" min="0" max="5" step="0.1" style="width:100%;">
+        <span id="stickyPadVal" style="font-size:0.7rem; color:#666;">1.5rem</span>
+      </div>
+
+      <div class="admin-field">
+        <label>Rozmiar czcionki w topbarze</label>
+        <input type="range" id="headerFontSizeRange" min="0.6" max="1.5" step="0.05" style="width:100%;">
+        <span id="headerFontSizeVal" style="font-size:0.7rem; color:#666;">0.95rem</span>
+      </div>
+
+      <div class="admin-field">
+        <label>Wysokość / padding topbaru</label>
+        <input type="range" id="headerHeightRange" min="40" max="150" step="5" style="width:100%;">
+        <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">80px</span>
+      </div>
+
+    </div>
+
+    <div class="admin-tabpage" data-page="images">
+      <div class="admin-section-title" data-i18n="admin.images.section">Zarządzanie zdjęciami</div>
+
+      <div class="admin-field">
+        <label data-i18n="admin.images.group">Grupa zdjęć</label>
+        <select id="imgGroupSelect">
+          <option value="kategorie">Kategorie</option>
+          <option value="promocje">Promocje</option>
+          <option value="event">Baner eventowy</option>
+          <option value="logo">Logo</option>
+        </select>
+      </div>
+
+      <div id="imgList" style="display:flex;flex-direction:column;gap:0.6rem;"></div>
+
+      <div class="admin-section-title" data-i18n="admin.images.add">Dodaj nowe zdjęcie</div>
+      <div class="admin-field">
+        <label data-i18n="admin.images.file">Plik (jpg/png/webp)</label>
+        <input type="file" id="imgUpload" accept="image/*">
+      </div>
+      <div class="admin-field">
+        <label data-i18n="admin.images.name">Nazwa / podpis (wyświetlany)</label>
+        <input type="text" id="imgNewName" placeholder="np. Pieczywo">
+      </div>
+      <button id="imgAddBtn" class="btn btn-primary" style="padding:0.6rem;font-size:0.85rem;" data-i18n="admin.images.addBtn">Dodaj zdjęcie</button>
+
+      <div class="admin-section-title" data-i18n="admin.images.layout">Układ siatki kategorii</div>
+      <div class="admin-field">
+        <label data-i18n="admin.images.cols">Min. szerokość kolumny (px)</label>
+        <input type="range" id="imgCols" min="120" max="400" step="10" style="width:100%;">
+        <span id="imgColsVal" style="font-size:0.7rem;color:#666;">250px</span>
+      </div>
+      <div class="admin-field">
+        <label data-i18n="admin.images.ratio">Proporcje kafelka</label>
+        <select id="imgRatio">
+          <option value="1/1">Kwadrat 1:1</option>
+          <option value="4/3">4:3</option>
+          <option value="3/4">3:4</option>
+          <option value="16/9">16:9</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="admin-tabpage" data-page="security">
+      <div class="admin-section-title" data-i18n="admin.sec.title">Dane logowania administratora</div>
+      <div class="admin-field">
+        <label data-i18n="admin.sec.login">Login</label>
+        <input type="text" id="secLogin" placeholder="admin" autocomplete="username">
+      </div>
+      <div class="admin-field">
+        <label data-i18n="admin.sec.pass">Nowe hasło</label>
+        <div class="password-wrapper">
+          <input type="password" id="secPass" placeholder="••••••" autocomplete="new-password">
+          <button type="button" class="toggle-password-btn" id="toggleSecPassBtn" title="Pokaż/Ukryj hasło">👁️</button>
+        </div>
+      </div>
+      <div class="admin-field">
+        <label data-i18n="admin.sec.email">Adres e-mail administratora</label>
+        <input type="email" id="secEmail" placeholder="admin@email.com">
+      </div>
+      <button id="secSaveBtn" class="btn btn-primary" style="padding:0.6rem;font-size:0.85rem;" data-i18n="admin.sec.save">Zapisz dane logowania</button>
+      <button id="secSendMailBtn" class="btn btn-secondary" style="padding:0.6rem;font-size:0.85rem;" data-i18n="admin.sec.sendMail">Wyślij nowe hasło na e-mail</button>
+      <p id="secMsg" style="font-size:0.75rem;font-weight:600;min-height:1em;"></p>
+      <p style="font-size:0.7rem;color:#888;margin-top:0.5rem;" data-i18n="admin.sec.info">Uwaga: dane są zapisywane w localStorage przeglądarki. Wysyłka e-mail odbywa się przez klienta pocztowego (mailto).</p>
+    </div>
+
+    <div class="admin-tabpage" data-page="stats">
+      <div class="admin-section-title">Analityka Ruchu (Local Analytics)</div>
+      <div class="stat-grid" id="statsGrid"></div>
+      <button id="sendReportBtn" class="report-btn">📧 Wyślij raport e-mail</button>
+      <p style="font-size:0.7rem; color:#888; text-align:center; margin-top:1rem;">Dane zbierane lokalnie w przeglądarce użytkownika (LocalStorage).</p>
+    </div>
+    
+    <div class="admin-tabpage" data-page="html">
+      <div class="admin-section-title">Zarządzanie wersjami</div>
+      <div class="admin-field">
+        <label>Nazwa nowej wersji</label>
+        <input type="text" id="versionName" placeholder="np. index-wielkanoc.html">
+      </div>
+      <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+        <button id="saveVersionBtn" class="btn btn-primary" style="flex:1; padding:0.5rem; font-size:0.8rem;">Zapisz wersję</button>
+        <button id="downloadHtmlBtn" class="btn btn-secondary" style="flex:1; padding:0.5rem; font-size:0.8rem;">Pobierz .html</button>
+      </div>
+      
+      <div class="admin-section-title">Import z pliku</div>
+      <div class="admin-field">
+        <textarea id="importHtmlArea" rows="3" placeholder="Wklej tutaj kod HTML..."></textarea>
+      </div>
+      <button id="importHtmlBtn" class="btn btn-primary" style="width:100%; padding:0.5rem; font-size:0.8rem;">Załaduj kod</button>
+      
+      <div class="admin-section-title" style="margin-top:1rem;">Historia wersji</div>
+      <div id="versionList" class="version-list"></div>
+    </div>
+  </div>
+  <footer class="admin-panel-foot">
+    <button id="adminCommit" class="btn btn-commit" data-i18n="admin.commit">Zapisz na stałe</button>
+  </footer>
+</div>
+
+<script>
+/* ===== TŁUMACZENIA ===== */
+const translations = {
+  pl: {
+    'nav.categories': 'Kategorie', 'nav.promos': 'Promocje', 'nav.contact': 'Kontakt',
+    'hero.title1': 'Polskie smaki', 'hero.title2': 'w Wallsend',
+    'hero.lead': 'Serdecznie zapraszamy do naszego polskiego sklepu w Wallsend k. Newcastle. Znajdziecie tu 1500+ produktów, świeże wędliny, sery, pieczywo, pierogi oraz polskie leki i warzywa. Darmowy parking do 2 godzin tuż obok.',
+    'hero.cta': 'Zobacz ofertę',
+    'hero.stat1': 'Produktów', 'hero.stat2': 'Darmowy parking', 'hero.stat3': 'Dni w tygodniu',
+    'cat.title': 'Co znajdziesz w FoodLand',
+    'cat.pieczywo': 'Pieczywo', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Słodycze', 'cat.warzywa': 'Warzywa', 'cat.wedliny': 'Wędliny', 'cat.napoje': 'Napoje',
+    'contact.title': 'Kontakt', 'contact.address': 'Adres', 'contact.phone': 'Telefon', 'contact.facebook': 'Odwiedź naszą stronę',
+    'map.route': '🚗 Wyznacz trasę do sklepu',
+    'promo.title': 'Aktualne promocje', 
+    'promo.zoom.on': 'Lupa: Włączona',
+    'promo.zoom.off': 'Lupa: Wyłączona',
+    'refer.title': 'Poleć nas znajomemu', 'refer.desc': 'Wpisz adres e-mail znajomego – wyślemy mu link do naszej strony.', 'refer.send': 'Poleć',
+    'refer.emailPlaceholder': 'znajomy@email.com',
+    'footer.rights': 'Wszelkie prawa zastrzeżone.',
+    'admin.login.title': 'Panel administratora', 'admin.login.user': 'Login', 'admin.login.pass': 'Hasło', 'admin.login.err': 'Błędne dane logowania.', 'admin.login.btn': 'Zaloguj', 'admin.login.cancel': 'Anuluj',
+    'admin.login.forgot': 'Zapomniałem hasła',
+    'admin.forgot.title': 'Odzyskiwanie hasła', 'admin.forgot.desc': 'Podaj zapisany adres e-mail administratora. Wyślemy na niego aktualny login i hasło.', 'admin.forgot.email': 'admin@email.com', 'admin.forgot.send': 'Wyślij', 'admin.forgot.cancel': 'Anuluj',
+    'admin.panel.title': 'Panel administratora', 'admin.tab.texts': 'Teksty', 'admin.tab.themes': 'Motywy', 'admin.tab.stats': 'Statystyki', 'admin.tab.html': 'Kod HTML', 'admin.tab.images': 'Zdjęcia', 'admin.tab.security': 'Bezpieczeństwo',
+    'admin.section.lang': 'Język edycji', 'admin.texts.info': 'Edycja dotyczy wybranego języka. Po zapisie tekst zostanie automatycznie zaktualizowany we wszystkich językach.',
+    'admin.section.stats': 'Statystyki', 'admin.stats.1': 'Statystyka 1', 'admin.stats.2': 'Statystyka 2', 'admin.stats.3': 'Statystyka 3',
+    'admin.section.maintexts': 'Teksty główne', 'admin.section.contact': 'Dane kontaktowe', 'admin.contact.address': 'Adres', 'admin.contact.phone': 'Telefon',
+    'admin.section.themes': 'Motywy', 'admin.section.layout': 'Układ i efekty', 'admin.layout.title': 'Rozmiar tytułów', 'admin.layout.blur': 'Rozmycie tła', 'admin.layout.sticky': 'Wielkość okienek sekcji (padding)',
+    'admin.stats.title': 'Statystyki ruchu', 'admin.stats.footer': 'Dane zapisywane lokalnie.',
+    'admin.commit': 'Zapisz na stałe',
+    'admin.images.section': 'Zarządzanie zdjęciami', 'admin.images.group': 'Grupa zdjęć', 'admin.images.add': 'Dodaj nowe zdjęcie', 'admin.images.file': 'Plik (jpg/png/webp)', 'admin.images.name': 'Nazwa / podpis', 'admin.images.addBtn': 'Dodaj zdjęcie',
+    'admin.images.effects': 'Efekty 3D (globalne)', 'admin.images.tilt': 'Nachylenie (tilt)', 'admin.images.depth': 'Głębokość (perspective)', 'admin.images.rotate': 'Obrót przy hover',
+    'admin.images.layout': 'Układ siatki kategorii', 'admin.images.cols': 'Min. szerokość kolumny (px)', 'admin.images.ratio': 'Proporcje kafelka',
+    'admin.sec.title': 'Dane logowania administratora', 'admin.sec.login': 'Login', 'admin.sec.pass': 'Nowe hasło', 'admin.sec.email': 'Adres e-mail administratora', 'admin.sec.save': 'Zapisz dane logowania', 'admin.sec.sendMail': 'Wyślij nowe hasło na e-mail', 'admin.sec.info': 'Uwaga: dane są zapisywane w localStorage przeglądarki. Wysyłka e-mail odbywa się przez klienta pocztowego (mailto).',
+    'holiday.upcoming': 'Nadchodzi: {name} za {days} dni',
+    'holiday.days': 'dni',
+    'holiday.pl.constitution.name': 'Święto Konstytucji 3 Maja', 'holiday.pl.constitution.desc': 'Narodowe święto Polski upamiętniające uchwalenie Konstytucji 3 maja 1791 roku.', 'holiday.pl.constitution.url': 'https://pl.wikipedia.org/wiki/Konstytucja_3_maja',
+    'holiday.pl.independence.name': 'Narodowe Święto Niepodległości', 'holiday.pl.independence.desc': 'Święto państwowe obchodzone 11 listopada dla upamiętnienia odzyskania przez Polskę niepodległości w 1918 roku.', 'holiday.pl.independence.url': 'https://pl.wikipedia.org/wiki/Narodowe_Święto_Niepodległości',
+    'holiday.pl.army.name': 'Święto Wojska Polskiego', 'holiday.pl.army.desc': 'Święto obchodzone 15 sierpnia w rocznicę zwycięskiej Bitwy Warszawskiej z 1920 roku.', 'holiday.pl.army.url': 'https://pl.wikipedia.org/wiki/Święto_Wojska_Polskiego',
+    'holiday.uk.george.name': 'Dzień Św. Jerzego', 'holiday.uk.george.desc': 'Dzień Świętego Jerzego, patrona Anglii, obchodzony 23 kwietnia.', 'holiday.uk.george.url': 'https://en.wikipedia.org/wiki/Saint_George%27s_Day',
+    'holiday.uk.halloween.name': 'Halloween', 'holiday.uk.halloween.desc': 'Halloween obchodzone jest 31 października, w wigilię Wszystkich Świętych.', 'holiday.uk.halloween.url': 'https://en.wikipedia.org/wiki/Halloween',
+    'holiday.uk.fawkes.name': 'Guy Fawkes Night', 'holiday.uk.fawkes.desc': 'Noc Ognisk obchodzona 5 listopada upamiętnia udaremniony zamach na parlament angielski w 1605 roku.', 'holiday.uk.fawkes.url': 'https://en.wikipedia.org/wiki/Guy_Fawkes_Night',
+    'holiday.ua.independence.name': 'День Незалежності України', 'holiday.ua.independence.desc': 'Święto państwowe Ukrainy obchodzone 24 sierpnia na cześć proklamowania niepodległości w 1991 roku.', 'holiday.ua.independence.url': 'https://uk.wikipedia.org/wiki/День_незалежності_України',
+    'holiday.ua.defenders.name': 'День захисників і захисниць України', 'holiday.ua.defenders.desc': 'Święto obchodzone 14 października, czczące weteranów oraz Siły Zbrojne Ukrainy.', 'holiday.ua.defenders.url': 'https://uk.wikipedia.org/wiki/День_захисників_і_захисниць_України',
+    'holiday.ro.national.name': 'Ziua Națională a României', 'holiday.ro.national.desc': 'Dzień Zjednoczenia Rumunii (1 grudnia) upamiętniający zjednoczenie Transylwanii z Królestwem Rumunii w 1918 roku.', 'holiday.ro.national.url': 'https://ro.wikipedia.org/wiki/Ziua_Națională_a_României',
+    'holiday.ro.andrew.name': 'Ziua Sfântului Andrei', 'holiday.ro.andrew.desc': 'Dzień Świętego Andrzeja (30 listopada), patrona duchowego Rumunii.', 'holiday.ro.andrew.url': 'https://ro.wikipedia.org/wiki/Sfântul_Andrei'
+  },
+  en: {
+    'nav.categories': 'Categories', 'nav.promos': 'Promotions', 'nav.contact': 'Contact',
+    'hero.title1': 'Polish flavours', 'hero.title2': 'in Wallsend',
+    'hero.lead': 'Welcome to our Polish shop in Wallsend near Newcastle. We offer 1500+ products, fresh meats, cheeses, bread, pierogi, Polish medicines and vegetables. Free parking for up to 2 hours right next door.',
+    'hero.cta': 'See offers',
+    'hero.stat1': 'Products', 'hero.stat2': 'Free parking', 'hero.stat3': 'Days a week',
+    'cat.title': 'What you will find at FoodLand',
+    'cat.pieczywo': 'Bread', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Sweets', 'cat.warzywa': 'Vegetables', 'cat.wedliny': 'Cold Cuts', 'cat.napoje': 'Drinks',
+    'contact.title': 'Contact', 'contact.address': 'Address', 'contact.phone': 'Phone', 'contact.facebook': 'Visit our page',
+    'map.route': '🚗 Get directions to the shop',
+    'promo.title': 'Current promotions', 
+    'promo.zoom.on': 'Magnifier: On',
+    'promo.zoom.off': 'Magnifier: Off',
+    'refer.title': 'Recommend us to a friend', 'refer.desc': 'Enter your friend\'s e-mail – we will send them a link to our site.', 'refer.send': 'Recommend',
+    'refer.emailPlaceholder': 'friend@email.com',
+    'footer.rights': 'All rights reserved.',
+    'admin.login.title': 'Admin Panel', 'admin.login.user': 'Login', 'admin.login.pass': 'Password', 'admin.login.err': 'Invalid credentials.', 'admin.login.btn': 'Log in', 'admin.login.cancel': 'Cancel',
+    'admin.login.forgot': 'Forgot password',
+    'admin.forgot.title': 'Password recovery', 'admin.forgot.desc': 'Enter the saved administrator e-mail. We will send the current login and password to it.', 'admin.forgot.email': 'admin@email.com', 'admin.forgot.send': 'Send', 'admin.forgot.cancel': 'Cancel',
+    'admin.panel.title': 'Admin Panel', 'admin.tab.texts': 'Texts', 'admin.tab.themes': 'Themes', 'admin.tab.stats': 'Stats', 'admin.tab.html': 'HTML Code', 'admin.tab.images': 'Images', 'admin.tab.security': 'Security',
+    'admin.section.lang': 'Edit Language', 'admin.texts.info': 'Editing applies to the selected language. After saving, text will be updated across all languages.',
+    'admin.section.stats': 'Stats', 'admin.stats.1': 'Stat 1', 'admin.stats.2': 'Stat 2', 'admin.stats.3': 'Stat 3',
+    'admin.section.maintexts': 'Main texts', 'admin.section.contact': 'Contact Data', 'admin.contact.address': 'Address', 'admin.contact.phone': 'Phone',
+    'admin.section.themes': 'Themes', 'admin.section.layout': 'Layout & Effects', 'admin.layout.title': 'Title size', 'admin.layout.blur': 'Blur effect', 'admin.layout.sticky': 'Section box size (padding)',
+    'admin.stats.title': 'Traffic Stats', 'admin.stats.footer': 'Data saved locally.',
+    'admin.commit': 'Commit changes',
+    'admin.images.section': 'Image management', 'admin.images.group': 'Image group', 'admin.images.add': 'Add new image', 'admin.images.file': 'File (jpg/png/webp)', 'admin.images.name': 'Name / caption', 'admin.images.addBtn': 'Add image',
+    'admin.images.effects': '3D effects (global)', 'admin.images.tilt': 'Tilt', 'admin.images.depth': 'Depth (perspective)', 'admin.images.rotate': 'Rotate on hover',
+    'admin.images.layout': 'Category grid layout', 'admin.images.cols': 'Min. column width (px)', 'admin.images.ratio': 'Tile aspect ratio',
+    'admin.sec.title': 'Administrator credentials', 'admin.sec.login': 'Login', 'admin.sec.pass': 'New password', 'admin.sec.email': 'Administrator e-mail address', 'admin.sec.save': 'Save credentials', 'admin.sec.sendMail': 'Send new password to e-mail', 'admin.sec.info': 'Note: data is stored in browser localStorage. E-mail is sent via your mail client (mailto).',
+    'holiday.upcoming': 'Upcoming: {name} in {days} days',
+    'holiday.days': 'days',
+    'holiday.pl.constitution.name': 'Constitution Day', 'holiday.pl.constitution.desc': 'Polish national holiday commemorating the adoption of the Constitution of 3 May 1791.', 'holiday.pl.constitution.url': 'https://en.wikipedia.org/wiki/Constitution_of_3_May_1791',
+    'holiday.pl.independence.name': 'Independence Day', 'holiday.pl.independence.desc': 'National holiday celebrated on 11 November to mark Poland regaining independence in 1918.', 'holiday.pl.independence.url': 'https://en.wikipedia.org/wiki/National_Independence_Day_(Poland)',
+    'holiday.pl.army.name': 'Armed Forces Day', 'holiday.pl.army.desc': 'Polish Armed Forces Day, held on 15 August, commemorates the victorious Battle of Warsaw of 1920.', 'holiday.pl.army.url': 'https://en.wikipedia.org/wiki/Armed_Forces_Day_(Poland)',
+    'holiday.uk.george.name': 'St. George\'s Day', 'holiday.uk.george.desc': 'St George’s Day, honouring England’s patron saint, is celebrated on 23 April.', 'holiday.uk.george.url': 'https://en.wikipedia.org/wiki/Saint_George%27s_Day',
+    'holiday.uk.halloween.name': 'Halloween', 'holiday.uk.halloween.desc': 'Halloween is celebrated on 31 October, the eve of All Saints’ Day.', 'holiday.uk.halloween.url': 'https://en.wikipedia.org/wiki/Halloween',
+    'holiday.uk.fawkes.name': 'Guy Fawkes Night', 'holiday.uk.fawkes.desc': 'Bonfire Night, observed on 5 November, commemorates the failed Gunpowder Plot of 1605.', 'holiday.uk.fawkes.url': 'https://en.wikipedia.org/wiki/Guy_Fawkes_Night',
+    'holiday.ua.independence.name': 'Independence Day of Ukraine', 'holiday.ua.independence.desc': 'Ukraine’s national holiday celebrated on 24 August, marking the declaration of independence in 1991.', 'holiday.ua.independence.url': 'https://en.wikipedia.org/wiki/Independence_Day_of_Ukraine',
+    'holiday.ua.defenders.name': 'Defenders Day of Ukraine', 'holiday.ua.defenders.desc': 'Defenders Day of Ukraine, celebrated on 14 October, honours veterans and the Armed Forces of Ukraine.', 'holiday.ua.defenders.url': 'https://en.wikipedia.org/wiki/Defenders_Day_of_Ukraine',
+    'holiday.ro.national.name': 'Great Union Day', 'holiday.ro.national.desc': 'Romania’s national day, celebrated on 1 December.', 'holiday.ro.national.url': 'https://en.wikipedia.org/wiki/Great_Union_Day',
+    'holiday.ro.andrew.name': 'St. Andrew\'s Day', 'holiday.ro.andrew.desc': 'St Andrew’s Day, celebrated on 30 November.', 'holiday.ro.andrew.url': 'https://en.wikipedia.org/wiki/Saint_Andrew%27s_Day'
+  },
+  uk: {
+    'nav.categories': 'Категорії', 'nav.promos': 'Акції', 'nav.contact': 'Контакти',
+    'hero.title1': 'Польські смаки', 'hero.title2': 'у Волсенді',
+    'hero.lead': 'Ласкаво просимо до нашого польського магазину в Волсенді поблизу Ньюкасла. У нас понад 1500 продуктів, свіжі ковбаси, сири, хліб, вареники, польські ліки та овочі.',
+    'hero.cta': 'Переглянути пропозиції',
+    'hero.stat1': 'Продуктів', 'hero.stat2': 'Безкоштовна парковка', 'hero.stat3': 'Днів на тиждень',
+    'cat.title': 'Що ви знайдете у FoodLand',
+    'cat.pieczywo': 'Хліб', 'cat.pierogi': 'Вареники', 'cat.slodycze': 'Солодощі', 'cat.warzywa': 'Овочі', 'cat.wedliny': 'Ковбаси', 'cat.napoje': 'Напої',
+    'contact.title': 'Контакти', 'contact.address': 'Адреса', 'contact.phone': 'Телефон', 'contact.facebook': 'Відвідайте нашу сторінку',
+    'map.route': '🚗 Прокласти маршрут до магазину',
+    'promo.title': 'Поточні акції', 
+    'promo.zoom.on': 'Лупа: Увімкнена',
+    'promo.zoom.off': 'Лупа: Вимкнена',
+    'refer.title': 'Порадьте нас друзям', 'refer.desc': 'Введіть e-mail друга – ми надішлемо йому посилання на наш сайт.', 'refer.send': 'Порадити',
+    'refer.emailPlaceholder': 'друг@email.com',
+    'footer.rights': 'Усі права захищені.',
+    'admin.login.title': 'Панель адміністратора', 'admin.login.user': 'Логін', 'admin.login.pass': 'Пароль', 'admin.login.err': 'Неправильні дані.', 'admin.login.btn': 'Увійти', 'admin.login.cancel': 'Скасувати',
+    'admin.login.forgot': 'Забув пароль',
+    'admin.forgot.title': 'Відновлення пароля', 'admin.forgot.desc': 'Введіть збережену електронну адресу адміністратора. Ми надішлемо на неї поточний логін і пароль.', 'admin.forgot.email': 'admin@email.com', 'admin.forgot.send': 'Надіслати', 'admin.forgot.cancel': 'Скасувати',
+    'admin.panel.title': 'Панель адміністратора', 'admin.tab.texts': 'Тексти', 'admin.tab.themes': 'Теми', 'admin.tab.stats': 'Статистика', 'admin.tab.html': 'Код HTML', 'admin.tab.images': 'Зображення', 'admin.tab.security': 'Безпека',
+    'admin.section.lang': 'Мова редагування', 'admin.texts.info': 'Редагування стосується вибраної мови.',
+    'admin.section.stats': 'Статистика', 'admin.stats.1': 'Стат 1', 'admin.stats.2': 'Стат 2', 'admin.stats.3': 'Стат 3',
+    'admin.section.maintexts': 'Головні тексти', 'admin.section.contact': 'Контактні дані', 'admin.contact.address': 'Адреса', 'admin.contact.phone': 'Телефон',
+    'admin.section.themes': 'Теми', 'admin.section.layout': 'Макет і ефекти', 'admin.layout.title': 'Розмір заголовків', 'admin.layout.blur': 'Розмиття фону', 'admin.layout.sticky': 'Розмір вікон секцій (padding)',
+    'admin.stats.title': 'Статистика відвідувань', 'admin.stats.footer': 'Дані зберігаються локально.',
+    'admin.commit': 'Зберегти зміни',
+    'admin.images.section': 'Керування зображеннями', 'admin.images.group': 'Група зображень', 'admin.images.add': 'Додати нове зображення', 'admin.images.file': 'Файл (jpg/png/webp)', 'admin.images.name': 'Назва / підпис', 'admin.images.addBtn': 'Додати зображення',
+    'admin.images.effects': '3D-ефекти (глобальні)', 'admin.images.tilt': 'Нахил (tilt)', 'admin.images.depth': 'Глибина (perspective)', 'admin.images.rotate': 'Обертання при наведенні',
+    'admin.images.layout': 'Макет сітки категорій', 'admin.images.cols': 'Мін. ширина колонки (px)', 'admin.images.ratio': 'Пропорції плитки',
+    'admin.sec.title': 'Дані для входу адміністратора', 'admin.sec.login': 'Логін', 'admin.sec.pass': 'Новий пароль', 'admin.sec.email': 'Електронна адреса адміністратора', 'admin.sec.save': 'Зберегти дані', 'admin.sec.sendMail': 'Надіслати новий пароль на e-mail', 'admin.sec.info': 'Увага: дані зберігаються в localStorage браузера. E-mail надсилається через поштовий клієнт (mailto).',
+    'holiday.upcoming': 'Наближається: {name} через {days} днів',
+    'holiday.days': 'днів',
+    'holiday.pl.constitution.name': 'День Конституції Польщі', 'holiday.pl.constitution.desc': 'Національне свято Польщі на честь ухвалення Конституції 3 травня 1791 року.', 'holiday.pl.constitution.url': 'https://uk.wikipedia.org/wiki/Конституція_3_травня_1791',
+    'holiday.pl.independence.name': 'День Незалежності Польщі', 'holiday.pl.independence.desc': 'Державне свято, що відзначається 11 листопада.', 'holiday.pl.independence.url': 'https://uk.wikipedia.org/wiki/День_незалежності_Польщі',
+    'holiday.pl.army.name': 'День Війська Польського', 'holiday.pl.army.desc': 'Свято, що відзначається 15 серпня.', 'holiday.pl.army.url': 'https://uk.wikipedia.org/wiki/День_Війська_Польського',
+    'holiday.uk.george.name': 'День Святого Георгія', 'holiday.uk.george.desc': 'День Святого Георгія, покровителя Англії, відзначається 23 квітня.', 'holiday.uk.george.url': 'https://uk.wikipedia.org/wiki/День_Святого_Георгія',
+    'holiday.uk.halloween.name': 'Хелловін', 'holiday.uk.halloween.desc': 'Хелловін відзначається 31 жовтня.', 'holiday.uk.halloween.url': 'https://uk.wikipedia.org/wiki/Хелловін',
+    'holiday.uk.fawkes.name': 'Ніч Гая Фокса', 'holiday.uk.fawkes.desc': 'Ніч багать 5 листопада.', 'holiday.uk.fawkes.url': 'https://uk.wikipedia.org/wiki/Ніч_Гая_Фокса',
+    'holiday.ua.independence.name': 'День Незалежності України', 'holiday.ua.independence.desc': 'Державне свято України, що відзначається 24 серпня.', 'holiday.ua.independence.url': 'https://uk.wikipedia.org/wiki/День_незалежності_України',
+    'holiday.ua.defenders.name': 'День захисників і захисниць України', 'holiday.ua.defenders.desc': 'Свято, що відзначається 14 жовтня.', 'holiday.ua.defenders.url': 'https://uk.wikipedia.org/wiki/День_захисників_і_захисниць_України',
+    'holiday.ro.national.name': 'День об\'єднання Румунії', 'holiday.ro.national.desc': 'Національний день Румунії, що відзначається 1 грудня.', 'holiday.ro.national.url': 'https://uk.wikipedia.org/wiki/День_об%27єднання_Румунії',
+    'holiday.ro.andrew.name': 'День Святого Андрія', 'holiday.ro.andrew.desc': 'День Святого Андрія, що відзначається 30 листопада.', 'holiday.ro.andrew.url': 'https://uk.wikipedia.org/wiki/День_Святого_Андрія'
+  },
+  ro: {
+    'nav.categories': 'Categorii', 'nav.promos': 'Promoții', 'nav.contact': 'Contact',
+    'hero.title1': 'Arome poloneze', 'hero.title2': 'în Wallsend',
+    'hero.lead': 'Vă invităm la magazinul nostru polonez din Wallsend lângă Newcastle. Oferim peste 1500 de produse, cârnați proaspeți, brânzeturi, pâine, pierogi, medicamente poloneze și legume.',
+    'hero.cta': 'Vezi ofertele',
+    'hero.stat1': 'Produse', 'hero.stat2': 'Parcare gratuită', 'hero.stat3': 'Zile pe săptămână',
+    'cat.title': 'Ce veți găsi la FoodLand',
+    'cat.pieczywo': 'Pâine', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Dulciuri', 'cat.warzywa': 'Legume', 'cat.wedliny': 'Mezeluri', 'cat.napoje': 'Băuturi',
+    'contact.title': 'Contact', 'contact.address': 'Adresă', 'contact.phone': 'Telefon', 'contact.facebook': 'Vizitați pagina noastră',
+    'map.route': '🚗 Obține indicații către magazin',
+    'promo.title': 'Promoții actuale', 
+    'promo.zoom.on': 'Lupă: Pornită',
+    'promo.zoom.off': 'Lupă: Oprită',
+    'refer.title': 'Recomandă-ne unui prieten', 'refer.desc': 'Introdu e-mailul prietenului – îi vom trimite un link către site-ul nostru.', 'refer.send': 'Recomandă',
+    'refer.emailPlaceholder': 'prieten@email.com',
+    'footer.rights': 'Toate drepturile rezervate.',
+    'admin.login.title': 'Panou Administrator', 'admin.login.user': 'Login', 'admin.login.pass': 'Parolă', 'admin.login.err': 'Date incorecte.', 'admin.login.btn': 'Conectare', 'admin.login.cancel': 'Anulare',
+    'admin.login.forgot': 'Am uitat parola',
+    'admin.forgot.title': 'Recuperare parolă', 'admin.forgot.desc': 'Introdu adresa de e-mail salvată a administratorului. Vom trimite loginul și parola actuală.', 'admin.forgot.email': 'admin@email.com', 'admin.forgot.send': 'Trimite', 'admin.forgot.cancel': 'Anulare',
+    'admin.panel.title': 'Panou Administrator', 'admin.tab.texts': 'Texte', 'admin.tab.themes': 'Teme', 'admin.tab.stats': 'Statistici', 'admin.tab.html': 'Cod HTML', 'admin.tab.images': 'Imagini', 'admin.tab.security': 'Securitate',
+    'admin.section.lang': 'Limba de editare', 'admin.texts.info': 'Editarea se aplică limbii selectate.',
+    'admin.section.stats': 'Statistici', 'admin.stats.1': 'Stat 1', 'admin.stats.2': 'Stat 2', 'admin.stats.3': 'Stat 3',
+    'admin.section.maintexts': 'Texte principale', 'admin.section.contact': 'Date de contact', 'admin.contact.address': 'Adresă', 'admin.contact.phone': 'Telefon',
+    'admin.section.themes': 'Teme', 'admin.section.layout': 'Aspect și efecte', 'admin.layout.title': 'Mărime titluri', 'admin.layout.blur': 'Efect blur', 'admin.layout.sticky': 'Mărime casete secțiuni (padding)',
+    'admin.stats.title': 'Statistici trafic', 'admin.stats.footer': 'Datele sunt salvate local.',
+    'admin.commit': 'Salvează modificările',
+    'admin.images.section': 'Gestionare imagini', 'admin.images.group': 'Grup de imagini', 'admin.images.add': 'Adaugă imagine nouă', 'admin.images.file': 'Fișier (jpg/png/webp)', 'admin.images.name': 'Nume / legendă', 'admin.images.addBtn': 'Adaugă imagine',
+    'admin.images.effects': 'Efecte 3D (globale)', 'admin.images.tilt': 'Înclinare (tilt)', 'admin.images.depth': 'Adâncime (perspective)', 'admin.images.rotate': 'Rotire la hover',
+    'admin.images.layout': 'Aspect grilă categorii', 'admin.images.cols': 'Lățime min. coloană (px)', 'admin.images.ratio': 'Proporții dale',
+    'admin.sec.title': 'Date de autentificare administrator', 'admin.sec.login': 'Login', 'admin.sec.pass': 'Parolă nouă', 'admin.sec.email': 'Adresă e-mail administrator', 'admin.sec.save': 'Salvează datele', 'admin.sec.sendMail': 'Trimite parola nouă pe e-mail', 'admin.sec.info': 'Notă: datele sunt stocate în localStorage. E-mailul este trimis prin clientul poștal (mailto).',
+    'holiday.upcoming': 'Urmează: {name} în {days} zile',
+    'holiday.days': 'zile',
+    'holiday.pl.constitution.name': 'Ziua Constituției Poloniei', 'holiday.pl.constitution.desc': 'Sărbătoare națională a Poloniei care comemorează adoptarea Constituției din 3 mai 1791.', 'holiday.pl.constitution.url': 'https://ro.wikipedia.org/wiki/Constituția_din_3_mai_1791',
+    'holiday.pl.independence.name': 'Ziua Independenței Poloniei', 'holiday.pl.independence.desc': 'Sărbătoare națională celebrată pe 11 noiembrie.', 'holiday.pl.independence.url': 'https://ro.wikipedia.org/wiki/Ziua_Independenței_Poloniei',
+    'holiday.pl.army.name': 'Ziua Armatei Poloneze', 'holiday.pl.army.desc': 'Ziua Armatei Poloneze, sărbătorită pe 15 august.', 'holiday.pl.army.url': 'https://ro.wikipedia.org/wiki/Ziua_Armatei_Poloneze',
+    'holiday.uk.george.name': 'Ziua Sfântului Gheorghe', 'holiday.uk.george.desc': 'Ziua Sfântului Gheorghe, patronul Angliei, este sărbătorită pe 23 aprilie.', 'holiday.uk.george.url': 'https://ro.wikipedia.org/wiki/Ziua_Sfântului_Gheorghe',
+    'holiday.uk.halloween.name': 'Halloween', 'holiday.uk.halloween.desc': 'Halloween este sărbătorit pe 31 octombrie.', 'holiday.uk.halloween.url': 'https://ro.wikipedia.org/wiki/Halloween',
+    'holiday.uk.fawkes.name': 'Noaptea lui Guy Fawkes', 'holiday.uk.fawkes.desc': 'Noaptea Focurilor, pe 5 noiembrie.', 'holiday.uk.fawkes.url': 'https://ro.wikipedia.org/wiki/Noaptea_lui_Guy_Fawkes',
+    'holiday.ua.independence.name': 'Ziua Independenței Ucrainei', 'holiday.ua.independence.desc': 'Sărbătoare națională a Ucrainei, celebrată pe 24 august.', 'holiday.ua.independence.url': 'https://ro.wikipedia.org/wiki/Ziua_Independenței_Ucrainei',
+    'holiday.ua.defenders.name': 'Ziua Apărătorilor Ucrainei', 'holiday.ua.defenders.desc': 'Ziua Apărătorilor Ucrainei, sărbătorită pe 14 octombrie.', 'holiday.ua.defenders.url': 'https://ro.wikipedia.org/wiki/Ziua_Apărătorilor_Ucrainei',
+    'holiday.ro.national.name': 'Ziua Națională a României', 'holiday.ro.national.desc': 'Ziua Națională a României, sărbătorită pe 1 decembrie.', 'holiday.ro.national.url': 'https://ro.wikipedia.org/wiki/Ziua_Națională_a_României',
+    'holiday.ro.andrew.name': 'Ziua Sfântului Andrei', 'holiday.ro.andrew.desc': 'Ziua Sfântului Andrei, sărbătorită pe 30 noiembrie.', 'holiday.ro.andrew.url': 'https://ro.wikipedia.org/wiki/Sfântul_Andrei'
+  }
+};
+
+const BASE_TRANSLATIONS = JSON.parse(JSON.stringify(translations));
+
+/* ===== SŁOWNIK KATEGORII ===== */
+const CATEGORY_DICTIONARY = [
+  { pl: 'Pieczywo', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
+  { pl: 'Pierogi', en: 'Pierogi', uk: 'Вареники', ro: 'Pierogi' },
+  { pl: 'Słodycze', en: 'Sweets', uk: 'Солодощі', ro: 'Dulciuri' },
+  { pl: 'Warzywa', en: 'Vegetables', uk: 'Овочі', ro: 'Legume' },
+  { pl: 'Wędliny', en: 'Cold Cuts', uk: 'Ковбаси', ro: 'Mezeluri' },
+  { pl: 'Napoje', en: 'Drinks', uk: 'Напої', ro: 'Băuturi' },
+  { pl: 'Nabiał', en: 'Dairy', uk: 'Молочне', ro: 'Lactate' },
+  { pl: 'Sery', en: 'Cheeses', uk: 'Сири', ro: 'Brânzeturi' },
+  { pl: 'Mięso', en: 'Meat', uk: 'М\'ясо', ro: 'Carne' },
+  { pl: 'Ryby', en: 'Fish', uk: 'Риба', ro: 'Pește' },
+  { pl: 'Owoce', en: 'Fruits', uk: 'Фрукти', ro: 'Fructe' },
+  { pl: 'Mrożonki', en: 'Frozen Food', uk: 'Заморозка', ro: 'Congelate' },
+  { pl: 'Przyprawy', en: 'Spices', uk: 'Спеції', ro: 'Condimente' },
+  { pl: 'Kawa', en: 'Coffee', uk: 'Кава', ro: 'Cafea' },
+  { pl: 'Herbata', en: 'Tea', uk: 'Чай', ro: 'Ceai' },
+  { pl: 'Leki', en: 'Medicines', uk: 'Ліки', ro: 'Medicamente' },
+  { pl: 'Kosmetyki', en: 'Cosmetics', uk: 'Косметика', ro: 'Cosmetice' },
+  { pl: 'Chemia', en: 'Household', uk: 'Побутова хімія', ro: 'Produse casnice' },
+  { pl: 'Dla dzieci', en: 'For Kids', uk: 'Для дітей', ro: 'Pentru copii' },
+  { pl: 'Zabawki', en: 'Toys', uk: 'Іграшки', ro: 'Jucării' },
+  { pl: 'Piekarnia', en: 'Bakery', uk: 'Пекарня', ro: 'Brutărie' },
+  { pl: 'Garmażeria', en: 'Deli', uk: 'Гастрономія', ro: 'Gastronomie' },
+  { pl: 'Ciasta', en: 'Cakes', uk: 'Торти', ro: 'Torturi' },
+  { pl: 'Ciastka', en: 'Cookies', uk: 'Печиво', ro: 'Biscuiți' },
+  { pl: 'Chleb', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
+  { pl: 'Alkohole', en: 'Alcohol', uk: 'Алкоголь', ro: 'Alcool' },
+  { pl: 'Makarony', en: 'Pasta', uk: 'Макарони', ro: 'Paste' },
+  { pl: 'Ryż', en: 'Rice', uk: 'Рис', ro: 'Orez' },
+  { pl: 'Konserwy', en: 'Canned Food', uk: 'Консерви', ro: 'Conserve' },
+  { pl: 'Sosy', en: 'Sauces', uk: 'Соуси', ro: 'Sosuri' },
+  { pl: 'Przekąski', en: 'Snacks', uk: 'Снеки', ro: 'Gustări' },
+  { pl: 'Płatki', en: 'Cereals', uk: 'Пластівці', ro: 'Cereale' },
+  { pl: 'Miód', en: 'Honey', uk: 'Мед', ro: 'Miere' },
+  { pl: 'Dżemy', en: 'Jams', uk: 'Джеми', ro: 'Dulcețuri' },
+  { pl: 'Oleje', en: 'Oils', uk: 'Олії', ro: 'Uleiuri' },
+  { pl: 'Octy', en: 'Vinegars', uk: 'Оцти', ro: 'Oțeturi' },
+  { pl: 'Wody', en: 'Waters', uk: 'Води', ro: 'Ape' },
+  { pl: 'Soki', en: 'Juices', uk: 'Соки', ro: 'Sucuri' },
+  { pl: 'Piwo', en: 'Beer', uk: 'Пиво', ro: 'Bere' },
+  { pl: 'Wino', en: 'Wine', uk: 'Вино', ro: 'Vin' },
+  { pl: 'Wódka', en: 'Vodka', uk: 'Горілка', ro: 'Vodcă' }
+];
+
+function translateCategoryName(rawName, lang) {
+  if (!rawName) return '';
+  const dictEntry = CATEGORY_DICTIONARY.find(
+    d => d.pl.toLowerCase() === rawName.toLowerCase().trim()
+  );
+  if (dictEntry && dictEntry[lang]) return dictEntry[lang];
+  return rawName;
+}
+
+if(!localStorage.getItem('foodland_v9_reset')) {
+    localStorage.setItem('foodland_v9_reset', 'true');
+}
+
+const DEFAULT_SETTINGS = {
+  theme: {'--bg-page':'#fcfaf8','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'rgba(255,255,255,0.95)','--text-main':'#2a2a2a','--btn-bg':'#d0021b'},
+  layout: {
+    '--section-title-size':'2.6rem', 
+    '--glass-blur':'0px', 
+    '--sticky-header-padding':'1.5rem 2.5rem',
+    '--header-font-size':'0.95rem',
+    '--header-height':'80px'
+  },
+  contactData: { address: '145 High Street East, Wallsend', phone: '+44 1234 567 890' },
+  overrides: {}, statOverrides: {},
+  credentials: { login: 'admin', password: '123', email: '' },
+  themeName: 'default', themeMode: 'light',
+  themeFilters: {},
+  reportEmail: '',
+  images: { kategorie: [], promocje: [], event: [], logo: [] },
+  imageLayout: { cols: 250, ratio: '1/1' },
+  imagesInitialized: false
+};
+const STORAGE_KEY = 'foodland:admin';
+let adminState = loadAdmin();
+let sessionState = null;
+let isLogged = false;
+let currentLang = 'pl';
+let editLang = 'pl';
+
+/* FIX: Liczniki wersji zapobiegające duplikatom przy asynchronicznym renderowaniu */
+let renderCategoriesVersion = 0;
+let renderPromosVersion = 0;
+let renderEventVersion = 0;
+let renderLogoVersion = 0;
+
+/* ===== INDEXED DB DLA OBRAZÓW ===== */
+let db;
+const DB_NAME = 'FoodLandDB';
+const DB_VERSION = 1;
+
+function initDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('images')) {
+        db.createObjectStore('images', { keyPath: 'id' });
+      }
+    };
+    req.onsuccess = e => { db = e.target.result; resolve(); };
+    req.onerror = e => reject(e.target.error);
+  });
+}
+
+function getImageFromDB(id) {
+  return new Promise((resolve, reject) => {
+    if (!db) return resolve(null);
+    const tx = db.transaction('images', 'readonly');
+    const store = tx.objectStore('images');
+    const req = store.get(id);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+function saveImageToDB(id, blob) {
+  return new Promise((resolve, reject) => {
+    if (!db) return reject('DB not ready');
+    const tx = db.transaction('images', 'readwrite');
+    const store = tx.objectStore('images');
+    const req = store.put({ id, blob });
+    req.onsuccess = () => resolve();
+    req.onerror = () => reject(req.error);
+  });
+}
+
+function deleteImageFromDB(id) {
+  return new Promise((resolve, reject) => {
+    if (!db) return reject('DB not ready');
+    const tx = db.transaction('images', 'readwrite');
+    const store = tx.objectStore('images');
+    const req = store.delete(id);
+    req.onsuccess = () => resolve();
+    req.onerror = () => reject(req.error);
+  });
+}
+
+function loadAdmin() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (!parsed.themeFilters) parsed.themeFilters = {};
+      if (!parsed.reportEmail) parsed.reportEmail = '';
+      if (!parsed.images) parsed.images = { kategorie: [], promocje: [], event: [], logo: [] };
+      if (!parsed.imageLayout) parsed.imageLayout = { cols: 250, ratio: '1/1' };
+      if (!parsed.credentials) parsed.credentials = { login: 'admin', password: '123', email: '' };
+      if (parsed.credentials.email === undefined) parsed.credentials.email = '';
+      if (!parsed.layout) parsed.layout = {};
+      if (!parsed.layout['--sticky-header-padding']) parsed.layout['--sticky-header-padding'] = '1.5rem 2.5rem';
+      return { ...DEFAULT_SETTINGS, ...parsed };
+    }
+    return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+  } catch { return JSON.parse(JSON.stringify(DEFAULT_SETTINGS)); }
+}
+
+function saveAdminState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(adminState));
+  } catch (e) {
+    if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+      localStorage.removeItem('foodland_analytics');
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(adminState));
+      } catch (e2) {
+        alert('Błąd: Przekroczono limit pamięci przeglądarki. Nie można zapisać zmian.');
+      }
+    } else {
+      console.error('Błąd zapisu:', e);
+    }
+  }
+}
+
+/* ===== INICJALIZACJA GRUP ZDJĘĆ ===== */
+function initImageGroups() {
+  if (!adminState.images) adminState.images = { kategorie: [], promocje: [], event: [], logo: [] };
+
+  // FIX: Usuwamy stare wpisy, które mają pole `file` zamiast `fileId` (stary format ładujący z plików)
+  if (adminState.imagesInitialized) {
+    ['kategorie', 'promocje', 'event', 'logo'].forEach(group => {
+      if (Array.isArray(adminState.images[group])) {
+        adminState.images[group] = adminState.images[group].filter(item => {
+          if (item.file && !item.fileId) return false; // Usuń stare wpisy
+          return true;
+        });
+      }
+    });
+    saveAdminState();
+    return;
+  }
+
+  // Pierwsza inicjalizacja – dodajemy TYLKO puste placeholdery (bez ładowania plików)
+  const defaultKategorie = ['pieczywo','pierogi','slodycze','warzywa','wedliny','napoje'].map((n, i) => ({
+    id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
+  }));
+  if (!adminState.images.kategorie || adminState.images.kategorie.length === 0) {
+    adminState.images.kategorie = defaultKategorie;
+  }
+  if (!adminState.images.promocje || adminState.images.promocje.length === 0) {
+    adminState.images.promocje = [
+      { id: 'promo_gazetka_1', name: 'Gazetka 1', fileId: null, size: 100, order: 0, active: true },
+      { id: 'promo_gazetka_2', name: 'Gazetka 2', fileId: null, size: 100, order: 1, active: true }
+    ];
+  }
+  if (!adminState.images.event || adminState.images.event.length === 0) {
+    adminState.images.event = [{ id:'event_baner', name:'Baner eventowy', fileId: null, size:100, order:0, active: true }];
+  }
+  if (!adminState.images.logo || adminState.images.logo.length === 0) {
+    adminState.images.logo = [{ id:'logo', name:'Logo', fileId: null, size:100, order:0, active: true }];
+  }
+  adminState.imagesInitialized = true;
+  saveAdminState();
+}
+
+function translatePage(lang) {
+  if (!translations[lang]) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = translations[lang][key];
+    if (val !== undefined) el.innerHTML = val;
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const val = translations[lang][key];
+    if (val !== undefined) el.setAttribute('placeholder', val);
+  });
+}
+
+function applyOverrides(lang) {
+  if (BASE_TRANSLATIONS[lang]) {
+    translations[lang] = { ...BASE_TRANSLATIONS[lang] };
+  } else {
+    translations[lang] = {};
+  }
+  if (adminState.overrides && adminState.overrides[lang]) {
+    Object.keys(adminState.overrides[lang]).forEach(key => {
+      translations[lang][key] = adminState.overrides[lang][key];
+    });
+  }
+}
+function applyAllOverrides() { Object.keys(BASE_TRANSLATIONS).forEach(lang => applyOverrides(lang)); }
+
+function applyStats(lang) {
+  const base = {
+    pl:{v1:'1500+',l1:'Produktów',v2:'2h',l2:'Darmowy parking',v3:'7',l3:'Dni w tygodniu'},
+    en:{v1:'1500+',l1:'Products',v2:'2h',l2:'Free parking',v3:'7',l3:'Days a week'},
+    uk:{v1:'1500+',l1:'Продуктів',v2:'2h',l2:'Безкоштовна парковка',v3:'7',l3:'Днів на тиждень'},
+    ro:{v1:'1500+',l1:'Produse',v2:'2h',l2:'Parcare gratuită',v3:'7',l3:'Zile pe săptămână'}
+  };
+  
+  const plOverrides = adminState.statOverrides && adminState.statOverrides['pl'];
+  
+  let src = { ...base[lang] };
+  
+  if (plOverrides) {
+      if (plOverrides.v1 !== undefined) src.v1 = plOverrides.v1;
+      if (plOverrides.v2 !== undefined) src.v2 = plOverrides.v2;
+      if (plOverrides.v3 !== undefined) src.v3 = plOverrides.v3;
+  }
+
+  const langOverrides = adminState.statOverrides && adminState.statOverrides[lang];
+  if (langOverrides) {
+      if (langOverrides.l1 !== undefined) src.l1 = langOverrides.l1;
+      if (langOverrides.l2 !== undefined) src.l2 = langOverrides.l2;
+      if (langOverrides.l3 !== undefined) src.l3 = langOverrides.l3;
+  }
+
+  const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  set('stat1-val', src.v1); set('stat2-val', src.v2); set('stat3-val', src.v3);
+  set('stat1-label', src.l1); set('stat2-label', src.l2); set('stat3-label', src.l3);
+}
+
+function applyContactData() {
+  const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  set('contact-address-val', adminState.contactData.address);
+  set('contact-phone-val', adminState.contactData.phone);
+}
+
+let zoomEnabled = true;
+function updateZoomButtonLabel() {
+  const btn = document.getElementById('zoomToggleBtn');
+  if (!btn) return;
+  const key = zoomEnabled ? 'promo.zoom.on' : 'promo.zoom.off';
+  const val = translations[currentLang]?.[key];
+  if (val !== undefined) btn.textContent = val;
+}
+
+/* ===== MAPA ===== */
+const SHOP_ADDRESS = "145 High St E, Wallsend NE28 7RL, UK";
+
+function updateMapLanguage(lang) {
+  const iframe = document.getElementById('mapFrame');
+  if (iframe) {
+    iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(SHOP_ADDRESS)}&t=&z=15&ie=UTF8&iwloc=&output=embed&hl=${lang}`;
+  }
+}
+
+function showRouteOnMap(lang) {
+  const iframe = document.getElementById('mapFrame');
+  if (iframe) {
+    iframe.src = `https://maps.google.com/maps?saddr=My+Location&daddr=${encodeURIComponent(SHOP_ADDRESS)}&output=embed&hl=${lang}`;
+  }
+}
+
+/* ===== HOLIDAY BANNER ===== */
+function updateHolidayBanner() {
+  const wrapper = document.getElementById('holidayBannerWrapper');
+  const banner = document.getElementById('holidayBanner');
+  const dropdown = document.getElementById('holidayDropdown');
+  if (!wrapper || !banner || !dropdown) return;
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const currentYear = today.getFullYear();
+
+  let upcoming = [];
+
+  const addHoliday = (countryCode, countryName, dateStr, holidayKey) => {
+    const [month, day] = dateStr.split('-').map(Number);
+    let holidayDate = new Date(currentYear, month - 1, day);
+    if (holidayDate < today) holidayDate = new Date(currentYear + 1, month - 1, day);
+    const diffDays = Math.ceil(Math.abs(holidayDate - today) / (1000 * 60 * 60 * 24));
+    if (diffDays <= 30) {
+      upcoming.push({ countryCode, countryName, date: holidayDate, daysLeft: diffDays, key: holidayKey });
+    }
+  };
+
+  addHoliday('pl', 'Polska', '05-03', 'holiday.pl.constitution');
+  addHoliday('pl', 'Polska', '11-11', 'holiday.pl.independence');
+  addHoliday('pl', 'Polska', '08-15', 'holiday.pl.army');
+  addHoliday('uk', 'UK', '04-23', 'holiday.uk.george');
+  addHoliday('uk', 'UK', '10-31', 'holiday.uk.halloween');
+  addHoliday('uk', 'UK', '11-05', 'holiday.uk.fawkes');
+  addHoliday('ua', 'Ukraina', '08-24', 'holiday.ua.independence');
+  addHoliday('ua', 'Ukraina', '10-14', 'holiday.ua.defenders');
+  addHoliday('ro', 'Rumunia', '12-01', 'holiday.ro.national');
+  addHoliday('ro', 'Rumunia', '11-30', 'holiday.ro.andrew');
+
+  upcoming.sort((a, b) => a.daysLeft - b.daysLeft);
+
+  if (upcoming.length > 0) {
+    const next = upcoming[0];
+    const holidayName = translations[currentLang]?.[next.key + '.name'] || next.key;
+    const msgTemplate = translations[currentLang]?.['holiday.upcoming'] || 'Upcoming: {name} in {days} days.';
+    banner.textContent = msgTemplate.replace('{name}', holidayName).replace('{days}', next.daysLeft);
+    wrapper.style.display = 'flex';
+
+    const daysText = translations[currentLang]?.['holiday.days'] || 'dni';
+    const localeMap = { pl: 'pl-PL', en: 'en-GB', uk: 'uk-UA', ro: 'ro-RO' };
+    const dateLocale = localeMap[currentLang] || 'pl-PL';
+
+    dropdown.innerHTML = upcoming.map(h => {
+      const name = translations[currentLang]?.[h.key + '.name'] || h.key;
+      const desc = translations[currentLang]?.[h.key + '.desc'] || '';
+      const url = translations[currentLang]?.[h.key + '.url'] || '#';
+      let countryTranslated = h.countryName;
+      if (currentLang === 'en') countryTranslated = h.countryCode === 'pl' ? 'Poland' : (h.countryCode === 'ro' ? 'Romania' : (h.countryCode === 'uk' ? 'UK' : 'Ukraine'));
+      if (currentLang === 'uk') countryTranslated = h.countryCode === 'pl' ? 'Польща' : (h.countryCode === 'ro' ? 'Румунія' : (h.countryCode === 'uk' ? 'Велика Британія' : 'Україна'));
+      if (currentLang === 'ro') countryTranslated = h.countryCode === 'pl' ? 'Polonia' : (h.countryCode === 'ro' ? 'România' : (h.countryCode === 'uk' ? 'Marea Britanie' : 'Ucraina'));
+      
+      const dateStr = h.date.toLocaleDateString(dateLocale, { day: 'numeric', month: 'long', year: 'numeric' });
+      
+      return `
+        <div class="holiday-item" data-country="${h.countryCode}" tabindex="0" aria-label="${name}">
+          <div class="holiday-item-header">
+            <div class="holiday-name-wrap">
+              <span class="holiday-flag-badge" data-country="${h.countryCode}"></span>
+              <span>${name}</span>
+            </div>
+            <span class="holiday-days">${h.daysLeft} ${daysText}</span>
+            <span class="holiday-chevron" aria-hidden="true">▾</span>
+          </div>
+          <div class="holiday-item-desc">
+            <div>
+              <div class="holiday-date-line"><span>📅</span><span>${dateStr} · ${countryTranslated}</span></div>
+              <p>${desc}</p>
+              <a href="${url}" target="_blank" rel="noopener noreferrer" class="holiday-link">Dowiedz się więcej (${countryTranslated}) →</a>
+            </div>
+          </div>
+        </div>`; 
+    }).join('');
+  } else {
+    wrapper.style.display = 'none';
+  }
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  applyOverrides(lang);
+  translatePage(lang);
+  updateMapLanguage(lang);
+  updateHolidayBanner();
+  document.querySelectorAll('#lang button').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
+  applyStats(lang);
+  applyContactData();
+  updateZoomButtonLabel();
+  renderCategories(); 
+}
+document.querySelectorAll('#lang button').forEach(btn => btn.addEventListener('click', () => setLang(btn.dataset.lang)));
+
+/* ===== MOTYWY ===== */
+const THEMES = [
+  { id: 'default', name: 'Domyślny', light: {'--bg-page':'#fcfaf8','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'rgba(255,255,255,0.95)','--text-main':'#2a2a2a','--btn-bg':'#d0021b'}, medium: {'--bg-page':'#f5e6e8','--topbar-bg':'rgba(255,240,245,0.75)','--footer-bg':'rgba(255,240,245,0.95)','--text-main':'#2a2a2a','--btn-bg':'#d0021b'}, dark: {'--bg-page':'#1a1a1a','--topbar-bg':'rgba(30,30,30,0.75)','--footer-bg':'rgba(30,30,30,0.95)','--text-main':'#fcfaf8','--btn-bg':'#d0021b'} },
+  { id: 'christmas', name: 'Boże Narodzenie', light: {'--bg-page':'#f0f8f0','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'rgba(255,255,255,0.95)','--text-main':'#1a3a1a','--btn-bg':'#00843d'}, medium: {'--bg-page':'#d0e8d0','--topbar-bg':'rgba(240,255,240,0.75)','--footer-bg':'rgba(240,255,240,0.95)','--text-main':'#1a3a1a','--btn-bg':'#00843d'}, dark: {'--bg-page':'#0a1a0a','--topbar-bg':'rgba(20,40,20,0.75)','--footer-bg':'rgba(20,40,20,0.95)','--text-main':'#e0f0e0','--btn-bg':'#00a84d'} },
+  { id: 'easter', name: 'Wielkanoc', light: {'--bg-page':'#fdf5e6','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'rgba(255,255,255,0.95)','--text-main':'#4a3a2a','--btn-bg':'#d4a017'}, medium: {'--bg-page':'#f5e6c6','--topbar-bg':'rgba(255,250,240,0.75)','--footer-bg':'rgba(255,250,240,0.95)','--text-main':'#4a3a2a','--btn-bg':'#d4a017'}, dark: {'--bg-page':'#2a1a0a','--topbar-bg':'rgba(40,30,20,0.75)','--footer-bg':'rgba(40,30,20,0.95)','--text-main':'#f0e0d0','--btn-bg':'#e4b027'} },
+  { id: 'halloween', name: 'Halloween', light: {'--bg-page':'#fff5e6','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'rgba(255,255,255,0.95)','--text-main':'#2a1a0a','--btn-bg':'#ff6600'}, medium: {'--bg-page':'#ffe6cc','--topbar-bg':'rgba(255,245,235,0.75)','--footer-bg':'rgba(255,245,235,0.95)','--text-main':'#2a1a0a','--btn-bg':'#ff6600'}, dark: {'--bg-page':'#1a0a0a','--topbar-bg':'rgba(30,20,20,0.75)','--footer-bg':'rgba(30,20,20,0.95)','--text-main':'#f0e0d0','--btn-bg':'#ff8800'} },
+  { id: 'valentines', name: 'Walentynki', light: {'--bg-page':'#fff0f5','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'rgba(255,255,255,0.95)','--text-main':'#4a1a2a','--btn-bg':'#e91e63'}, medium: {'--bg-page':'#ffccdd','--topbar-bg':'rgba(255,240,245,0.75)','--footer-bg':'rgba(255,240,245,0.95)','--text-main':'#4a1a2a','--btn-bg':'#e91e63'}, dark: {'--bg-page':'#2a0a1a','--topbar-bg':'rgba(40,20,30,0.75)','--footer-bg':'rgba(40,20,30,0.95)','--text-main':'#f0d0e0','--btn-bg':'#f91e73'} },
+  { id: 'independence_pl', name: 'Dzień Niepodległości PL', light: {'--bg-page':'#f5f5f5','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#111','--btn-bg':'#d0021b'}, medium: {'--bg-page':'#e6e6e6','--topbar-bg':'rgba(245,245,245,0.75)','--footer-bg':'#f5f5f5','--text-main':'#111','--btn-bg':'#d0021b'}, dark: {'--bg-page':'#222','--topbar-bg':'rgba(51,51,51,0.75)','--footer-bg':'#333','--text-main':'#fff','--btn-bg':'#d0021b'} },
+  { id: 'independence_ro', name: 'Dzień Niepodległości RO', light: {'--bg-page':'#f0f8ff','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#002b5e','--btn-bg':'#ce1126'}, medium: {'--bg-page':'#d0e0f0','--topbar-bg':'rgba(240,248,255,0.75)','--footer-bg':'#f0f8ff','--text-main':'#002b5e','--btn-bg':'#ce1126'}, dark: {'--bg-page':'#001a3a','--topbar-bg':'rgba(0,43,94,0.75)','--footer-bg':'#002b5e','--text-main':'#f0f8ff','--btn-bg':'#ce1126'} },
+  { id: 'guy_fawkes', name: 'Guy Fawkes Night (UK)', light: {'--bg-page':'#fff8e6','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#333','--btn-bg':'#ff4500'}, medium: {'--bg-page':'#ffe6b3','--topbar-bg':'rgba(255,248,230,0.75)','--footer-bg':'#fff8e6','--text-main':'#333','--btn-bg':'#ff4500'}, dark: {'--bg-page':'#1a1a1a','--topbar-bg':'rgba(42,42,42,0.75)','--footer-bg':'#2a2a2a','--text-main':'#fff','--btn-bg':'#ff4500'} },
+  { id: 'st_andrew', name: 'Dzień Św. Andrzeja', light: {'--bg-page':'#f5f0ff','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#2a1a4a','--btn-bg':'#8a2be2'}, medium: {'--bg-page':'#e0d0ff','--topbar-bg':'rgba(245,240,255,0.75)','--footer-bg':'#f5f0ff','--text-main':'#2a1a4a','--btn-bg':'#8a2be2'}, dark: {'--bg-page':'#1a0a2a','--topbar-bg':'rgba(42,26,58,0.75)','--footer-bg':'#2a1a3a','--text-main':'#e0d0ff','--btn-bg':'#9a3be2'} },
+  { id: 'mothers_day', name: 'Dzień Matki', light: {'--bg-page':'#fff0f0','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#4a1a1a','--btn-bg':'#ff69b4'}, medium: {'--bg-page':'#ffd0e0','--topbar-bg':'rgba(255,240,240,0.75)','--footer-bg':'#fff0f0','--text-main':'#4a1a1a','--btn-bg':'#ff69b4'}, dark: {'--bg-page':'#2a0a0a','--topbar-bg':'rgba(58,26,26,0.75)','--footer-bg':'#3a1a1a','--text-main':'#ffd0e0','--btn-bg':'#ff79c4'} },
+  { id: 'fathers_day', name: 'Dzień Ojca', light: {'--bg-page':'#f0f4f8','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#1a2a3a','--btn-bg':'#4682b4'}, medium: {'--bg-page':'#d0e0f0','--topbar-bg':'rgba(240,244,248,0.75)','--footer-bg':'#f0f4f8','--text-main':'#1a2a3a','--btn-bg':'#4682b4'}, dark: {'--bg-page':'#0a1a2a','--topbar-bg':'rgba(26,42,58,0.75)','--footer-bg':'#1a2a3a','--text-main':'#d0e0f0','--btn-bg':'#5692c4'} },
+  { id: 'new_year', name: 'Nowy Rok', light: {'--bg-page':'#f5f5f5','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#333','--btn-bg':'#ffd700'}, medium: {'--bg-page':'#e0e0e0','--topbar-bg':'rgba(245,245,245,0.75)','--footer-bg':'#f5f5f5','--text-main':'#333','--btn-bg':'#ffd700'}, dark: {'--bg-page':'#111','--topbar-bg':'rgba(34,34,34,0.75)','--footer-bg':'#222','--text-main':'#fff','--btn-bg':'#ffd700'} },
+  { id: 'epiphany', name: 'Trzech Króli', light: {'--bg-page':'#fffaf0','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#4a3a1a','--btn-bg':'#b8860b'}, medium: {'--bg-page':'#f5e6c0','--topbar-bg':'rgba(255,250,240,0.75)','--footer-bg':'#fffaf0','--text-main':'#4a3a1a','--btn-bg':'#b8860b'}, dark: {'--bg-page':'#2a1a0a','--topbar-bg':'rgba(58,42,26,0.75)','--footer-bg':'#3a2a1a','--text-main':'#f5e6c0','--btn-bg':'#c8961b'} },
+  { id: 'corpus_christi', name: 'Boże Ciało', light: {'--bg-page':'#fff5f5','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#4a1a1a','--btn-bg':'#dc143c'}, medium: {'--bg-page':'#ffe0e0','--topbar-bg':'rgba(255,245,245,0.75)','--footer-bg':'#fff5f5','--text-main':'#4a1a1a','--btn-bg':'#dc143c'}, dark: {'--bg-page':'#2a0a0a','--topbar-bg':'rgba(58,26,26,0.75)','--footer-bg':'#3a1a1a','--text-main':'#ffe0e0','--btn-bg':'#ec245c'} },
+  { id: 'all_saints', name: 'Wszystkich Świętych', light: {'--bg-page':'#f0f0f0','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#333','--btn-bg':'#708090'}, medium: {'--bg-page':'#d0d0d0','--topbar-bg':'rgba(240,240,240,0.75)','--footer-bg':'#f0f0f0','--text-main':'#333','--btn-bg':'#708090'}, dark: {'--bg-page':'#1a1a1a','--topbar-bg':'rgba(42,42,42,0.75)','--footer-bg':'#2a2a2a','--text-main':'#f0f0f0','--btn-bg':'#8090a0'} },
+  { id: 'women_day', name: 'Dzień Kobiet', light: {'--bg-page':'#fff0f5','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#4a1a2a','--btn-bg':'#d0021b'}, medium: {'--bg-page':'#ffd0e0','--topbar-bg':'rgba(255,240,245,0.75)','--footer-bg':'#fff0f5','--text-main':'#4a1a2a','--btn-bg':'#d0021b'}, dark: {'--bg-page':'#2a0a1a','--topbar-bg':'rgba(58,26,42,0.75)','--footer-bg':'#3a1a2a','--text-main':'#ffd0e0','--btn-bg':'#e0022b'} },
+  { id: 'children_day', name: 'Dzień Dziecka', light: {'--bg-page':'#f0f8ff','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#1a2a3a','--btn-bg':'#00bfff'}, medium: {'--bg-page':'#d0e8ff','--topbar-bg':'rgba(240,248,255,0.75)','--footer-bg':'#f0f8ff','--text-main':'#1a2a3a','--btn-bg':'#00bfff'}, dark: {'--bg-page':'#0a1a2a','--topbar-bg':'rgba(26,42,58,0.75)','--footer-bg':'#1a2a3a','--text-main':'#d0e8ff','--btn-bg':'#10cfff'} },
+  { id: 'thanksgiving', name: 'Święto Dziękczynienia', light: {'--bg-page':'#fdf5e6','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#4a3a2a','--btn-bg':'#cd853f'}, medium: {'--bg-page':'#f5deb3','--topbar-bg':'rgba(253,245,230,0.75)','--footer-bg':'#fdf5e6','--text-main':'#4a3a2a','--btn-bg':'#cd853f'}, dark: {'--bg-page':'#2a1a0a','--topbar-bg':'rgba(58,42,26,0.75)','--footer-bg':'#3a2a1a','--text-main':'#f5deb3','--btn-bg':'#dd955f'} },
+  { id: 'labour_day', name: 'Święto Pracy', light: {'--bg-page':'#f5f5f5','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#333','--btn-bg':'#d0021b'}, medium: {'--bg-page':'#e0e0e0','--topbar-bg':'rgba(245,245,245,0.75)','--footer-bg':'#f5f5f5','--text-main':'#333','--btn-bg':'#d0021b'}, dark: {'--bg-page':'#111','--topbar-bg':'rgba(34,34,34,0.75)','--footer-bg':'#222','--text-main':'#fff','--btn-bg':'#e0022b'} },
+  { id: 'earth_day', name: 'Dzień Ziemi', light: {'--bg-page':'#f0fff0','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'#ffffff','--text-main':'#1a3a1a','--btn-bg':'#228b22'}, medium: {'--bg-page':'#d0ffd0','--topbar-bg':'rgba(240,255,240,0.75)','--footer-bg':'#f0fff0','--text-main':'#1a3a1a','--btn-bg':'#228b22'}, dark: {'--bg-page':'#0a1a0a','--topbar-bg':'rgba(26,42,26,0.75)','--footer-bg':'#1a2a1a','--text-main':'#d0ffd0','--btn-bg':'#329b32'} }
+];
+
+function getFilterKey(themeId, mode) { return `${themeId}__${mode}`; }
+
+function renderThemes() {
+  const container = document.getElementById('themeRows');
+  if(!container) return;
+  container.innerHTML = '';
+  THEMES.forEach(t => {
+    const isActive = adminState.themeName === t.id;
+    const div = document.createElement('div');
+    div.className = 'theme-row';
+    div.innerHTML = `
+      <span class="theme-label">${t.name}</span>
+      <button class="theme-mode-btn ${isActive && adminState.themeMode === 'light' ? 'active' : ''}" data-theme="${t.id}" data-mode="light">Jasny</button>
+      <button class="theme-mode-btn ${isActive && adminState.themeMode === 'medium' ? 'active' : ''}" data-theme="${t.id}" data-mode="medium">Średni</button>
+      <button class="theme-mode-btn ${isActive && adminState.themeMode === 'dark' ? 'active' : ''}" data-theme="${t.id}" data-mode="dark">Ciemny</button>
+      <div class="theme-sliders" data-theme="${t.id}" data-mode="${adminState.themeName===t.id?adminState.themeMode:'light'}"></div>
+    `;
+    container.appendChild(div);
+  });
+
+  container.querySelectorAll('.theme-sliders').forEach(box => {
+    const themeId = box.dataset.theme;
+    const mode = box.dataset.mode;
+    const key = getFilterKey(themeId, mode);
+    const f = (adminState.themeFilters && adminState.themeFilters[key]) || { saturate: 1, brightness: 1 };
+    box.innerHTML = `
+      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="${f.saturate}" data-f="saturate" data-key="${key}"><span>${f.saturate}</span></div>
+      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="${f.brightness}" data-f="brightness" data-key="${key}"><span>${f.brightness}</span></div>
+    `;
+  });
+
+  container.querySelectorAll('.theme-mode-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const id = e.target.dataset.theme;
+      const mode = e.target.dataset.mode;
+      applyTheme(id, mode);
+      renderThemes();
+    });
+  });
+
+  container.querySelectorAll('input[type=range]').forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      const f = e.target.dataset.f;
+      const key = e.target.dataset.key;
+      if (!adminState.themeFilters) adminState.themeFilters = {};
+      if (!adminState.themeFilters[key]) adminState.themeFilters[key] = { saturate: 1, brightness: 1 };
+      adminState.themeFilters[key][f] = parseFloat(e.target.value);
+      e.target.nextElementSibling.textContent = e.target.value;
+      applyTheme(adminState.themeName, adminState.themeMode);
+    });
+  });
+}
+
+function applyTheme(themeId, mode) {
+  const theme = THEMES.find(t => t.id === themeId);
+  if (!theme) return;
+  adminState.themeName = themeId;
+  adminState.themeMode = mode;
+  adminState.theme = theme[mode];
+  
+  document.documentElement.style.setProperty('--bg-page', adminState.theme['--bg-page']);
+  document.documentElement.style.setProperty('--topbar-bg', adminState.theme['--topbar-bg']);
+  document.documentElement.style.setProperty('--footer-bg', adminState.theme['--footer-bg']);
+  document.documentElement.style.setProperty('--text-main', adminState.theme['--text-main']);
+  document.documentElement.style.setProperty('--btn-bg', adminState.theme['--btn-bg']);
+
+  const key = getFilterKey(themeId, mode);
+  const f = (adminState.themeFilters && adminState.themeFilters[key]) || { saturate: 1, brightness: 1 };
+  
+  const mainContent = document.getElementById('mainContent');
+  if(mainContent) {
+      mainContent.style.setProperty('--theme-saturate', f.saturate);
+      mainContent.style.setProperty('--theme-brightness', f.brightness);
+  }
+}
+
+/* ===== ZDJĘCIA – WSPÓLNA LOGIKA ===== */
+function getGroupImages(group) {
+  if (!adminState.images) adminState.images = {};
+  return adminState.images[group] || [];
+}
+
+function saveGroupImages(group, list) {
+  if (!adminState.images) adminState.images = {};
+  adminState.images[group] = list;
+  adminState.imagesInitialized = true;
+  saveAdminState();
+}
+
+async function renderImageList() {
+  const groupSelect = document.getElementById('imgGroupSelect');
+  if (!groupSelect) return;
+  const group = groupSelect.value;
+  const list = document.getElementById('imgList');
+  if (!list) return;
+
+  const items = getGroupImages(group).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  if (!items.length) {
+    list.innerHTML = '<p style="font-size:0.75rem;color:#888;">Brak zdjęć w tej grupie. Dodaj pierwsze zdjęcie poniżej.</p>';
+    return;
+  }
+
+  list.innerHTML = '';
+  for (const item of items) {
+    const div = document.createElement('div');
+    div.className = 'img-item';
+
+    const isActive = item.active !== false;
+    let imgSrc = '';
+    
+    if (item.fileId) {
+       try {
+         const dbRecord = await getImageFromDB(item.fileId);
+         if (dbRecord && dbRecord.blob) {
+            imgSrc = URL.createObjectURL(dbRecord.blob);
+         }
+       } catch(e) {}
+    }
+
+    if (!imgSrc) {
+      imgSrc = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+    }
+
+    div.innerHTML = `
+      <img src="${imgSrc}" alt="${item.name}" onerror="this.style.opacity=0.2">
+      <div class="img-meta">
+        <strong>${item.name || 'Bez nazwy'}</strong>
+        <small>${item.fileId ? 'IndexedDB (Blob)' : 'Brak pliku'}</small>
+      </div>
+      <div class="toggle-switch">
+        <input type="checkbox" id="toggle_${item.id}" ${isActive ? 'checked' : ''}>
+        <label for="toggle_${item.id}" class="slider"></label>
+      </div>
+      <button class="btn-delete" title="Usuń zdjęcie">🗑️</button>
+    `;
+    list.appendChild(div);
+
+    const checkbox = div.querySelector('input[type="checkbox"]');
+    checkbox.addEventListener('change', (e) => {
+      const originalList = getGroupImages(group);
+      const originalItem = originalList.find(i => i.id === item.id);
+      if (originalItem) {
+        originalItem.active = e.target.checked;
+        saveGroupImages(group, originalList);
+      }
+      if (group === 'kategorie') renderCategories();
+      if (group === 'promocje') renderPromosSection();
+      if (group === 'event') renderEventBanner();
+      if (group === 'logo') renderLogo();
+    });
+
+    const deleteBtn = div.querySelector('.btn-delete');
+    deleteBtn.addEventListener('click', async () => {
+      if (confirm('Czy na pewno chcesz usunąć to zdjęcie?')) {
+        if (item.fileId) {
+           try { await deleteImageFromDB(item.fileId); } catch(e) { console.error(e); }
+        }
+        let originalList = getGroupImages(group).slice();
+        originalList = originalList.filter(i => i.id !== item.id);
+        originalList.forEach((el, idx) => { el.order = idx; });
+        saveGroupImages(group, originalList);
+        
+        renderImageList(); 
+        
+        if (group === 'kategorie') renderCategories();
+        if (group === 'promocje') renderPromosSection();
+        if (group === 'event') renderEventBanner();
+        if (group === 'logo') renderLogo();
+      }
+    });
+  }
+}
+
+async function addNewImage() {
+  const groupSelect = document.getElementById('imgGroupSelect');
+  if (!groupSelect) return;
+  const group = groupSelect.value;
+  const fileInput = document.getElementById('imgUpload');
+  const nameInput = document.getElementById('imgNewName');
+  const f = fileInput?.files[0];
+  if (!f) return alert('Wybierz plik zdjęcia.');
+  
+  let name = (nameInput?.value || '').trim();
+  if (!name) name = f.name.replace(/\.[^/.]+$/, '');
+  
+  const id = 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+  
+  try {
+    await saveImageToDB(id, f);
+    
+    const items = getGroupImages(group).slice();
+    items.push({
+      id: id,
+      fileId: id,
+      name: name,
+      size: 100,
+      order: items.length,
+      active: true
+    });
+    saveGroupImages(group, items);
+    
+    renderImageList();
+    
+    if (group === 'kategorie') renderCategories();
+    if (group === 'promocje') renderPromosSection();
+    if (group === 'event') renderEventBanner();
+    if (group === 'logo') renderLogo();
+
+    if (fileInput) fileInput.value = '';
+    if (nameInput) nameInput.value = '';
+  } catch(e) {
+    alert('Wystąpił błąd podczas zapisywania zdjęcia: ' + e);
+  }
+}
+
+function applyImageSettings() {
+  const lay = adminState.imageLayout || { cols: 250, ratio: '1/1' };
+  const grid = document.getElementById('catGrid');
+  if (grid) {
+    grid.style.gridTemplateColumns = `repeat(auto-fill, minmax(${lay.cols}px, 1fr))`;
+    grid.dataset.ratio = lay.ratio;
+  }
+}
+
+async function renderCategories() {
+  const grid = document.getElementById('catGrid');
+  if (!grid) return;
+
+  // FIX: Zabezpieczenie przed duplikatami
+  const myVersion = ++renderCategoriesVersion;
+
+  let items = getGroupImages('kategorie').filter(img => img.active !== false);
+  items.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  // Zbierz dane ZANIM wyczyścimy grid
+  const prepared = [];
+  for (const item of items) {
+    const rawName = item.name || 'Kategoria';
+    const title = translateCategoryName(rawName, currentLang);
+    let imgSrc = '';
+    if (item.fileId) {
+      try {
+        const dbRecord = await getImageFromDB(item.fileId);
+        if (dbRecord && dbRecord.blob) {
+          imgSrc = URL.createObjectURL(dbRecord.blob);
+        }
+      } catch (e) {}
+    }
+    prepared.push({ item, title, imgSrc });
+  }
+
+  // Sprawdź, czy to nadal aktualne renderowanie
+  if (myVersion !== renderCategoriesVersion) return;
+
+  grid.innerHTML = '';
+
+  if (!prepared.length) {
+    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">Brak zdjęć w kategorii. Dodaj zdjęcia w panelu administratora.</p>';
+    applyImageSettings();
+    return;
+  }
+
+  for (const { item, title, imgSrc } of prepared) {
+    const div = document.createElement('div');
+    div.className = 'cat-card';
+    const inner = document.createElement('div');
+    inner.className = 'cat-card-inner';
+
+    const img = document.createElement('img');
+    img.alt = title;
+    img.onerror = function () {
+      this.onerror = null;
+      this.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+    };
+    img.src = imgSrc || 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+
+    inner.appendChild(img);
+
+    const ov = document.createElement('div');
+    ov.className = 'overlay';
+    ov.innerHTML = `<h3>${title}</h3>`;
+    inner.appendChild(ov);
+
+    if (item.size && item.size !== 100) {
+      div.style.setProperty('--card-scale', item.size / 100);
+    }
+
+    div.appendChild(inner);
+    grid.appendChild(div);
+  }
+
+  applyImageSettings();
+}
+
+async function renderPromosSection() {
+  const list = document.getElementById('promoList');
+  if (!list) return;
+
+  // FIX: Zabezpieczenie przed duplikatami
+  const myVersion = ++renderPromosVersion;
+
+  const activePromos = getGroupImages('promocje')
+    .filter(img => img.active !== false)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  const prepared = [];
+  for (const promo of activePromos) {
+    let src = '';
+    if (promo.fileId) {
+      try {
+        const dbRecord = await getImageFromDB(promo.fileId);
+        if (dbRecord && dbRecord.blob) src = URL.createObjectURL(dbRecord.blob);
+      } catch (e) {}
+    }
+    prepared.push({ promo, src });
+  }
+
+  if (myVersion !== renderPromosVersion) return;
+
+  list.innerHTML = '';
+
+  if (!prepared.length) {
+    list.innerHTML = '<p class="promo-empty">Brak aktualnych promocji.</p>';
+    return;
+  }
+
+  prepared.forEach(({ promo, src }, i) => {
+    const id = i + 1;
+    const container = document.createElement('div');
+    container.className = 'promo-banner-container';
+    container.id = `promoContainer${id}`;
+
+    const img = document.createElement('img');
+    img.className = 'promo-img-base';
+    img.alt = promo.name || 'Gazetka';
+    img.id = `promoImg${id}`;
+    img.loading = 'eager';
+    img.decoding = 'async';
+
+    img.onload = function () {
+      this.classList.add('loaded');
+      initZoom(`promoContainer${id}`, `promoImg${id}`, `zoomLens${id}`);
+    };
+    img.onerror = function () {
+      this.style.display = 'none';
+    };
+    if (src) img.src = src;
+
+    const lens = document.createElement('div');
+    lens.className = 'zoom-lens';
+    lens.id = `zoomLens${id}`;
+
+    container.appendChild(img);
+    container.appendChild(lens);
+    list.appendChild(container);
+  });
+}
+
+async function renderEventBanner() {
+  const section = document.getElementById('eventBannerSection');
+  const img = document.getElementById('eventBannerImg');
+  if (!section || !img) return;
+
+  // FIX: Zabezpieczenie przed duplikatami
+  const myVersion = ++renderEventVersion;
+
+  const activeEvents = getGroupImages('event')
+    .filter(img => img.active !== false)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  if (activeEvents.length === 0 || !activeEvents[0]) {
+    section.style.display = 'none';
+    return;
+  }
+
+  const event = activeEvents[0];
+  let src = '';
+  if (event.fileId) {
+    try {
+      const dbRecord = await getImageFromDB(event.fileId);
+      if (dbRecord && dbRecord.blob) src = URL.createObjectURL(dbRecord.blob);
+    } catch (e) {}
+  }
+
+  if (myVersion !== renderEventVersion) return;
+
+  if (!src) {
+    section.style.display = 'none';
+    return;
+  }
+
+  img.onload = () => { section.style.display = 'block'; };
+  img.onerror = () => { section.style.display = 'none'; };
+  img.src = src;
+}
+
+async function renderLogo() {
+  const logoImg = document.querySelector('.logo-img');
+  if (!logoImg) return;
+
+  // FIX: Zabezpieczenie przed duplikatami
+  const myVersion = ++renderLogoVersion;
+
+  const activeLogos = getGroupImages('logo')
+    .filter(img => img.active !== false)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  if (activeLogos.length === 0 || !activeLogos[0]) {
+    logoImg.style.display = 'none';
+    return;
+  }
+
+  const logo = activeLogos[0];
+  let src = '';
+  if (logo.fileId) {
+    try {
+      const dbRecord = await getImageFromDB(logo.fileId);
+      if (dbRecord && dbRecord.blob) src = URL.createObjectURL(dbRecord.blob);
+    } catch (e) {}
+  }
+
+  if (myVersion !== renderLogoVersion) return;
+
+  if (!src) {
+    logoImg.style.display = 'none';
+    return;
+  }
+
+  logoImg.style.display = 'block';
+  logoImg.onerror = () => { logoImg.style.display = 'none'; };
+  logoImg.src = src;
+}
+
+/* ===== LUPA ===== */
+function initZoom(containerId, imgId, lensId) {
+  const container = document.getElementById(containerId);
+  const img = document.getElementById(imgId);
+  const lens = document.getElementById(lensId);
+  if (!container || !img || !lens) return;
+
+  lens.style.display = 'none';
+  if (img.complete && img.naturalWidth > 0) {
+    lens.style.backgroundImage = `url('${img.src}')`;
+  } else {
+    img.addEventListener('load', () => {
+      lens.style.backgroundImage = `url('${img.src}')`;
+    }, { once: true });
+  }
+  lens.style.backgroundRepeat = 'no-repeat';
+
+  if (container.dataset.zoomBound === '1') return;
+  container.dataset.zoomBound = '1';
+
+  container.addEventListener('mouseenter', () => {
+    if (zoomEnabled && lens.style.backgroundImage) lens.style.display = 'block';
+  });
+  container.addEventListener('mouseleave', () => { lens.style.display = 'none'; });
+  container.addEventListener('mousemove', (e) => {
+    if (!zoomEnabled) { lens.style.display = 'none'; return; }
+    const rect = img.getBoundingClientRect();
+    let x = e.clientX - rect.left, y = e.clientY - rect.top;
+    if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+      lens.style.display = 'none'; return;
+    }
+    lens.style.display = 'block';
+    const lensW = lens.offsetWidth, lensH = lens.offsetHeight, zoom = 2.5;
+    lens.style.backgroundSize = `${rect.width * zoom}px ${rect.height * zoom}px`;
+    const contRect = container.getBoundingClientRect();
+    lens.style.left = `${(e.clientX - contRect.left) - lensW / 2}px`;
+    lens.style.top = `${(e.clientY - contRect.top) - lensH / 2}px`;
+    lens.style.backgroundPosition = `${-(x * zoom - lensW / 2)}px ${-(y * zoom - lensH / 2)}px`;
+  });
+}
+const zoomToggleBtn = document.getElementById('zoomToggleBtn');
+if (zoomToggleBtn) {
+  zoomToggleBtn.addEventListener('click', () => {
+    zoomEnabled = !zoomEnabled;
+    updateZoomButtonLabel();
+    if (!zoomEnabled) document.querySelectorAll('.zoom-lens').forEach(l => l.style.display = 'none');
+  });
+}
+
+/* ===== SECRET TRIGGER I LOGOWANIE ===== */
+(function () {
+  const SECRET = 'dnaldoof';
+  let buffer = '', resetTimer = null, overFooter = false;
+  const footer = document.querySelector('.footer');
+  if(footer){
+    footer.addEventListener('mouseenter', () => overFooter = true);
+    footer.addEventListener('mouseleave', () => overFooter = false);
+  }
+  document.addEventListener('keydown', (e) => {
+    if (isLogged || e.key.length !== 1 || e.ctrlKey || e.altKey || e.metaKey || !overFooter) return;
+    buffer += e.key.toLowerCase();
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => buffer = '', 3000);
+    if (buffer.endsWith(SECRET)) {
+      buffer = '';
+      document.getElementById('adminLoginModal').hidden = false;
+      document.getElementById('adminUser').focus();
+    }
+  });
+})();
+
+document.getElementById('adminLoginBtn').addEventListener('click', () => {
+  const u = document.getElementById('adminUser').value;
+  const p = document.getElementById('adminPass').value;
+  const cred = adminState.credentials || { login:'admin', password:'123' };
+  if (u === cred.login && p === cred.password) {
+    isLogged = true;
+    document.getElementById('adminLoginModal').hidden = true;
+    document.getElementById('adminPanel').hidden = false;
+    document.body.classList.add('admin-open');
+    adminState = loadAdmin();
+    initImageGroups();
+    renderAdminPanel();
+  } else {
+    document.getElementById('adminErr').hidden = false;
+  }
+});
+
+document.getElementById('adminCloseBtn').addEventListener('click', () => {
+  document.getElementById('adminLoginModal').hidden = true;
+});
+
+/* ===== ODBLOKOWANIE HASŁA ===== */
+document.getElementById('forgotPassLink').addEventListener('click', () => {
+  document.getElementById('adminLoginModal').hidden = true;
+  document.getElementById('forgotModal').hidden = false;
+  document.getElementById('forgotEmail').value = adminState.credentials?.email || '';
+  document.getElementById('forgotMsg').hidden = true;
+});
+
+document.getElementById('forgotCloseBtn').addEventListener('click', () => {
+  document.getElementById('forgotModal').hidden = true;
+});
+
+document.getElementById('forgotSendBtn').addEventListener('click', () => {
+  const email = (document.getElementById('forgotEmail').value || '').trim();
+  const msg = document.getElementById('forgotMsg');
+  const savedEmail = (adminState.credentials?.email || '').trim();
+  if (!email) {
+    msg.hidden = false;
+    msg.style.color = '#d0021b';
+    msg.textContent = 'Podaj adres e-mail.';
+    return;
+  }
+  if (!savedEmail || savedEmail.toLowerCase() !== email.toLowerCase()) {
+    msg.hidden = false;
+    msg.style.color = '#d0021b';
+    msg.textContent = 'Podany e-mail nie pasuje do zapisanego konta administratora.';
+    return;
+  }
+  const cred = adminState.credentials;
+  const subject = 'FoodLand – dane logowania administratora';
+  const body = `Aktualne dane logowania do panelu administratora FoodLand:\n\nLogin: ${cred.login}\nHasło: ${cred.password}\n\nZaleca się zmianę hasła po zalogowaniu.`;
+  
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(gmailUrl, '_blank');
+
+  msg.hidden = false;
+  msg.style.color = '#00843d';
+  msg.textContent = 'Otwarto nową kartę z gotową wiadomością e-mail (Gmail).';
+});
+
+/* ===== ZAMKNIĘCIE PANELU ===== */
+document.getElementById('adminPanelClose').addEventListener('click', () => {
+  adminState = loadAdmin();
+  initImageGroups();
+  applyThemeAndLayout();
+  applyAllOverrides();
+  setLang(currentLang);
+  renderCategories();
+  renderPromosSection();
+  renderEventBanner();
+  renderLogo();
+  
+  document.getElementById('adminPanel').hidden = true;
+  document.body.classList.remove('admin-open');
+  isLogged = false;
+});
+
+document.querySelectorAll('#adminTabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#adminTabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.admin-tabpage').forEach(p => p.classList.toggle('active', p.dataset.page === btn.dataset.tab));
+    if (btn.dataset.tab === 'images') {
+      renderImageList();
+    }
+    if (btn.dataset.tab === 'security') {
+      loadSecurityFields();
+    }
+  });
+});
+
+document.querySelectorAll('.lang-edit-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    editLang = btn.dataset.lang;
+    document.querySelectorAll('.lang-edit-btn').forEach(b => {
+      b.style.background = b.dataset.lang === editLang ? '#d0021b' : '#eee';
+      b.style.color = b.dataset.lang === editLang ? '#fff' : '#555';
+    });
+    setLang(editLang);
+    renderTextFields();
+  });
+});
+
+const TEXT_ORDER = [
+  'nav.categories', 'nav.promos', 'nav.contact',
+  'hero.title1', 'hero.title2', 'hero.lead', 'hero.cta', 'hero.stat1', 'hero.stat2', 'hero.stat3',
+  'cat.title', 'cat.pieczywo', 'cat.pierogi', 'cat.slodycze', 'cat.warzywa', 'cat.wedliny', 'cat.napoje',
+  'promo.title', 'promo.zoom.on', 'promo.zoom.off',
+  'contact.title', 'contact.address', 'contact.phone', 'contact.facebook',
+  'refer.title', 'refer.desc', 'refer.send', 'refer.emailPlaceholder', 'footer.rights'
+];
+
+function renderTextFields() {
+  const box = document.getElementById('adminFields');
+  if(!box) return;
+  box.innerHTML = '';
+  TEXT_ORDER.forEach(key => {
+    const base = BASE_TRANSLATIONS[editLang] || {};
+    let currentVal = base[key] || '';
+    if (adminState.overrides && adminState.overrides[editLang] && adminState.overrides[editLang][key] !== undefined) {
+        currentVal = adminState.overrides[editLang][key];
+    }
+    if (!currentVal && editLang !== 'pl') {
+        currentVal = BASE_TRANSLATIONS['en'][key] || '';
+    }
+    const div = document.createElement('div');
+    div.className = 'admin-field';
+    div.innerHTML = `<label>${key} (${editLang.toUpperCase()})</label><textarea rows="2" data-key="${key}">${currentVal}</textarea>`;
+    const ta = div.querySelector('textarea');
+    ta.addEventListener('input', () => {
+      if (!adminState.overrides) adminState.overrides = {};
+      if (!adminState.overrides[editLang]) adminState.overrides[editLang] = {};
+      
+      adminState.overrides[editLang][key] = ta.value;
+
+      if (!translations[editLang]) translations[editLang] = { ...BASE_TRANSLATIONS[editLang] };
+      translations[editLang][key] = ta.value;
+      
+      applyAllOverrides();
+      setLang(currentLang);
+    });
+    box.appendChild(div);
+  });
+}
+
+['stat1-val-input', 'stat2-val-input', 'stat3-val-input'].forEach((id, index) => {
+  document.getElementById(id).addEventListener('input', (e) => {
+    if (!adminState.statOverrides) adminState.statOverrides = {};
+    
+    const val = e.target.value;
+    
+    ['pl', 'en', 'uk', 'ro'].forEach(lang => {
+        if (!adminState.statOverrides[lang]) adminState.statOverrides[lang] = {};
+        adminState.statOverrides[lang][`v${index + 1}`] = val;
+    });
+    
+    applyStats(currentLang);
+  });
+});
+
+function initStatsTracker() {
+  const KEY_STATS = 'foodland_analytics';
+  let stats = JSON.parse(localStorage.getItem(KEY_STATS)) || {
+    totalVisits: 0, uniqueVisits: 0, pageViews: 0,
+    browsers: {}, os: {}, devices: {}, referrers: {}, languages: {},
+    screenResolutions: {}, timezones: {}, connectionTypes: {}, colorSchemes: {},
+    firstVisit: null, lastVisit: null, avgSessionSeconds: 0, totalSessionSeconds: 0,
+    clicks: 0, scrollDepth: 0, formSubmissions: 0, referralEmails: 0,
+    promoViews: 0, categoryViews: 0, langSwitches: 0, adminLogins: 0,
+    maxScrollDepth: 0, avgScrollDepth: 0, bounceRate: 0, returningVisits: 0,
+    topPages: {}, errorCount: 0, promoClickCount: 0
+  };
+
+  let uniqueId = localStorage.getItem('foodland_uid');
+  if (!uniqueId) {
+    uniqueId = 'user_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('foodland_uid', uniqueId);
+    stats.uniqueVisits++;
+    stats.firstVisit = stats.firstVisit || new Date().toISOString();
+  } else {
+    stats.returningVisits = (stats.returningVisits || 0) + 1;
+  }
+
+  const now = new Date().toISOString();
+  stats.lastVisit = now;
+
+  if (!sessionStorage.getItem('foodland_session')) {
+    sessionStorage.setItem('foodland_session', 'active');
+    stats.totalVisits++;
+    stats.pageViews++;
+    stats.clicks = (stats.clicks || 0) + 1;
+
+    let browser = "Inne";
+    if (navigator.userAgent.indexOf("Chrome") > -1) browser = "Chrome";
+    else if (navigator.userAgent.indexOf("Firefox") > -1) browser = "Firefox";
+    else if (navigator.userAgent.indexOf("Safari") > -1) browser = "Safari";
+    else if (navigator.userAgent.indexOf("Edge") > -1) browser = "Edge";
+    stats.browsers[browser] = (stats.browsers[browser] || 0) + 1;
+
+    let os = "Inne";
+    if (navigator.userAgent.indexOf("Win") > -1) os = "Windows";
+    else if (navigator.userAgent.indexOf("Mac") > -1) os = "MacOS";
+    else if (navigator.userAgent.indexOf("Linux") > -1) os = "Linux";
+    else if (navigator.userAgent.indexOf("Android") > -1) os = "Android";
+    else if (navigator.userAgent.indexOf("like Mac") > -1) os = "iOS";
+    stats.os[os] = (stats.os[os] || 0) + 1;
+
+    let device = "Desktop";
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) device = "Mobile/Tablet";
+    stats.devices[device] = (stats.devices[device] || 0) + 1;
+
+    let ref = document.referrer ? new URL(document.referrer).hostname : 'Bezpośredni';
+    if (ref.includes('google')) ref = 'Google';
+    else if (ref.includes('facebook')) ref = 'Facebook';
+    stats.referrers[ref] = (stats.referrers[ref] || 0) + 1;
+
+    let lang = navigator.language || 'nieznany';
+    stats.languages[lang] = (stats.languages[lang] || 0) + 1;
+
+    const res = `${screen.width}x${screen.height}`;
+    stats.screenResolutions[res] = (stats.screenResolutions[res] || 0) + 1;
+
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'nieznana';
+    stats.timezones[tz] = (stats.timezones[tz] || 0) + 1;
+
+    const conn = navigator.connection ? navigator.connection.effectiveType || 'nieznane' : 'nieznane';
+    stats.connectionTypes[conn] = (stats.connectionTypes[conn] || 0) + 1;
+
+    const colorScheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    stats.colorSchemes[colorScheme] = (stats.colorSchemes[colorScheme] || 0) + 1;
+
+    stats.topPages['strona główna'] = (stats.topPages['strona główna'] || 0) + 1;
+  } else {
+    stats.pageViews++;
+  }
+
+  let maxScroll = 0;
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const depth = Math.round((h.scrollTop + window.innerHeight) / h.scrollHeight * 100);
+    if (depth > maxScroll) {
+      maxScroll = depth;
+      stats.maxScrollDepth = Math.max(stats.maxScrollDepth || 0, depth);
+      if (stats.maxScrollDepth > 0) stats.avgScrollDepth = Math.round(((stats.avgScrollDepth || 0) + stats.maxScrollDepth) / 2);
+    }
+  }, { passive: true });
+
+  document.addEventListener('click', () => { stats.clicks = (stats.clicks || 0) + 1; });
+
+  document.querySelectorAll('#lang button').forEach(btn => {
+    btn.addEventListener('click', () => { stats.langSwitches = (stats.langSwitches || 0) + 1; });
+  });
+
+  setInterval(() => {
+    localStorage.setItem(KEY_STATS, JSON.stringify(stats));
+  }, 5000);
+  window.addEventListener('beforeunload', () => {
+    localStorage.setItem(KEY_STATS, JSON.stringify(stats));
+  });
+
+  localStorage.setItem(KEY_STATS, JSON.stringify(stats));
+}
+
+function renderStats() {
+  const container = document.getElementById('statsGrid');
+  if(!container) return;
+  const stats = JSON.parse(localStorage.getItem('foodland_analytics')) || {};
+  const getTop = (obj) => {
+    if(!obj || Object.keys(obj).length === 0) return 'Brak';
+    return Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
+  };
+
+  const items = [
+    { label: 'Całkowite Wizyty', value: stats.totalVisits || 0, big: true },
+    { label: 'Unikalni Użytkownicy', value: stats.uniqueVisits || 0 },
+    { label: 'Odsłony Strony', value: stats.pageViews || 0 },
+    { label: 'Powroty', value: stats.returningVisits || 0 },
+    { label: 'Najczęstsza Przeglądarka', value: getTop(stats.browsers) },
+    { label: 'Najczęstszy System', value: getTop(stats.os) },
+    { label: 'Urządzenie', value: getTop(stats.devices) },
+    { label: 'Źródło Ruchu', value: getTop(stats.referrers) },
+    { label: 'Język przeglądarki', value: getTop(stats.languages) },
+    { label: 'Rozdzielczość', value: getTop(stats.screenResolutions) },
+    { label: 'Strefa czasowa', value: getTop(stats.timezones) },
+    { label: 'Typ połączenia', value: getTop(stats.connectionTypes) },
+    { label: 'Motyw systemowy', value: getTop(stats.colorSchemes) },
+    { label: 'Kliknięcia', value: stats.clicks || 0 },
+    { label: 'Maks. głębokość scrolla', value: (stats.maxScrollDepth || 0) + '%' },
+    { label: 'Śr. głębokość scrolla', value: (stats.avgScrollDepth || 0) + '%' },
+    { label: 'Zgłoszenia formularza', value: stats.formSubmissions || 0 },
+    { label: 'Wysłane polecenia', value: stats.referralEmails || 0 },
+    { label: 'Zmiany języka', value: stats.langSwitches || 0 },
+    { label: 'Logowania admina', value: stats.adminLogins || 0 },
+    { label: 'Błędy (JS)', value: stats.errorCount || 0 },
+    { label: 'Pierwsza wizyta', value: stats.firstVisit ? new Date(stats.firstVisit).toLocaleString() : '—' },
+    { label: 'Ostatnia wizyta', value: stats.lastVisit ? new Date(stats.lastVisit).toLocaleString() : '—' }
+  ];
+
+  container.innerHTML = items.map((it, i) => {
+    if (i === 0) return `<div class="stat-box" style="grid-column: span 2; background: #e8f4ea; border-color: #c3e6cb;"><h3 style="font-size: 1.8rem; color: #00843d;">${it.value}</h3><p>${it.label}</p></div>`;
+    return `<div class="stat-box"><h3>${it.value}</h3><p>${it.label}</p></div>`;
+  }).join('');
+}
+
+function sendEmailReport() {
+  const stats = JSON.parse(localStorage.getItem('foodland_analytics')) || {};
+  const to = adminState.reportEmail || prompt('Podaj adres e-mail odbiorcy raportu:');
+  if (!to) return;
+  adminState.reportEmail = to;
+  saveAdminState();
+
+  const lines = Object.entries(stats).map(([k, v]) => {
+    if (typeof v === 'object') return `${k}: ${JSON.stringify(v)}`;
+    return `${k}: ${v}`;
+  });
+  const subject = 'Raport statystyk FoodLand – ' + new Date().toLocaleString();
+  const body = 'Raport analityczny:\n\n' + lines.join('\n');
+  
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(gmailUrl, '_blank');
+}
+
+document.getElementById('sendReportBtn')?.addEventListener('click', sendEmailReport);
+
+/* ===== BEZPIECZEŃSTWO ===== */
+function loadSecurityFields() {
+  const cred = adminState.credentials || { login:'admin', password:'123', email:'' };
+  document.getElementById('secLogin').value = cred.login || '';
+  document.getElementById('secPass').value = cred.password || '';
+  document.getElementById('secEmail').value = cred.email || '';
+  const msg = document.getElementById('secMsg');
+  if (msg) { msg.hidden = true; msg.textContent = ''; }
+  
+  const secPass = document.getElementById('secPass');
+  const toggleBtn = document.getElementById('toggleSecPassBtn');
+  if(secPass) secPass.type = 'password';
+  if(toggleBtn) toggleBtn.textContent = '👁️';
+}
+
+document.getElementById('secSaveBtn')?.addEventListener('click', () => {
+  const login = (document.getElementById('secLogin').value || '').trim();
+  const pass = (document.getElementById('secPass').value || '').trim();
+  const email = (document.getElementById('secEmail').value || '').trim();
+  const msg = document.getElementById('secMsg');
+  if (!login || !pass) {
+    msg.hidden = false;
+    msg.style.color = '#d0021b';
+    msg.textContent = 'Login i hasło nie mogą być puste.';
+    return;
+  }
+  if (!adminState.credentials) adminState.credentials = {};
+  adminState.credentials.login = login;
+  adminState.credentials.password = pass;
+  adminState.credentials.email = email;
+  saveAdminState();
+  msg.hidden = false;
+  msg.style.color = '#00843d';
+  msg.textContent = 'Dane logowania zostały zapisane.';
+});
+
+document.getElementById('secSendMailBtn')?.addEventListener('click', () => {
+  const email = (document.getElementById('secEmail').value || '').trim() || adminState.credentials?.email || '';
+  const msg = document.getElementById('secMsg');
+  if (!email) {
+    msg.hidden = false;
+    msg.style.color = '#d0021b';
+    msg.textContent = 'Najpierw podaj adres e-mail administratora.';
+    return;
+  }
+  const login = (document.getElementById('secLogin').value || adminState.credentials?.login || '').trim();
+  const pass = (document.getElementById('secPass').value || adminState.credentials?.password || '').trim();
+  if (!login || !pass) {
+    msg.hidden = false;
+    msg.style.color = '#d0021b';
+    msg.textContent = 'Login i hasło nie mogą być puste.';
+    return;
+  }
+  if (!adminState.credentials) adminState.credentials = {};
+  adminState.credentials.email = email;
+  saveAdminState();
+
+  const subject = 'FoodLand – nowe dane logowania administratora';
+  const body = `Nowe dane logowania do panelu administratora FoodLand:\n\nLogin: ${login}\nHasło: ${pass}\n\nZaleca się zmianę hasła po zalogowaniu.`;
+  
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(gmailUrl, '_blank');
+
+  msg.hidden = false;
+  msg.style.color = '#00843d';
+  msg.textContent = 'Otwarto nową kartę z gotową wiadomością e-mail (Gmail).';
+});
+
+document.getElementById('toggleSecPassBtn')?.addEventListener('click', () => {
+    const secPass = document.getElementById('secPass');
+    const toggleBtn = document.getElementById('toggleSecPassBtn');
+    if (secPass.type === 'password') {
+        secPass.type = 'text';
+        toggleBtn.textContent = '🙈';
+    } else {
+        secPass.type = 'password';
+        toggleBtn.textContent = '👁️';
+    }
+});
+
+/* ===== WERSJE HTML ===== */
+const VERSIONS_KEY = 'foodland_versions';
+let versions = JSON.parse(localStorage.getItem(VERSIONS_KEY)) || [];
+
+function renderVersions() {
+  const list = document.getElementById('versionList');
+  if (!list) return;
+  list.innerHTML = versions.map((v, i) => `
+    <div class="version-item">
+      <span>${v.name} <small style="color:#888">(${v.date})</small></span>
+      <div>
+        <button onclick="loadVersion(${i})" style="background:#00843d;">Wczytaj</button>
+        <button onclick="deleteVersion(${i})" style="background:#555;">X</button>
+      </div>
+    </div>
+  `).join('') || '<p style="font-size:0.7rem;color:#888;">Brak zapisanych wersji.</p>';
+}
+
+window.loadVersion = function(index) {
+  if(confirm('Czy na pewno chcesz wczytać tę wersję? Spowoduje to nadpisanie bieżącej strony.')) {
+    document.open();
+    document.write(versions[index].html);
+    document.close();
+  }
+};
+
+window.deleteVersion = function(index) {
+  if(confirm('Usunąć tę wersję?')) {
+    versions.splice(index, 1);
+    localStorage.setItem(VERSIONS_KEY, JSON.stringify(versions));
+    renderVersions();
+  }
+};
+
+document.getElementById('saveVersionBtn')?.addEventListener('click', () => {
+  const name = document.getElementById('versionName').value.trim();
+  if (!name) return alert('Podaj nazwę wersji!');
+  const html = document.documentElement.outerHTML;
+  versions.unshift({ name, html, date: new Date().toLocaleString() });
+  
+  try {
+    localStorage.setItem(VERSIONS_KEY, JSON.stringify(versions));
+    document.getElementById('versionName').value = '';
+    renderVersions();
+    alert('Wersja zapisana!');
+  } catch (e) {
+    alert('Błąd: Brak miejsca w pamięci (localStorage). Usuń stare wersje.');
+  }
+});
+
+document.getElementById('downloadHtmlBtn')?.addEventListener('click', () => {
+  const html = document.documentElement.outerHTML;
+  const blob = new Blob([html], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'index.html';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('importHtmlBtn')?.addEventListener('click', () => {
+  const code = document.getElementById('importHtmlArea').value;
+  if(code) {
+    if(confirm('Czy na pewno chcesz nadpisać bieżący kod?')) {
+      document.open();
+      document.write(code);
+      document.close();
+    }
+  }
+});
+
+const titleSizeRange = document.getElementById('titleSizeRange');
+if(titleSizeRange) {
+  titleSizeRange.addEventListener('input', (e) => {
+    const val = e.target.value;
+    document.getElementById('titleSizeVal').textContent = val + 'rem';
+    document.documentElement.style.setProperty('--section-title-size', val + 'rem');
+    if (!adminState.layout) adminState.layout = {};
+    adminState.layout['--section-title-size'] = val + 'rem';
+  });
+}
+
+const blurRange = document.getElementById('blurRange');
+if(blurRange) {
+  blurRange.addEventListener('input', (e) => {
+    const val = e.target.value;
+    document.getElementById('blurVal').textContent = val + 'px';
+    document.documentElement.style.setProperty('--glass-blur', val + 'px');
+    if (!adminState.layout) adminState.layout = {};
+    adminState.layout['--glass-blur'] = val + 'px';
+  });
+}
+
+const stickyPadRange = document.getElementById('stickyPadRange');
+if(stickyPadRange) {
+  stickyPadRange.addEventListener('input', (e) => {
+    const val = e.target.value;
+    document.getElementById('stickyPadVal').textContent = val + 'rem';
+    const padValue = val + 'rem ' + (parseFloat(val) * 1.666) + 'rem';
+    document.documentElement.style.setProperty('--sticky-header-padding', padValue);
+    if (!adminState.layout) adminState.layout = {};
+    adminState.layout['--sticky-header-padding'] = padValue;
+  });
+}
+
+const headerFontSizeRange = document.getElementById('headerFontSizeRange');
+if(headerFontSizeRange) {
+  headerFontSizeRange.addEventListener('input', (e) => {
+    const val = e.target.value;
+    document.getElementById('headerFontSizeVal').textContent = val + 'rem';
+    document.documentElement.style.setProperty('--header-font-size', val + 'rem');
+    if (!adminState.layout) adminState.layout = {};
+    adminState.layout['--header-font-size'] = val + 'rem';
+  });
+}
+
+const headerHeightRange = document.getElementById('headerHeightRange');
+if(headerHeightRange) {
+  headerHeightRange.addEventListener('input', (e) => {
+    const val = e.target.value;
+    document.getElementById('headerHeightVal').textContent = val + 'px';
+    document.documentElement.style.setProperty('--header-height', val + 'px');
+    if (!adminState.layout) adminState.layout = {};
+    adminState.layout['--header-height'] = val + 'px';
+  });
+}
+
+function renderAdminPanel() {
+  setLang(editLang);
+  renderThemes();
+  renderStats();
+  renderVersions();
+  applyThemeAndLayout();
+  applyContactData();
+  
+  const titleSize = adminState.layout['--section-title-size'] || '2.6rem';
+  const blurSize = adminState.layout['--glass-blur'] || '0px';
+  const stickyPad = adminState.layout['--sticky-header-padding'] || '1.5rem 2.5rem';
+  const headerFontSize = adminState.layout['--header-font-size'] || '0.95rem';
+  const headerHeight = adminState.layout['--header-height'] || '80px';
+  
+  if(document.getElementById('titleSizeRange')) {
+      document.getElementById('titleSizeRange').value = parseFloat(titleSize);
+      document.getElementById('titleSizeVal').textContent = titleSize;
+  }
+  if(document.getElementById('blurRange')) {
+      document.getElementById('blurRange').value = parseInt(blurSize);
+      document.getElementById('blurVal').textContent = blurSize;
+  }
+  if(document.getElementById('stickyPadRange')) {
+      const padVal = parseFloat(stickyPad) || 1.5;
+      document.getElementById('stickyPadRange').value = padVal;
+      document.getElementById('stickyPadVal').textContent = padVal + 'rem';
+  }
+  if(document.getElementById('headerFontSizeRange')) {
+      const val = parseFloat(headerFontSize);
+      document.getElementById('headerFontSizeRange').value = val;
+      document.getElementById('headerFontSizeVal').textContent = headerFontSize;
+  }
+  if(document.getElementById('headerHeightRange')) {
+      const val = parseInt(headerHeight);
+      document.getElementById('headerHeightRange').value = val;
+      document.getElementById('headerHeightVal').textContent = headerHeight;
+  }
+
+  document.getElementById('stat1-val-input').value = (adminState.statOverrides?.[editLang]?.v1) || '1500+';
+  document.getElementById('stat2-val-input').value = (adminState.statOverrides?.[editLang]?.v2) || '2h';
+  document.getElementById('stat3-val-input').value = (adminState.statOverrides?.[editLang]?.v3) || '7';
+  
+  renderTextFields();
+
+  renderImageList();
+  const lay = adminState.imageLayout || { cols: 250, ratio: '1/1' };
+  if (document.getElementById('imgCols')) {
+    document.getElementById('imgCols').value = lay.cols;
+    document.getElementById('imgColsVal').textContent = lay.cols + 'px';
+  }
+  if (document.getElementById('imgRatio')) {
+    document.getElementById('imgRatio').value = lay.ratio;
+  }
+  applyImageSettings();
+  loadSecurityFields();
+}
+
+function applyThemeAndLayout() {
+  const t = adminState.theme;
+  if (t['--bg-page']) document.documentElement.style.setProperty('--bg-page', t['--bg-page']);
+  if (t['--topbar-bg']) document.documentElement.style.setProperty('--topbar-bg', t['--topbar-bg']);
+  if (t['--footer-bg']) document.documentElement.style.setProperty('--footer-bg', t['--footer-bg']);
+  if (t['--text-main']) document.documentElement.style.setProperty('--text-main', t['--text-main']);
+  if (t['--btn-bg']) document.documentElement.style.setProperty('--btn-bg', t['--btn-bg']);
+  const l = adminState.layout;
+  if (l['--section-title-size']) document.documentElement.style.setProperty('--section-title-size', l['--section-title-size']);
+  if (l['--glass-blur']) document.documentElement.style.setProperty('--glass-blur', l['--glass-blur']);
+  if (l['--sticky-header-padding']) document.documentElement.style.setProperty('--sticky-header-padding', l['--sticky-header-padding']);
+  if (l['--header-font-size']) document.documentElement.style.setProperty('--header-font-size', l['--header-font-size']);
+  if (l['--header-height']) document.documentElement.style.setProperty('--header-height', l['--header-height']);
+  applyTheme(adminState.themeName, adminState.themeMode);
+}
+
+/* ===== ZAPIS NA STAŁE ===== */
+document.getElementById('adminCommit')?.addEventListener('click', () => {
+  saveAdminState();
+  alert('Zmiany zostały zapisane na stałe w localStorage (obrazy w IndexedDB).');
+});
+
+// INICJALIZACJA APLIKACJI
+window.addEventListener('DOMContentLoaded', async () => {
+  await initDB();
+  
+  initStatsTracker();
+  initImageGroups();
+  applyAllOverrides();
+  setLang('pl');
+  
+  await renderEventBanner();
+  await renderLogo();
+  await renderPromosSection();
+  applyImageSettings();
+
+  const mapRouteBtn = document.getElementById('mapRouteBtn');
+  if (mapRouteBtn) {
+    mapRouteBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showRouteOnMap(currentLang);
+    });
+  }
+
+  const groupSelect = document.getElementById('imgGroupSelect');
+  if (groupSelect) {
+    groupSelect.addEventListener('change', () => {
+      renderImageList();
+    });
+  }
+
+  document.getElementById('imgAddBtn')?.addEventListener('click', addNewImage);
+
+  const bindRange = (id, valId, key, unit, cb) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', (e) => {
+      const v = parseInt(e.target.value) || 0;
+      document.getElementById(valId).textContent = v + unit;
+      if (cb) cb(v);
+    });
+  };
+  bindRange('imgCols', 'imgColsVal', 'cols', 'px', (v) => {
+    if (!adminState.imageLayout) adminState.imageLayout = { cols: 250, ratio: '1/1' };
+    adminState.imageLayout.cols = v;
+    applyImageSettings();
+  });
+
+  document.getElementById('imgRatio')?.addEventListener('change', (e) => {
+    if (!adminState.imageLayout) adminState.imageLayout = { cols: 250, ratio: '1/1' };
+    adminState.imageLayout.ratio = e.target.value;
+    applyImageSettings();
+  });
+
+  const referSendBtn = document.getElementById('referSendBtn');
+  if (referSendBtn) {
+    referSendBtn.addEventListener('click', () => {
+      const email = document.getElementById('referEmail').value.trim();
+      const msg = document.getElementById('referMsg');
+      if (!email) {
+        msg.textContent = 'Podaj adres e-mail.';
+        msg.style.color = '#d0021b';
+        return;
+      }
+      const subject = 'Polecam FoodLand – Polski Sklep w Wallsend';
+      const body = 'Cześć! Polecam Ci polski sklep FoodLand w Wallsend. Odwiedź: ' + window.location.href;
+      window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      msg.textContent = 'Otwarto klienta pocztowego.';
+      msg.style.color = '#00843d';
+    });
+  }
+});
+</script>
+</body>
+</html>

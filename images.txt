@@ -1,0 +1,11 @@
+images/
+├── hero/
+│   └── sklep-wnetrze.jpg      
+├── kategorie/
+│   ├── pieczywo.jpg, wedliny.jpg itd.
+├── promocje/
+│   ├── gazetka-1.jpg (i ewentualnie kolejne)
+├── kontakt/                 <-- NOWY FOLDER
+│   └── sklep-zewnatrz.jpg   <-- NOWE ZDJĘCIE (widok sklepu z ulicy)
+└── event/
+    └── baner.jpg
