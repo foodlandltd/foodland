@@ -87,8 +87,7 @@ body.admin-open .header { right: var(--admin-width); }
 .logo-wrapper{position:fixed;top:8px;left:2vw;z-index:10000;}
 .logo-img{height:160px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));}
 
-.lang-switch{display:flex;align-items:center;gap:.15rem;background:var(--panel-inner);padding:4px;border-radius:var(--radius-pill); z-index: 10000; position: relative;}
-.lang-switch button{
+.lang-switch{display:flex;align-items:center;gap:.15rem;background:var(--panel-inner);padding:4px;border-radius:var(--radius-pill); z-index: 99999 !important; position: relative;}
   padding:.35rem .7rem;
   font-size:.75rem;
   font-weight:700;
@@ -104,13 +103,15 @@ body.admin-open .header { right: var(--admin-width); }
   box-shadow:var(--shadow-sm);
 }
 
-#holidayBannerWrapper { position: relative; display: none; align-items: center; }
+#holidayBannerWrapper { position: relative; display: none; align-items: center; z-index: 99999 !important; }
 #holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
 #holidayBanner {
   display: flex; align-items: center; gap: 0.5rem;
   background: var(--red-light); color: var(--red);
   padding: 0.25rem 0.8rem; border-radius: var(--radius-pill);
-  font-size: 0.7rem; font-weight: 700; cursor: help; white-space: nowrap;
+  font-size: 0.7rem; font-weight: 700; cursor: help; 
+  white-space: normal; /* Pozwala na zawinięcie tekstu */
+  text-align: center;
   animation: fadeIn 0.5s ease; border: 1px solid rgba(208, 2, 27, 0.2);
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
@@ -339,11 +340,11 @@ input:checked + .slider:before { transform: translateX(20px); }
   .contact-grid{grid-template-columns:1fr;}
 }
 @media(max-width:600px){
-  .logo-img{height:60px;}
-  .header-left-spacer{width:80px;}
-  .hero{padding-top:12rem;}
+  .logo-img{height:50px;} /* Zmniejszamy logo */
+  .header-left-spacer{width:0px;} /* Usuwamy pustą przestrzeń */
+  .hero{padding-top:10rem;}
 
-  /* Ukrywamy menu, żeby zrobić miejsce */
+  /* Ukrywamy menu */
   .nav { display: none !important; }
 
   /* Ustawiamy nagłówek w jednej linii */
@@ -353,19 +354,21 @@ input:checked + .slider:before { transform: translateX(20px); }
     justify-content: space-between !important; 
   }
 
-  /* Poprawiamy prawą stronę (języki + święta) */
+  /* Prawa strona: języki i święta w jednej linii, mniejsze */
   .header-actions { 
     padding-right: 0 !important; 
     flex-direction: row !important; 
     align-items: center !important; 
-    gap: 0.5rem !important; 
-    z-index: 10000;
+    gap: 0.3rem !important; 
   }
-
-  /* Zmniejszamy przyciski językowe, żeby się zmieściły */
   .lang-switch { 
-    transform: scale(0.85); 
+    transform: scale(0.7); 
     transform-origin: right center; 
+  }
+  #holidayBannerWrapper { 
+    transform: scale(0.75); 
+    transform-origin: right center; 
+    max-width: 150px; /* Ograniczamy szerokość banera */
   }
 }
 </style>
