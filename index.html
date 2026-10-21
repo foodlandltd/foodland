@@ -650,6 +650,12 @@ const translations = {
     'hero.stat1': 'Produktów', 'hero.stat2': 'Darmowy parking', 'hero.stat3': 'Dni w tygodniu',
     'cat.title': 'Co znajdziesz w FoodLand',
     'cat.pieczywo': 'Pieczywo', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Słodycze', 'cat.warzywa': 'Warzywa', 'cat.wedliny': 'Wędliny', 'cat.napoje': 'Napoje',
+    'cat.ciasta': 'Ciasta',
+    'cat.ciastka': 'Ciastka',
+    'cat.miody': 'Miody',
+    'cat.mrozonki': 'Mrożonki',
+    'cat.nabial': 'Nabiał',
+    'cat.okazje': 'Okazje',
     'contact.title': 'Kontakt', 'contact.address': 'Adres', 'contact.phone': 'Telefon', 'contact.facebook': 'Odwiedź naszą stronę',
     'map.route': '🚗 Wyznacz trasę do sklepu',
     'promo.title': 'Aktualne promocje', 
@@ -692,6 +698,12 @@ const translations = {
     'hero.cta': 'See offers',
     'hero.stat1': 'Products', 'hero.stat2': 'Free parking', 'hero.stat3': 'Days a week',
     'cat.title': 'What you will find at FoodLand',
+    'cat.ciasta': 'Cakes',
+    'cat.ciastka': 'Cookies',
+    'cat.miody': 'Honey',
+    'cat.mrozonki': 'Frozen Food',
+    'cat.nabial': 'Dairy',
+    'cat.okazje': 'Offers',
     'cat.pieczywo': 'Bread', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Sweets', 'cat.warzywa': 'Vegetables', 'cat.wedliny': 'Cold Cuts', 'cat.napoje': 'Drinks',
     'contact.title': 'Contact', 'contact.address': 'Address', 'contact.phone': 'Phone', 'contact.facebook': 'Visit our page',
     'map.route': '🚗 Get directions to the shop',
@@ -735,6 +747,12 @@ const translations = {
     'hero.cta': 'Переглянути пропозиції',
     'hero.stat1': 'Продуктів', 'hero.stat2': 'Безкоштовна парковка', 'hero.stat3': 'Днів на тиждень',
     'cat.title': 'Що ви знайдете у FoodLand',
+    'cat.ciasta': 'Торти',
+    'cat.ciastka': 'Печиво',
+    'cat.miody': 'Мед',
+    'cat.mrozonki': 'Заморозка',
+    'cat.nabial': 'Молочне',
+    'cat.okazje': 'Акції',
     'cat.pieczywo': 'Хліб', 'cat.pierogi': 'Вареники', 'cat.slodycze': 'Солодощі', 'cat.warzywa': 'Овочі', 'cat.wedliny': 'Ковбаси', 'cat.napoje': 'Напої',
     'contact.title': 'Контакти', 'contact.address': 'Адреса', 'contact.phone': 'Телефон', 'contact.facebook': 'Відвідайте нашу сторінку',
     'map.route': '🚗 Прокласти маршрут до магазину',
@@ -778,6 +796,12 @@ const translations = {
     'hero.cta': 'Vezi ofertele',
     'hero.stat1': 'Produse', 'hero.stat2': 'Parcare gratuită', 'hero.stat3': 'Zile pe săptămână',
     'cat.title': 'Ce veți găsi la FoodLand',
+    'cat.ciasta': 'Torturi',
+    'cat.ciastka': 'Biscuiți',
+    'cat.miody': 'Miere',
+    'cat.mrozonki': 'Congelate',
+    'cat.nabial': 'Lactate',
+    'cat.okazje': 'Oferte',
     'cat.pieczywo': 'Pâine', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Dulciuri', 'cat.warzywa': 'Legume', 'cat.wedliny': 'Mezeluri', 'cat.napoje': 'Băuturi',
     'contact.title': 'Contact', 'contact.address': 'Adresă', 'contact.phone': 'Telefon', 'contact.facebook': 'Vizitați pagina noastră',
     'map.route': '🚗 Obține indicații către magazin',
@@ -1013,7 +1037,7 @@ function initImageGroups() {
     return;
   }
 
-  const defaultKategorie = ['pieczywo','pierogi','slodycze','warzywa','wedliny','napoje'].map((n, i) => ({
+  const defaultKategorie = ['pieczywo','ciasta','ciastka','miody','mrozonki','nabial','okazje','warzywa','wedliny'].map((n, i) => ({
     id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
   }));
   if (!adminState.images.kategorie || adminState.images.kategorie.length === 0) {
