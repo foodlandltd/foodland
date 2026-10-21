@@ -16,6 +16,7 @@ body{
 }
 
 img{max-width:100%;display:block;border-radius:inherit}
+#holidayBannerWrapper { display: flex !important; }
 #adminPanel:not([data-admin-active="true"]) { display: none !important; }
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;border:none;background:none;cursor:pointer}
@@ -349,7 +350,7 @@ input:checked + .slider:before { transform: translateX(20px); }
       <button data-lang="ro">RO</button>
     </div>
     
-    <div id="holidayBannerWrapper" style="display: flex;">
+    <div id="holidayBannerWrapper" style="display: flex !important;">
       <div id="holidayBanner">Nadchodzi: Halloween za 11 dni</div>
       <div id="holidayDropdown">
         <div class="holiday-item" data-country="uk" tabindex="0" aria-label="Halloween">
@@ -1818,7 +1819,7 @@ async function renderCategories() {
         const safeName = rawName.toLowerCase()     .replace(/ą/g, 'a').replace(/ć/g, 'c').replace(/ę/g, 'e')     .replace(/ł/g, 'l').replace(/ń/g, 'n').replace(/ó/g, 'o')     .replace(/ś/g, 's').replace(/ź/g, 'z').replace(/ż/g, 'z')     .replace(/\s+/g, '');
         imgSrc = `./images/kategorie/${safeName}.jpg`;
     }
-
+    document.getElementById('catGrid').dataset.ratio = '16/9';
     prepared.push({ item, title, imgSrc });
   }
 
