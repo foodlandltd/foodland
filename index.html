@@ -443,7 +443,17 @@ input:checked + .slider:before { transform: translateX(20px); }
   <section class="categories" id="kategorie">
     <div class="section-content">
       <div class="sticky-header glass" id="headerKategorie"><h2 class="font-logo" data-i18n="cat.title">Co znajdziesz w FoodLand</h2></div>
-      <div class="cat-grid" id="catGrid" data-ratio="16/9" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));"></div>
+     <div class="cat-grid" id="catGrid" data-ratio="16/9" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
+  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Wędliny" src="./images/kategorie/wedliny.jpg"><div class="overlay"><h3>Wędliny</h3></div></div></div>
+  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Warzywa" src="./images/kategorie/warzywa.jpg"><div class="overlay"><h3>Warzywa</h3></div></div></div>
+  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Nabiał" src="./images/kategorie/nabial.jpg"><div class="overlay"><h3>Nabiał</h3></div></div></div>
+  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Pieczywo" src="./images/kategorie/pieczywo.jpg"><div class="overlay"><h3>Pieczywo</h3></div></div></div>
+  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Ciasta" src="./images/kategorie/ciasta.jpg"><div class="overlay"><h3>Ciasta</h3></div></div></div>
+  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Ciastka" src="./images/kategorie/ciastka.jpg"><div class="overlay"><h3>Ciastka</h3></div></div></div>
+  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Miód" src="./images/kategorie/miody.jpg"><div class="overlay"><h3>Miód</h3></div></div></div>
+  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Mrożonki" src="./images/kategorie/mrozonki.jpg"><div class="overlay"><h3>Mrożonki</h3></div></div></div>
+  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Okazje" src="./images/kategorie/okazje.jpg"><div class="overlay"><h3>Okazje</h3></div></div></div>
+</div>
   </section>
 
   <section class="promos" id="promocje">
@@ -1784,6 +1794,7 @@ function applyImageSettings() {
 }
 
 async function renderCategories() {
+  return; // Zatrzymujemy skrypt, bo kafelki są już w HTML
   const grid = document.getElementById('catGrid');
   if (!grid) return;
 
