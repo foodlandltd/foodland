@@ -1774,7 +1774,7 @@ async function renderCategories() {
     }
     
     if (!imgSrc) {
-        const safeName = rawName.toLowerCase().replace(/\s+/g, '');
+        const safeName = rawName.toLowerCase()     .replace(/ą/g, 'a').replace(/ć/g, 'c').replace(/ę/g, 'e')     .replace(/ł/g, 'l').replace(/ń/g, 'n').replace(/ó/g, 'o')     .replace(/ś/g, 's').replace(/ź/g, 'z').replace(/ż/g, 'z')     .replace(/\s+/g, '');
         imgSrc = `./images/kategorie/${safeName}.jpg`;
     }
 
