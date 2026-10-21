@@ -328,7 +328,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 }
 </style>
 <link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
-<body class="admin-open">
+<body>
 
 <header class="header">
   <div class="header-left-spacer"></div>
@@ -2710,6 +2710,9 @@ window.addEventListener('DOMContentLoaded', async () => {
       msg.style.color = '#00843d';
     });
   }
+    const adminPanel = document.getElementById('adminPanel');
+  if (adminPanel) adminPanel.hidden = true;
+  document.body.classList.remove('admin-open');
 });
 </script>
 
