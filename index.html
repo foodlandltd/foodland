@@ -351,7 +351,7 @@ input:checked + .slider:before { transform: translateX(20px); }
     </div>
     
     <div id="holidayBannerWrapper" style="display: flex !important;">
-      <div id="holidayBanner">Nadchodzi: Halloween za 11 dni</div>
+      <div id="holidayBanner">🎃 Nadchodzi: Halloween za 11 dni 🎃</div>
       <div id="holidayDropdown">
         <div class="holiday-item" data-country="uk" tabindex="0" aria-label="Halloween">
           <div class="holiday-item-header">
@@ -1453,7 +1453,7 @@ function updateHolidayBanner() {
   const dropdown = document.getElementById('holidayDropdown');
   if (!wrapper || !banner || !dropdown) return;
 
-  const today = new Date();
+  coconst today = new Date(new Date().toLocaleString("en-US", {timeZone: "Europe/London"}));nst today = new Date();
   today.setHours(0,0,0,0);
   const currentYear = today.getFullYear();
 
