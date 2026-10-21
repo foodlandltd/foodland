@@ -330,11 +330,29 @@ input:checked + .slider:before { transform: translateX(20px); }
   .header-left-spacer{width:120px;}
   .hero{padding-top:14rem;}
   
+  /* POPRAWKA: Zmniejszamy cały nagłówek, aby zmieścił się w jednej linii */
+  .header { 
+    padding: 0 0.5rem !important; 
+    height: 60px !important; 
+  }
+  .nav ul { 
+    gap: 0.4rem !important; 
+    flex-wrap: nowrap !important; /* Wymuszamy jedną linię */
+  }
+  .nav a { 
+    font-size: 0.7rem !important; /* Mniejsza czcionka w menu */
+  }
+  .header-actions { 
+    padding-right: 0 !important; 
+    transform: scale(0.75); /* Zmniejszamy całą prawą stronę (języki + święta) */
+    transform-origin: right center; 
+  }
+}
+  
   /* NOWE POPRAWKI DLA ANDROIDA */
   .header { padding: 0 1rem !important; }
   .nav ul { gap: 0.5rem !important; flex-wrap: wrap !important; justify-content: center; }
   .header-actions { padding-right: 0 !important; }
-  .lang-switch { transform: scale(0.85); transform-origin: right center; }
   #holidayBannerWrapper { transform: scale(0.85); transform-origin: right center; }
 }
 </style>
