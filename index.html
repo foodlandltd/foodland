@@ -7,12 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Playfair+Display:ital,wght@0,700;0,900;1,700&amp;display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   font-family:var(--font-body, 'Inter', system-ui, sans-serif);
   background: var(--bg-page, #fcfaf8);
   color: var(--text-main, #2a2a2a);
   line-height:1.5; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  max-width:100vw;
 }
 
 img{max-width:100%;display:block;border-radius:inherit}
@@ -52,49 +54,117 @@ button{font-family:inherit;border:none;background:none;cursor:pointer}
   transition: margin-right 0.3s ease;
   min-height: 100vh;
   position: relative;
+  max-width:100vw;
+  overflow-x:hidden;
   filter: saturate(var(--theme-saturate, 1)) brightness(var(--theme-brightness, 1)) contrast(var(--theme-contrast, 1)) hue-rotate(var(--theme-hue, 0deg));
 }
 body.admin-open #mainContent {
   margin-right: var(--admin-width);
 }
 
+/* ===== TOPBAR ===== */
 .header{
   position:fixed;top:0;left:0;right:0;z-index:9999;
-  padding:var(--header-link-padding);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:space-between;
   height:var(--header-height);
+  padding:0 1rem 0 2vw;
   background: rgba(255, 255, 255, 0.75) !important;
   backdrop-filter: blur(15px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
   transition: right .3s ease;
   box-shadow: 0 2px 15px rgba(0,0,0,0.05);
   border-bottom: 1px solid rgba(255,255,255,0.3);
+  gap:0.5rem;
 }
 body.admin-open .header { right: var(--admin-width); }
 
-.header-left-spacer{width:260px;flex-shrink:0;}
+/* Hamburger menu */
+.nav-hamburger{
+  position:relative;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  width:44px;height:44px;flex-shrink:0;
+  border-radius:10px;
+  background:var(--panel-inner);
+  cursor:pointer;
+  margin-left:auto;
+  z-index:10001;
+}
+.nav-hamburger span{
+  display:block;width:24px;height:3px;background:var(--text-main);border-radius:2px;
+  transition:all .25s ease;
+}
+.nav-hamburger:hover{background:var(--red-light);}
+.nav-hamburger:hover span{background:var(--red);}
 
-.nav{display:flex;align-items:center;justify-content:center;height:100%;flex:1;}
-.nav ul{list-style:none;display:flex;gap:2rem;align-items:center;margin:0;padding:0;height:100%;}
-.nav a{font-size:var(--header-font-size);font-weight:700;display:flex;align-items:center;height:100%;color:var(--text-main);}
-.nav a:hover{color:var(--red)}
+/* Dropdown menu */
+.nav-dropdown{
+  position:absolute;top:calc(100% + 10px);right:0;
+  min-width:220px;
+  background:var(--card-bg);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-sm);
+  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  padding:0.6rem;
+  display:flex;flex-direction:column;gap:0.3rem;
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:all .22s ease;
+  z-index:10005;
+}
+.nav-hamburger:hover .nav-dropdown,
+.nav-hamburger:focus-within .nav-dropdown,
+.nav-hamburger.open .nav-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-dropdown a{
+  padding:0.75rem 1rem;
+  border-radius:8px;
+  font-weight:700;font-size:0.95rem;
+  color:var(--text-main);
+  display:flex;align-items:center;gap:0.6rem;
+  transition:all .2s ease;
+}
+.nav-dropdown a:hover{background:var(--red-light);color:var(--red);}
 
-.header-actions{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:0.4rem;height:100%;padding-right:2vw;z-index:100;}
+/* Logo (mobile smaller) */
+.logo-wrapper{position:fixed;top:8px;left:2vw;z-index:10000;max-width:38vw;}
+.logo-img{height:160px;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));}
 
-.logo-wrapper{position:fixed;top:8px;left:2vw;z-index:10000;}
-.logo-img{height:160px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));}
+/* Header actions */
+.header-actions{
+  display:flex;align-items:center;gap:0.5rem;flex-shrink:0;
+}
 
-.lang-switch{display:flex;align-items:center;gap:.15rem;background:var(--panel-inner);padding:4px;border-radius:var(--radius-pill);}
-.lang-switch button{padding:.35rem .7rem;font-size:.75rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
+.lang-switch{
+  display:flex;align-items:center;gap:.1rem;background:var(--panel-inner);
+  padding:3px;border-radius:var(--radius-pill);
+  flex-wrap:nowrap;
+}
+.lang-switch button{padding:.3rem .55rem;font-size:.72rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
 .lang-switch button.active{background:var(--card-bg);color:var(--red);box-shadow:var(--shadow-sm);}
 
-#holidayBannerWrapper { position: relative; display: none; align-items: center; }
+/* Zoom toggle in topbar */
+.zoom-toggle-top{
+  display:flex;align-items:center;gap:0.4rem;
+  background:var(--panel-inner);
+  color:var(--text-main);
+  padding:0.45rem 0.7rem;
+  border-radius:var(--radius-pill);
+  font-size:0.72rem;font-weight:700;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .2s;
+}
+.zoom-toggle-top:hover{background:var(--red-light);color:var(--red);}
+.zoom-toggle-top.active{background:var(--red);color:#fff;}
+.zoom-toggle-top .zoom-icon{font-size:0.95rem;}
+
+/* Holiday banner */
+#holidayBannerWrapper { position: relative; display: none; align-items: center; flex-shrink:0;}
 #holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
 #holidayBanner {
   display: flex; align-items: center; gap: 0.5rem;
   background: var(--red-light); color: var(--red);
-  padding: 0.25rem 0.8rem; border-radius: var(--radius-pill);
+  padding: 0.25rem 0.7rem; border-radius: var(--radius-pill);
   font-size: 0.7rem; font-weight: 700; cursor: help; white-space: nowrap;
+  max-width: 200px; overflow: hidden; text-overflow: ellipsis;
   animation: fadeIn 0.5s ease; border: 1px solid rgba(208, 2, 27, 0.2);
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
@@ -102,7 +172,7 @@ body.admin-open .header { right: var(--admin-width); }
   position: absolute; top: calc(100% + 10px); right: 0;
   background: var(--card-bg); border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm); box-shadow: var(--shadow);
-  padding: 0.5rem; width: 380px; max-height: min(70vh, 520px);
+  padding: 0.5rem; width: 340px; max-width:90vw; max-height: min(70vh, 520px);
   overflow-y: auto; overscroll-behavior: contain; display: none;
   flex-direction: column; gap: 0.5rem; z-index: 10000;
 }
@@ -134,7 +204,6 @@ body.admin-open .header { right: var(--admin-width); }
 .holiday-item-desc p { margin: 0 0 0.5rem 0; }
 .holiday-link { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--red); text-decoration: underline; margin-top: 0.2rem; cursor: pointer; }
 .holiday-link:hover { color: #a00015; }
-@media (max-width: 1150px) { #holidayBannerWrapper { display: none !important; } }
 
 section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .hero{padding-top:18rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
@@ -149,10 +218,11 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .btn-primary{background:var(--btn-bg);color:var(--btn-text);}
 .btn-secondary{background:var(--panel-inner);color:var(--text-main);}
 .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;}
-.hero-stats{display:flex;gap:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.1);justify-content:center;width:100%;}
+.hero-stats{display:flex;gap:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.1);justify-content:center;width:100%;flex-wrap:wrap;}
 .hero-stats div strong{display:block;font-size:1.8rem;font-weight:900;color:var(--red);}
 .hero-stats div span{font-size:.75rem;text-transform:uppercase;font-weight:700;color:var(--text-muted);}
 
+/* ===== KATEGORIE: DRUKOWANE LITERY ===== */
 .cat-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
@@ -180,7 +250,16 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .cat-grid[data-ratio="4/3"] .cat-card{aspect-ratio:4/3;}
 .cat-grid[data-ratio="3/4"] .cat-card{aspect-ratio:3/4;}
 .cat-grid[data-ratio="16/9"] .cat-card{aspect-ratio:16/9;}
-.cat-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85));display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;color:#fff;}
+.cat-grid[data-ratio="1/1"] .cat-card{aspect-ratio:1/1;}
+.cat-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85));display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;color:#fff;}
+.cat-card .overlay h3{
+  font-size:1.05rem;
+  font-weight:900;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  margin:0;
+  line-height:1.25;
+}
 
 #eventBannerSection { padding: 0 4vw; margin-top: -2rem; margin-bottom: 2rem; display: none; }
 #eventBannerImg { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); object-fit: contain; max-height: none; display: block; }
@@ -206,7 +285,6 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 }
 .promo-img-base.loaded { opacity: 1; }
 .zoom-lens{position:absolute;width:300px;height:300px;border-radius:var(--radius);border:4px solid #fff;box-shadow:0 20px 40px rgba(0,0,0,0.4);pointer-events:none;display:none;background-repeat:no-repeat;z-index:100;}
-.zoom-btn-header { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.8rem; background: var(--panel-inner); color: var(--text-main); border-radius: var(--radius-pill); font-weight: 700; cursor: pointer; }
 .promo-empty { text-align:center; color:var(--text-muted); padding: 2rem; font-size: .95rem; }
 
 .contact-content{padding:3rem;border-radius:var(--radius);}
@@ -314,94 +392,88 @@ input:checked + .slider:before { transform: translateX(20px); }
 }
 .toggle-password-btn:hover { color: #d0021b; }
 
+/* ===== RESPONSYWNOŚĆ ===== */
+@media(max-width:1150px){
+  #holidayBannerWrapper{display:none !important;}
+}
+@media(max-width:1100px){
+  .header{padding:0 0.5rem 0 1vw;gap:0.4rem;}
+  .logo-wrapper{max-width:34vw;}
+  .logo-img{height:110px;}
+  .zoom-toggle-top span.zoom-label{display:none;}
+  .zoom-toggle-top{padding:0.45rem 0.55rem;}
+  .lang-switch button{padding:.28rem .5rem;font-size:.68rem;}
+}
 @media(max-width:900px){
   body.admin-open #mainContent { margin-right: 0; }
   body.admin-open .header { right: 0; }
   .admin-panel { width: 100vw; }
-  .logo-img{height:100px;}
-  .header-left-spacer{width:160px;}
+  .logo-img{height:90px;}
+  .logo-wrapper{max-width:30vw;}
   .contact-grid{grid-template-columns:1fr;}
-}
-@media(max-width:600px){
-  .logo-img{height:70px;}
-  .header-left-spacer{width:120px;}
   .hero{padding-top:14rem;}
+  .hero-copy{padding:2rem 1.2rem;}
+  .hero-stats{gap:1.5rem;}
+  .header{height:90px;}
+  .zoom-toggle-top .zoom-icon{font-size:1.1rem;}
+}
+@media(max-width:700px){
+  .logo-img{height:70px;}
+  .logo-wrapper{max-width:26vw;top:6px;left:1.5vw;}
+  .header{height:80px;padding:0 0.4rem;}
+  .nav-hamburger{width:40px;height:40px;}
+  .nav-hamburger span{width:22px;height:2.5px;}
+  .lang-switch button{padding:.25rem .42rem;font-size:.62rem;}
+  .hero{padding-top:11rem;min-height:auto;padding-bottom:4rem;}
+  .hero h1{font-size:2rem;}
+  .hero-lead{font-size:1rem;}
+  section{padding:5rem 4vw 4rem;}
+  .sticky-header{padding:1rem 1.2rem;margin-bottom:2rem;}
+  .contact-content{padding:1.2rem;}
+  .promo-banner-container{padding:0.5rem;}
+}
+@media(max-width:480px){
+  .logo-img{height:56px;}
+  .header{height:70px;}
+  .lang-switch{gap:0;}
+  .lang-switch button{padding:.22rem .35rem;font-size:.58rem;}
+  .header-actions{gap:0.3rem;}
+  .hero-stats{gap:1rem;flex-wrap:wrap;}
+  .cat-grid{grid-template-columns:1fr 1fr !important;gap:0.8rem;}
+  .cat-card .overlay{padding:0.8rem;}
+  .cat-card .overlay h3{font-size:0.85rem;}
 }
 </style>
 <link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
 <body>
 
 <header class="header">
-  <div class="header-left-spacer"></div>
-  <nav class="nav">
-    <ul>
-      <li><a href="#kategorie" data-i18n="nav.categories">Kategorie</a></li>
-      <li><a href="#promocje" data-i18n="nav.promos">Promocje</a></li>
-      <li><a href="#kontakt" data-i18n="nav.contact">Kontakt</a></li>
-    </ul>
-  </nav>
-  <div class="header-actions">
+  <div class="header-actions" style="margin-right:auto;">
     <div class="lang-switch" id="lang">
       <button data-lang="pl" class="active">PL</button>
       <button data-lang="en">EN</button>
       <button data-lang="uk">UA</button>
       <button data-lang="ro">RO</button>
     </div>
-    
-    <div id="holidayBannerWrapper" style="display: flex;">
-      <div id="holidayBanner">Nadchodzi: Halloween za 11 dni</div>
-      <div id="holidayDropdown">
-        <div class="holiday-item" data-country="uk" tabindex="0" aria-label="Halloween">
-          <div class="holiday-item-header">
-            <div class="holiday-name-wrap">
-              <span class="holiday-flag-badge" data-country="uk"></span>
-              <span>Halloween</span>
-            </div>
-            <span class="holiday-days">11 dni</span>
-            <span class="holiday-chevron" aria-hidden="true">▾</span>
-          </div>
-          <div class="holiday-item-desc">
-            <div>
-              <div class="holiday-date-line"><span>📅</span><span>31 października 2026 · UK</span></div>
-              <p>Halloween obchodzone jest 31 października, w wigilię Wszystkich Świętych.</p>
-              <a href="https://en.wikipedia.org/wiki/Halloween" target="_blank" rel="noopener noreferrer" class="holiday-link">Dowiedz się więcej (UK) →</a>
-            </div>
-          </div>
-        </div>
-        <div class="holiday-item" data-country="uk" tabindex="0" aria-label="Guy Fawkes Night">
-          <div class="holiday-item-header">
-            <div class="holiday-name-wrap">
-              <span class="holiday-flag-badge" data-country="uk"></span>
-              <span>Guy Fawkes Night</span>
-            </div>
-            <span class="holiday-days">16 dni</span>
-            <span class="holiday-chevron" aria-hidden="true">▾</span>
-          </div>
-          <div class="holiday-item-desc">
-            <div>
-              <div class="holiday-date-line"><span>📅</span><span>5 listopada 2026 · UK</span></div>
-              <p>Noc Ognisk obchodzona 5 listopada upamiętnia udaremniony zamach na parlament angielski w 1605 roku.</p>
-              <a href="https://en.wikipedia.org/wiki/Guy_Fawkes_Night" target="_blank" rel="noopener noreferrer" class="holiday-link">Dowiedz się więcej (UK) →</a>
-            </div>
-          </div>
-        </div>
-        <div class="holiday-item" data-country="pl" tabindex="0" aria-label="Narodowe Święto Niepodległości">
-          <div class="holiday-item-header">
-            <div class="holiday-name-wrap">
-              <span class="holiday-flag-badge" data-country="pl"></span>
-              <span>Narodowe Święto Niepodległości</span>
-            </div>
-            <span class="holiday-days">22 dni</span>
-            <span class="holiday-chevron" aria-hidden="true">▾</span>
-          </div>
-          <div class="holiday-item-desc">
-            <div>
-              <div class="holiday-date-line"><span>📅</span><span>11 listopada 2026 · Polska</span></div>
-              <p>Święto państwowe obchodzone 11 listopada dla upamiętnienia odzyskania przez Polskę niepodległości w 1918 roku.</p>
-              <a href="https://pl.wikipedia.org/wiki/Narodowe_Święto_Niepodległości" target="_blank" rel="noopener noreferrer" class="holiday-link">Dowiedz się więcej (Polska) →</a>
-            </div>
-          </div>
-        </div></div>
+    <div id="holidayBannerWrapper" style="display: none;">
+      <div id="holidayBanner"></div>
+      <div id="holidayDropdown"></div>
+    </div>
+  </div>
+
+  <div class="header-actions" style="justify-content:flex-end;">
+    <button id="zoomToggleTop" class="zoom-toggle-top" title="Lupa">
+      <span class="zoom-icon">🔍</span>
+      <span class="zoom-label" id="zoomLabel">Lupa: ON</span>
+    </button>
+
+    <div class="nav-hamburger" id="navHamburger" tabindex="0" role="button" aria-label="Menu">
+      <span></span><span></span><span></span>
+      <div class="nav-dropdown" id="navDropdown">
+        <a href="#kategorie" data-i18n="nav.categories">KATEGORIE</a>
+        <a href="#promocje" data-i18n="nav.promos">PROMOCJE</a>
+        <a href="#kontakt" data-i18n="nav.contact">KONTAKT</a>
+      </div>
     </div>
   </div>
 </header>
@@ -433,7 +505,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 
   <section id="eventBannerSection" style="display: block;">
     <div class="section-content">
-      <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event" loading="lazy">
+      <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event" loading="lazy" decoding="async">
     </div>
   </section>
 
@@ -448,7 +520,6 @@ input:checked + .slider:before { transform: translateX(20px); }
     <div class="section-content">
       <div class="sticky-header glass" style="margin-bottom:2rem;" id="headerPromocje">
         <h2 class="font-logo" data-i18n="promo.title">Aktualne promocje</h2>
-        <button id="zoomToggleBtn" class="zoom-btn-header" data-i18n="promo.zoom.on">Lupa: Włączona</button>
       </div>
       <div class="promo-list" id="promoList"></div>
     </div>
@@ -479,7 +550,7 @@ input:checked + .slider:before { transform: translateX(20px); }
             </div>
           </div>
           <div class="map-wrap">
-            <iframe id="mapFrame" src="https://maps.google.com/maps?q=145%20High%20St%20E%2C%20Wallsend%20NE28%207RL%2C%20UK&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed&amp;hl=pl" allowfullscreen="" loading="lazy" style="width:100%; height:100%; border:0;"></iframe>
+            <iframe id="mapFrame" src="https://maps.google.com/maps?q=145%20High%20St%20E%2C%20Wallsend%20NE28%207RN%2C%20UK&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed&amp;hl=pl" allowfullscreen="" loading="lazy" style="width:100%; height:100%; border:0;"></iframe>
             <button id="mapRouteBtn" class="map-btn-route" data-i18n="map.route">🚗 Wyznacz trasę do sklepu</button>
           </div>
         </div>
@@ -529,11 +600,11 @@ input:checked + .slider:before { transform: translateX(20px); }
     <button id="adminPanelClose" style="font-size:1.2rem;color:#555;">✕</button>
   </header>
   <nav class="admin-tabs" id="adminTabs">
-    <button data-tab="texts" class="" data-i18n="admin.tab.texts">Teksty</button>
-    <button data-tab="themes" data-i18n="admin.tab.themes" class="">Motywy</button>
-    <button data-tab="images" data-i18n="admin.tab.images" class="">Zdjęcia</button>
-    <button data-tab="security" data-i18n="admin.tab.security" class="">Bezpieczeństwo</button>
-    <button data-tab="stats" data-i18n="admin.tab.stats" class="">Statystyki</button>
+    <button data-tab="texts" data-i18n="admin.tab.texts">Teksty</button>
+    <button data-tab="themes" data-i18n="admin.tab.themes">Motywy</button>
+    <button data-tab="images" data-i18n="admin.tab.images">Zdjęcia</button>
+    <button data-tab="security" data-i18n="admin.tab.security">Bezpieczeństwo</button>
+    <button data-tab="stats" data-i18n="admin.tab.stats">Statystyki</button>
     <button data-tab="html" data-i18n="admin.tab.html" class="active">Kod HTML</button>
   </nav>
   <div class="admin-panel-body">
@@ -704,12 +775,9 @@ const translations = {
     'hero.cta': 'Zobacz ofertę',
     'hero.stat1': 'Produktów', 'hero.stat2': 'Darmowy parking', 'hero.stat3': 'Dni w tygodniu',
     'cat.title': 'Co znajdziesz w FoodLand',
-    'cat.pieczywo': 'Pieczywo', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Słodycze', 'cat.warzywa': 'Warzywa', 'cat.wedliny': 'Wędliny', 'cat.napoje': 'Napoje',
     'contact.title': 'Kontakt', 'contact.address': 'Adres', 'contact.phone': 'Telefon', 'contact.hours': 'Godziny otwarcia', 'contact.facebook': 'Odwiedź naszą stronę',
     'map.route': '🚗 Wyznacz trasę do sklepu',
-    'promo.title': 'Aktualne promocje', 
-    'promo.zoom.on': 'Lupa: Włączona',
-    'promo.zoom.off': 'Lupa: Wyłączona',
+    'promo.title': 'Aktualne promocje',
     'refer.title': 'Poleć nas znajomemu', 'refer.desc': 'Wpisz adres e-mail znajomego – wyślemy mu link do naszej strony.', 'refer.send': 'Poleć',
     'refer.emailPlaceholder': 'znajomy@email.com',
     'footer.rights': 'Wszelkie prawa zastrzeżone.',
@@ -719,12 +787,10 @@ const translations = {
     'admin.panel.title': 'Panel administratora', 'admin.tab.texts': 'Teksty', 'admin.tab.themes': 'Motywy', 'admin.tab.stats': 'Statystyki', 'admin.tab.html': 'Kod HTML', 'admin.tab.images': 'Zdjęcia', 'admin.tab.security': 'Bezpieczeństwo',
     'admin.section.lang': 'Język edycji', 'admin.texts.info': 'Edycja dotyczy wybranego języka. Po zapisie tekst zostanie automatycznie zaktualizowany we wszystkich językach.',
     'admin.section.stats': 'Statystyki', 'admin.stats.1': 'Statystyka 1', 'admin.stats.2': 'Statystyka 2', 'admin.stats.3': 'Statystyka 3',
-    'admin.section.maintexts': 'Teksty główne', 'admin.section.contact': 'Dane kontaktowe', 'admin.contact.address': 'Adres', 'admin.contact.phone': 'Telefon',
+    'admin.section.maintexts': 'Teksty główne',
     'admin.section.themes': 'Motywy', 'admin.section.layout': 'Układ i efekty', 'admin.layout.title': 'Rozmiar tytułów', 'admin.layout.blur': 'Rozmycie tła', 'admin.layout.sticky': 'Wielkość okienek sekcji (padding)',
-    'admin.stats.title': 'Statystyki ruchu', 'admin.stats.footer': 'Dane zapisywane lokalnie.',
     'admin.commit': 'Zapisz na stałe',
     'admin.images.section': 'Zarządzanie zdjęciami', 'admin.images.group': 'Grupa zdjęć', 'admin.images.add': 'Dodaj nowe zdjęcie', 'admin.images.file': 'Plik (jpg/png/webp)', 'admin.images.name': 'Nazwa / podpis', 'admin.images.addBtn': 'Dodaj zdjęcie',
-    'admin.images.effects': 'Efekty 3D (globalne)', 'admin.images.tilt': 'Nachylenie (tilt)', 'admin.images.depth': 'Głębokość (perspective)', 'admin.images.rotate': 'Obrót przy hover',
     'admin.images.layout': 'Układ siatki kategorii', 'admin.images.cols': 'Min. szerokość kolumny (px)', 'admin.images.ratio': 'Proporcje kafelka',
     'admin.sec.title': 'Dane logowania administratora', 'admin.sec.login': 'Login', 'admin.sec.pass': 'Nowe hasło', 'admin.sec.email': 'Adres e-mail administratora', 'admin.sec.save': 'Zapisz dane logowania', 'admin.sec.sendMail': 'Wyślij nowe hasło na e-mail', 'admin.sec.info': 'Uwaga: dane są zapisywane w localStorage przeglądarki. Wysyłka e-mail odbywa się przez klienta pocztowego (mailto).',
     'holiday.upcoming': 'Nadchodzi: {name} za {days} dni',
@@ -747,12 +813,9 @@ const translations = {
     'hero.cta': 'See offers',
     'hero.stat1': 'Products', 'hero.stat2': 'Free parking', 'hero.stat3': 'Days a week',
     'cat.title': 'What you will find at FoodLand',
-    'cat.pieczywo': 'Bread', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Sweets', 'cat.warzywa': 'Vegetables', 'cat.wedliny': 'Cold Cuts', 'cat.napoje': 'Drinks',
     'contact.title': 'Contact', 'contact.address': 'Address', 'contact.phone': 'Phone', 'contact.hours': 'Opening hours', 'contact.facebook': 'Visit our page',
     'map.route': '🚗 Get directions to the shop',
-    'promo.title': 'Current promotions', 
-    'promo.zoom.on': 'Magnifier: On',
-    'promo.zoom.off': 'Magnifier: Off',
+    'promo.title': 'Current promotions',
     'refer.title': 'Recommend us to a friend', 'refer.desc': 'Enter your friend\'s e-mail – we will send them a link to our site.', 'refer.send': 'Recommend',
     'refer.emailPlaceholder': 'friend@email.com',
     'footer.rights': 'All rights reserved.',
@@ -762,12 +825,10 @@ const translations = {
     'admin.panel.title': 'Admin Panel', 'admin.tab.texts': 'Texts', 'admin.tab.themes': 'Themes', 'admin.tab.stats': 'Stats', 'admin.tab.html': 'HTML Code', 'admin.tab.images': 'Images', 'admin.tab.security': 'Security',
     'admin.section.lang': 'Edit Language', 'admin.texts.info': 'Editing applies to the selected language. After saving, text will be updated across all languages.',
     'admin.section.stats': 'Stats', 'admin.stats.1': 'Stat 1', 'admin.stats.2': 'Stat 2', 'admin.stats.3': 'Stat 3',
-    'admin.section.maintexts': 'Main texts', 'admin.section.contact': 'Contact Data', 'admin.contact.address': 'Address', 'admin.contact.phone': 'Phone',
+    'admin.section.maintexts': 'Main texts',
     'admin.section.themes': 'Themes', 'admin.section.layout': 'Layout & Effects', 'admin.layout.title': 'Title size', 'admin.layout.blur': 'Blur effect', 'admin.layout.sticky': 'Section box size (padding)',
-    'admin.stats.title': 'Traffic Stats', 'admin.stats.footer': 'Data saved locally.',
     'admin.commit': 'Commit changes',
     'admin.images.section': 'Image management', 'admin.images.group': 'Image group', 'admin.images.add': 'Add new image', 'admin.images.file': 'File (jpg/png/webp)', 'admin.images.name': 'Name / caption', 'admin.images.addBtn': 'Add image',
-    'admin.images.effects': '3D effects (global)', 'admin.images.tilt': 'Tilt', 'admin.images.depth': 'Depth (perspective)', 'admin.images.rotate': 'Rotate on hover',
     'admin.images.layout': 'Category grid layout', 'admin.images.cols': 'Min. column width (px)', 'admin.images.ratio': 'Tile aspect ratio',
     'admin.sec.title': 'Administrator credentials', 'admin.sec.login': 'Login', 'admin.sec.pass': 'New password', 'admin.sec.email': 'Administrator e-mail address', 'admin.sec.save': 'Save credentials', 'admin.sec.sendMail': 'Send new password to e-mail', 'admin.sec.info': 'Note: data is stored in browser localStorage. E-mail is sent via your mail client (mailto).',
     'holiday.upcoming': 'Upcoming: {name} in {days} days',
@@ -790,12 +851,9 @@ const translations = {
     'hero.cta': 'Переглянути пропозиції',
     'hero.stat1': 'Продуктів', 'hero.stat2': 'Безкоштовна парковка', 'hero.stat3': 'Днів на тиждень',
     'cat.title': 'Що ви знайдете у FoodLand',
-    'cat.pieczywo': 'Хліб', 'cat.pierogi': 'Вареники', 'cat.slodycze': 'Солодощі', 'cat.warzywa': 'Овочі', 'cat.wedliny': 'Ковбаси', 'cat.napoje': 'Напої',
     'contact.title': 'Контакти', 'contact.address': 'Адреса', 'contact.phone': 'Телефон', 'contact.hours': 'Години роботи', 'contact.facebook': 'Відвідайте нашу сторінку',
     'map.route': '🚗 Прокласти маршрут до магазину',
-    'promo.title': 'Поточні акції', 
-    'promo.zoom.on': 'Лупа: Увімкнена',
-    'promo.zoom.off': 'Лупа: Вимкнена',
+    'promo.title': 'Поточні акції',
     'refer.title': 'Порадьте нас друзям', 'refer.desc': 'Введіть e-mail друга – ми надішлемо йому посилання на наш сайт.', 'refer.send': 'Порадити',
     'refer.emailPlaceholder': 'друг@email.com',
     'footer.rights': 'Усі права захищені.',
@@ -805,12 +863,10 @@ const translations = {
     'admin.panel.title': 'Панель адміністратора', 'admin.tab.texts': 'Тексти', 'admin.tab.themes': 'Теми', 'admin.tab.stats': 'Статистика', 'admin.tab.html': 'Код HTML', 'admin.tab.images': 'Зображення', 'admin.tab.security': 'Безпека',
     'admin.section.lang': 'Мова редагування', 'admin.texts.info': 'Редагування стосується вибраної мови.',
     'admin.section.stats': 'Статистика', 'admin.stats.1': 'Стат 1', 'admin.stats.2': 'Стат 2', 'admin.stats.3': 'Стат 3',
-    'admin.section.maintexts': 'Головні тексти', 'admin.section.contact': 'Контактні дані', 'admin.contact.address': 'Адреса', 'admin.contact.phone': 'Телефон',
+    'admin.section.maintexts': 'Головні тексти',
     'admin.section.themes': 'Теми', 'admin.section.layout': 'Макет і ефекти', 'admin.layout.title': 'Розмір заголовків', 'admin.layout.blur': 'Розмиття фону', 'admin.layout.sticky': 'Розмір вікон секцій (padding)',
-    'admin.stats.title': 'Статистика відвідувань', 'admin.stats.footer': 'Дані зберігаються локально.',
     'admin.commit': 'Зберегти зміни',
     'admin.images.section': 'Керування зображеннями', 'admin.images.group': 'Група зображень', 'admin.images.add': 'Додати нове зображення', 'admin.images.file': 'Файл (jpg/png/webp)', 'admin.images.name': 'Назва / підпис', 'admin.images.addBtn': 'Додати зображення',
-    'admin.images.effects': '3D-ефекти (глобальні)', 'admin.images.tilt': 'Нахил (tilt)', 'admin.images.depth': 'Глибина (perspective)', 'admin.images.rotate': 'Обертання при наведенні',
     'admin.images.layout': 'Макет сітки категорій', 'admin.images.cols': 'Мін. ширина колонки (px)', 'admin.images.ratio': 'Пропорції плитки',
     'admin.sec.title': 'Дані для входу адміністратора', 'admin.sec.login': 'Логін', 'admin.sec.pass': 'Новий пароль', 'admin.sec.email': 'Електронна адреса адміністратора', 'admin.sec.save': 'Зберегти дані', 'admin.sec.sendMail': 'Надіслати новий пароль на e-mail', 'admin.sec.info': 'Увага: дані зберігаються в localStorage браузера. E-mail надсилається через поштовий клієнт (mailto).',
     'holiday.upcoming': 'Наближається: {name} через {days} днів',
@@ -833,12 +889,9 @@ const translations = {
     'hero.cta': 'Vezi ofertele',
     'hero.stat1': 'Produse', 'hero.stat2': 'Parcare gratuită', 'hero.stat3': 'Zile pe săptămână',
     'cat.title': 'Ce veți găsi la FoodLand',
-    'cat.pieczywo': 'Pâine', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Dulciuri', 'cat.warzywa': 'Legume', 'cat.wedliny': 'Mezeluri', 'cat.napoje': 'Băuturi',
     'contact.title': 'Contact', 'contact.address': 'Adresă', 'contact.phone': 'Telefon', 'contact.hours': 'Program de lucru', 'contact.facebook': 'Vizitați pagina noastră',
     'map.route': '🚗 Obține indicații către magazin',
-    'promo.title': 'Promoții actuale', 
-    'promo.zoom.on': 'Lupă: Pornită',
-    'promo.zoom.off': 'Lupă: Oprită',
+    'promo.title': 'Promoții actuale',
     'refer.title': 'Recomandă-ne unui prieten', 'refer.desc': 'Introdu e-mailul prietenului – îi vom trimite un link către site-ul nostru.', 'refer.send': 'Recomandă',
     'refer.emailPlaceholder': 'prieten@email.com',
     'footer.rights': 'Toate drepturile rezervate.',
@@ -848,12 +901,10 @@ const translations = {
     'admin.panel.title': 'Panou Administrator', 'admin.tab.texts': 'Texte', 'admin.tab.themes': 'Teme', 'admin.tab.stats': 'Statistici', 'admin.tab.html': 'Cod HTML', 'admin.tab.images': 'Imagini', 'admin.tab.security': 'Securitate',
     'admin.section.lang': 'Limba de editare', 'admin.texts.info': 'Editarea se aplică limbii selectate.',
     'admin.section.stats': 'Statistici', 'admin.stats.1': 'Stat 1', 'admin.stats.2': 'Stat 2', 'admin.stats.3': 'Stat 3',
-    'admin.section.maintexts': 'Texte principale', 'admin.section.contact': 'Date de contact', 'admin.contact.address': 'Adresă', 'admin.contact.phone': 'Telefon',
+    'admin.section.maintexts': 'Texte principale',
     'admin.section.themes': 'Teme', 'admin.section.layout': 'Aspect și efecte', 'admin.layout.title': 'Mărime titluri', 'admin.layout.blur': 'Efect blur', 'admin.layout.sticky': 'Mărime casete secțiuni (padding)',
-    'admin.stats.title': 'Statistici trafic', 'admin.stats.footer': 'Datele sunt salvate local.',
     'admin.commit': 'Salvează modificările',
     'admin.images.section': 'Gestionare imagini', 'admin.images.group': 'Grup de imagini', 'admin.images.add': 'Adaugă imagine nouă', 'admin.images.file': 'Fișier (jpg/png/webp)', 'admin.images.name': 'Nume / legendă', 'admin.images.addBtn': 'Adaugă imagine',
-    'admin.images.effects': 'Efecte 3D (globale)', 'admin.images.tilt': 'Înclinare (tilt)', 'admin.images.depth': 'Adâncime (perspective)', 'admin.images.rotate': 'Rotire la hover',
     'admin.images.layout': 'Aspect grilă categorii', 'admin.images.cols': 'Lățime min. coloană (px)', 'admin.images.ratio': 'Proporții dale',
     'admin.sec.title': 'Date de autentificare administrator', 'admin.sec.login': 'Login', 'admin.sec.pass': 'Parolă nouă', 'admin.sec.email': 'Adresă e-mail administrator', 'admin.sec.save': 'Salvează datele', 'admin.sec.sendMail': 'Trimite parola nouă pe e-mail', 'admin.sec.info': 'Notă: datele sunt stocate în localStorage. E-mailul este trimis prin clientul poștal (mailto).',
     'holiday.upcoming': 'Urmează: {name} în {days} zile',
@@ -873,49 +924,106 @@ const translations = {
 
 const BASE_TRANSLATIONS = JSON.parse(JSON.stringify(translations));
 
-/* ===== SŁOWNIK KATEGORII ===== */
+/* ===== SŁOWNIK KATEGORII – ROZBUDOWANY ===== */
+/* Kategorie mogą być dodawane w przyszłości. Wystarczy dodać nowy wpis do CATEGORY_DICTIONARY
+   i dodać kategorię w panelu admina (nazwa musi pasować do 'pl'). */
 const CATEGORY_DICTIONARY = [
-  { pl: 'Pieczywo', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
-  { pl: 'Pierogi', en: 'Pierogi', uk: 'Вареники', ro: 'Pierogi' },
-  { pl: 'Słodycze', en: 'Sweets', uk: 'Солодощі', ro: 'Dulciuri' },
-  { pl: 'Warzywa', en: 'Vegetables', uk: 'Овочі', ro: 'Legume' },
-  { pl: 'Wędliny', en: 'Cold Cuts', uk: 'Ковбаси', ro: 'Mezeluri' },
-  { pl: 'Napoje', en: 'Drinks', uk: 'Напої', ro: 'Băuturi' },
-  { pl: 'Nabiał', en: 'Dairy', uk: 'Молочне', ro: 'Lactate' },
-  { pl: 'Sery', en: 'Cheeses', uk: 'Сири', ro: 'Brânzeturi' },
-  { pl: 'Mięso', en: 'Meat', uk: 'М\'ясо', ro: 'Carne' },
-  { pl: 'Ryby', en: 'Fish', uk: 'Риба', ro: 'Pește' },
-  { pl: 'Owoce', en: 'Fruits', uk: 'Фрукти', ro: 'Fructe' },
-  { pl: 'Mrożonki', en: 'Frozen Food', uk: 'Заморозка', ro: 'Congelate' },
-  { pl: 'Przyprawy', en: 'Spices', uk: 'Спеції', ro: 'Condimente' },
-  { pl: 'Kawa', en: 'Coffee', uk: 'Кава', ro: 'Cafea' },
-  { pl: 'Herbata', en: 'Tea', uk: 'Чай', ro: 'Ceai' },
-  { pl: 'Leki', en: 'Medicines', uk: 'Ліки', ro: 'Medicamente' },
-  { pl: 'Kosmetyki', en: 'Cosmetics', uk: 'Косметика', ro: 'Cosmetice' },
-  { pl: 'Chemia', en: 'Household', uk: 'Побутова хімія', ro: 'Produse casnice' },
-  { pl: 'Dla dzieci', en: 'For Kids', uk: 'Для дітей', ro: 'Pentru copii' },
-  { pl: 'Zabawki', en: 'Toys', uk: 'Іграшки', ro: 'Jucării' },
+  // === PIEKARNIA ===
+  { pl: 'Pieczywo', en: 'Bread & Bakery', uk: 'Хліб та випічка', ro: 'Pâine și panificație' },
+  { pl: 'Chleb', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
+  { pl: 'Bułki', en: 'Bread rolls', uk: 'Булочки', ro: 'Chifle' },
   { pl: 'Piekarnia', en: 'Bakery', uk: 'Пекарня', ro: 'Brutărie' },
-  { pl: 'Garmażeria', en: 'Deli', uk: 'Гастрономія', ro: 'Gastronomie' },
   { pl: 'Ciasta', en: 'Cakes', uk: 'Торти', ro: 'Torturi' },
   { pl: 'Ciastka', en: 'Cookies', uk: 'Печиво', ro: 'Biscuiți' },
-  { pl: 'Chleb', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
-  { pl: 'Alkohole', en: 'Alcohol', uk: 'Алкоголь', ro: 'Alcool' },
-  { pl: 'Makarony', en: 'Pasta', uk: 'Макарони', ro: 'Paste' },
-  { pl: 'Ryż', en: 'Rice', uk: 'Рис', ro: 'Orez' },
-  { pl: 'Konserwy', en: 'Canned Food', uk: 'Консерви', ro: 'Conserve' },
-  { pl: 'Sosy', en: 'Sauces', uk: 'Соуси', ro: 'Sosuri' },
+
+  // === MIĘSO I WĘDLINY ===
+  { pl: 'Wędliny', en: 'Cold Cuts', uk: 'Ковбаси', ro: 'Mezeluri' },
+  { pl: 'Mięso', en: 'Meat', uk: 'М\'ясо', ro: 'Carne' },
+  { pl: 'Kiełbasy', en: 'Sausages', uk: 'Ковбаси', ro: 'Cârnați' },
+  { pl: 'Drób', en: 'Poultry', uk: 'Птиця', ro: 'Pui' },
+  { pl: 'Ryby', en: 'Fish', uk: 'Риба', ro: 'Pește' },
+  { pl: 'Garmażeria', en: 'Deli', uk: 'Гастрономія', ro: 'Gastronomie' },
+
+  // === NABIAŁ ===
+  { pl: 'Nabiał', en: 'Dairy', uk: 'Молочне', ro: 'Lactate' },
+  { pl: 'Sery', en: 'Cheeses', uk: 'Сири', ro: 'Brânzeturi' },
+  { pl: 'Mleko', en: 'Milk', uk: 'Молоко', ro: 'Lapte' },
+  { pl: 'Jogurty', en: 'Yoghurts', uk: 'Йогурти', ro: 'Iaurturi' },
+  { pl: 'Masło', en: 'Butter', uk: 'Масло', ro: 'Unt' },
+  { pl: 'Jajka', en: 'Eggs', uk: 'Яйця', ro: 'Ouă' },
+
+  // === WARZYWA I OWOCE ===
+  { pl: 'Warzywa', en: 'Vegetables', uk: 'Овочі', ro: 'Legume' },
+  { pl: 'Owoce', en: 'Fruits', uk: 'Фрукти', ro: 'Fructe' },
+  { pl: 'Zioła', en: 'Herbs', uk: 'Трави', ro: 'Ierburi' },
+
+  // === MROŻONKI ===
+  { pl: 'Mrożonki', en: 'Frozen Food', uk: 'Заморозка', ro: 'Congelate' },
+  { pl: 'Pierogi', en: 'Pierogi', uk: 'Вареники', ro: 'Pierogi' },
+  { pl: 'Lody', en: 'Ice cream', uk: 'Морозиво', ro: 'Înghețată' },
+
+  // === SŁODYCZE I PRZEKĄSKI ===
+  { pl: 'Słodycze', en: 'Sweets', uk: 'Солодощі', ro: 'Dulciuri' },
+  { pl: 'Czekolady', en: 'Chocolates', uk: 'Шоколад', ro: 'Ciocolată' },
+  { pl: 'Cukierki', en: 'Candies', uk: 'Цукерки', ro: 'Bomboane' },
+  { pl: 'Ciastka', en: 'Biscuits', uk: 'Печиво', ro: 'Biscuiți' },
   { pl: 'Przekąski', en: 'Snacks', uk: 'Снеки', ro: 'Gustări' },
-  { pl: 'Płatki', en: 'Cereals', uk: 'Пластівці', ro: 'Cereale' },
-  { pl: 'Miód', en: 'Honey', uk: 'Мед', ro: 'Miere' },
-  { pl: 'Dżemy', en: 'Jams', uk: 'Джеми', ro: 'Dulcețuri' },
-  { pl: 'Oleje', en: 'Oils', uk: 'Олії', ro: 'Uleiuri' },
-  { pl: 'Octy', en: 'Vinegars', uk: 'Оцти', ro: 'Oțeturi' },
+  { pl: 'Chipsy', en: 'Crisps', uk: 'Чипси', ro: 'Chipsuri' },
+  { pl: 'Orzechy', en: 'Nuts', uk: 'Горіхи', ro: 'Nuci' },
+
+  // === NAPOJE ===
+  { pl: 'Napoje', en: 'Drinks', uk: 'Напої', ro: 'Băuturi' },
   { pl: 'Wody', en: 'Waters', uk: 'Води', ro: 'Ape' },
   { pl: 'Soki', en: 'Juices', uk: 'Соки', ro: 'Sucuri' },
+  { pl: 'Napoje gazowane', en: 'Fizzy drinks', uk: 'Газовані напої', ro: 'Băuturi carbogazoase' },
+  { pl: 'Kawa', en: 'Coffee', uk: 'Кава', ro: 'Cafea' },
+  { pl: 'Herbata', en: 'Tea', uk: 'Чай', ro: 'Ceai' },
+
+  // === ALKOHOLE ===
+  { pl: 'Alkohole', en: 'Alcohol', uk: 'Алкоголь', ro: 'Alcool' },
   { pl: 'Piwo', en: 'Beer', uk: 'Пиво', ro: 'Bere' },
   { pl: 'Wino', en: 'Wine', uk: 'Вино', ro: 'Vin' },
-  { pl: 'Wódka', en: 'Vodka', uk: 'Горілка', ro: 'Vodcă' }
+  { pl: 'Wódka', en: 'Vodka', uk: 'Горілка', ro: 'Vodcă' },
+
+  // === PRODUKTY SUCHE ===
+  { pl: 'Makarony', en: 'Pasta', uk: 'Макарони', ro: 'Paste' },
+  { pl: 'Ryż', en: 'Rice', uk: 'Рис', ro: 'Orez' },
+  { pl: 'Kasze', en: 'Groats', uk: 'Крупи', ro: 'Crupe' },
+  { pl: 'Mąka', en: 'Flour', uk: 'Борошно', ro: 'Făină' },
+  { pl: 'Cukier', en: 'Sugar', uk: 'Цукор', ro: 'Zahăr' },
+  { pl: 'Płatki', en: 'Cereals', uk: 'Пластівці', ro: 'Cereale' },
+  { pl: 'Konserwy', en: 'Canned Food', uk: 'Консерви', ro: 'Conserve' },
+
+  // === PRZYPRAWY, SOSY, DODATKI ===
+  { pl: 'Przyprawy', en: 'Spices', uk: 'Спеції', ro: 'Condimente' },
+  { pl: 'Sosy', en: 'Sauces', uk: 'Соуси', ro: 'Sosuri' },
+  { pl: 'Oleje', en: 'Oils', uk: 'Олії', ro: 'Uleiuri' },
+  { pl: 'Octy', en: 'Vinegars', uk: 'Оцти', ro: 'Oțeturi' },
+  { pl: 'Miód', en: 'Honey', uk: 'Мед', ro: 'Miere' },
+  { pl: 'Dżemy', en: 'Jams', uk: 'Джеми', ro: 'Dulcețuri' },
+
+  // === ZDROWIE ===
+  { pl: 'Leki', en: 'Medicines', uk: 'Ліки', ro: 'Medicamente' },
+  { pl: 'Suplementy', en: 'Supplements', uk: 'Добавки', ro: 'Suplimente' },
+  { pl: 'Zioła', en: 'Herbal remedies', uk: 'Трави', ro: 'Remedii pe bază de plante' },
+
+  // === KOSMETYKI I CHEMIA ===
+  { pl: 'Kosmetyki', en: 'Cosmetics', uk: 'Косметика', ro: 'Cosmetice' },
+  { pl: 'Chemia', en: 'Household', uk: 'Побутова хімія', ro: 'Produse casnice' },
+  { pl: 'Środki czystości', en: 'Cleaning products', uk: 'Засоби для чищення', ro: 'Produse de curățenie' },
+
+  // === DLA DZIECI ===
+  { pl: 'Dla dzieci', en: 'For Kids', uk: 'Для дітей', ro: 'Pentru copii' },
+  { pl: 'Zabawki', en: 'Toys', uk: 'Іграшки', ro: 'Jucării' },
+  { pl: 'Pieluchy', en: 'Nappies', uk: 'Підгузки', ro: 'Scutece' },
+
+  // === ZWIERZĘTA ===
+  { pl: 'Karma dla zwierząt', en: 'Pet food', uk: 'Корм для тварин', ro: 'Hrană pentru animale' },
+
+  // === INNE ===
+  { pl: 'Okazje', en: 'Bargains', uk: 'Акції', ro: 'Oferte' },
+  { pl: 'Nowości', en: 'New arrivals', uk: 'Новинки', ro: 'Noutăți' },
+  { pl: 'Promocje', en: 'Promotions', uk: 'Акції', ro: 'Promoții' }
 ];
 
 function translateCategoryName(rawName, lang) {
@@ -952,12 +1060,10 @@ const DEFAULT_SETTINGS = {
 };
 const STORAGE_KEY = 'foodland:admin';
 let adminState = loadAdmin();
-let sessionState = null;
 let isLogged = false;
 let currentLang = 'pl';
 let editLang = 'pl';
 
-/* FIX: Liczniki wersji zapobiegające duplikatom przy asynchronicznym renderowaniu */
 let renderCategoriesVersion = 0;
 let renderPromosVersion = 0;
 let renderEventVersion = 0;
@@ -1078,7 +1184,9 @@ function initImageGroups() {
   if (!adminState.images.promocje || adminState.images.promocje.length === 0) {
     adminState.images.promocje = [
       { id: 'promo_gazetka_1', name: 'gazetka1', fileId: null, size: 100, order: 0, active: true },
-      { id: 'promo_gazetka_2', name: 'gazetka2', fileId: null, size: 100, order: 1, active: true }
+      { id: 'promo_gazetka_2', name: 'gazetka2', fileId: null, size: 100, order: 1, active: true },
+      { id: 'promo_gazetka_3', name: 'gazetka3', fileId: null, size: 100, order: 2, active: true },
+      { id: 'promo_gazetka_4', name: 'gazetka4', fileId: null, size: 100, order: 3, active: true }
     ];
   }
   if (!adminState.images.event || adminState.images.event.length === 0) {
@@ -1128,7 +1236,6 @@ function applyStats(lang) {
   };
   
   const plOverrides = adminState.statOverrides && adminState.statOverrides['pl'];
-  
   let src = { ...base[lang] };
   
   if (plOverrides) {
@@ -1157,11 +1264,16 @@ function applyContactData() {
 
 let zoomEnabled = true;
 function updateZoomButtonLabel() {
-  const btn = document.getElementById('zoomToggleBtn');
+  const btn = document.getElementById('zoomToggleTop');
+  const label = document.getElementById('zoomLabel');
   if (!btn) return;
-  const key = zoomEnabled ? 'promo.zoom.on' : 'promo.zoom.off';
-  const val = translations[currentLang]?.[key];
-  if (val !== undefined) btn.textContent = val;
+  if (zoomEnabled) {
+    btn.classList.add('active');
+    if (label) label.textContent = currentLang === 'pl' ? 'Lupa: ON' : (currentLang === 'en' ? 'Zoom: ON' : (currentLang === 'uk' ? 'Лупа: УВІМК' : 'Lupă: ON'));
+  } else {
+    btn.classList.remove('active');
+    if (label) label.textContent = currentLang === 'pl' ? 'Lupa: OFF' : (currentLang === 'en' ? 'Zoom: OFF' : (currentLang === 'uk' ? 'Лупа: ВИКЛ' : 'Lupă: OFF'));
+  }
 }
 
 /* ===== MAPA ===== */
@@ -1427,7 +1539,7 @@ async function renderImageList() {
     }
 
     div.innerHTML = `
-      <img src="${imgSrc}" alt="${item.name}" onerror="this.style.opacity=0.2">
+      <img src="${imgSrc}" alt="${item.name}" onerror="this.style.opacity=0.2" loading="lazy" decoding="async">
       <div class="img-meta">
         <strong>${item.name || 'Bez nazwy'}</strong>
         <small>${item.fileId ? 'IndexedDB (Blob)' : 'Brak pliku'}</small>
@@ -1542,7 +1654,6 @@ async function renderCategories() {
     const title = translateCategoryName(rawName, currentLang);
     let imgSrc = '';
     
-    // Próbuj pobrać z IndexedDB, jeśli nie ma - użyj pliku z folderu images
     if (item.fileId) {
       try {
         const dbRecord = await getImageFromDB(item.fileId);
@@ -1552,8 +1663,9 @@ async function renderCategories() {
       } catch (e) {}
     }
     
+    // Fallback dla Androida i innych – zdjęcie z folderu
     if (!imgSrc) {
-        const safeName = rawName.toLowerCase().replace(/\s+/g, '');
+        const safeName = rawName.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż]/g, '');
         imgSrc = `./images/kategorie/${safeName}.jpg`;
     }
 
@@ -1579,6 +1691,8 @@ async function renderCategories() {
     const img = document.createElement('img');
     img.alt = title;
     img.loading = 'lazy';
+    img.decoding = 'async';
+    img.setAttribute('referrerpolicy', 'no-referrer');
     img.onerror = function () {
       this.onerror = null;
       this.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
@@ -1623,9 +1737,8 @@ async function renderPromosSection() {
       } catch (e) {}
     }
     
-    // Fallback do folderu images/promocje
     if (!src && promo.name) {
-        const safeName = promo.name.toLowerCase().replace(/\s+/g, '');
+        const safeName = promo.name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż]/g, '');
         src = `./images/promocje/${safeName}.jpg`;
     }
 
@@ -1653,6 +1766,7 @@ async function renderPromosSection() {
     img.id = `promoImg${id}`;
     img.loading = 'lazy';
     img.decoding = 'async';
+    img.setAttribute('referrerpolicy', 'no-referrer');
 
     img.onload = function () {
       this.classList.add('loaded');
@@ -1698,7 +1812,6 @@ async function renderEventBanner() {
     } catch (e) {}
   }
   
-  // Fallback do folderu images/event
   if (!src) {
       src = `./images/event/baner.jpg`;
   }
@@ -1712,6 +1825,7 @@ async function renderEventBanner() {
 
   img.onload = () => { section.style.display = 'block'; };
   img.onerror = () => { section.style.display = 'none'; };
+  img.setAttribute('referrerpolicy', 'no-referrer');
   img.src = src;
 }
 
@@ -1739,7 +1853,6 @@ async function renderLogo() {
     } catch (e) {}
   }
   
-  // Fallback do folderu images
   if (!src) {
       src = `./images/logo.jpg`;
   }
@@ -1796,14 +1909,35 @@ function initZoom(containerId, imgId, lensId) {
     lens.style.backgroundPosition = `${-(x * zoom - lensW / 2)}px ${-(y * zoom - lensH / 2)}px`;
   });
 }
-const zoomToggleBtn = document.getElementById('zoomToggleBtn');
-if (zoomToggleBtn) {
-  zoomToggleBtn.addEventListener('click', () => {
+const zoomToggleTop = document.getElementById('zoomToggleTop');
+if (zoomToggleTop) {
+  zoomToggleTop.addEventListener('click', () => {
     zoomEnabled = !zoomEnabled;
     updateZoomButtonLabel();
     if (!zoomEnabled) document.querySelectorAll('.zoom-lens').forEach(l => l.style.display = 'none');
   });
 }
+
+/* ===== HAMBURGER ===== */
+(function(){
+  const hamburger = document.getElementById('navHamburger');
+  if (!hamburger) return;
+  // mobile: tap toggles .open
+  hamburger.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') return;
+    hamburger.classList.toggle('open');
+  });
+  // close on link click
+  hamburger.querySelectorAll('.nav-dropdown a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+    });
+  });
+  // close on outside click
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target)) hamburger.classList.remove('open');
+  });
+})();
 
 /* ===== SECRET TRIGGER I LOGOWANIE ===== */
 (function () {
@@ -1934,8 +2068,8 @@ document.querySelectorAll('.lang-edit-btn').forEach(btn => {
 const TEXT_ORDER = [
   'nav.categories', 'nav.promos', 'nav.contact',
   'hero.title1', 'hero.title2', 'hero.lead', 'hero.cta', 'hero.stat1', 'hero.stat2', 'hero.stat3',
-  'cat.title', 'cat.pieczywo', 'cat.pierogi', 'cat.slodycze', 'cat.warzywa', 'cat.wedliny', 'cat.napoje',
-  'promo.title', 'promo.zoom.on', 'promo.zoom.off',
+  'cat.title',
+  'promo.title',
   'contact.title', 'contact.address', 'contact.phone', 'contact.hours', 'contact.facebook',
   'refer.title', 'refer.desc', 'refer.send', 'refer.emailPlaceholder', 'footer.rights'
 ];
