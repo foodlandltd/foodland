@@ -560,7 +560,7 @@ input:checked + .slider:before { transform: translateX(20px); }
       <div class="contact-content glass">
         <div class="contact-grid">
           <div class="contact-data">
-            <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street East, NE28 7RL Wallsend</span></div></div>
+            <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street E, NE28 7RL Wallsend</span></div></div>
                         <div class="contact-item"><div class="icon">🕒</div><div><strong data-i18n="contact.hours">Godziny otwarcia</strong><br>
               <span class="hours-line" data-i18n="contact.hours.weekdays">Pon-Pt: 9:00–19:00</span>
               <span class="hours-line" data-i18n="contact.hours.saturday">Sob: 9:00–18:00</span>
@@ -578,7 +578,7 @@ input:checked + .slider:before { transform: translateX(20px); }
             </div>
           </div>
           <div class="map-wrap">
-            <iframe id="mapFrame" src="https://maps.google.com/maps?q=145%20High%20St%20E%2C%20Wallsend%20NE28%207RN%2C%20UK&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed&amp;hl=pl" allowfullscreen="" style="width:100%; height:100%; border:0;"></iframe>
+            <iframe id="mapFrame" src="https://maps.google.com/maps?q=145%20High%20St%20E%2C%20Wallsend%20NE28%207RL%2C%20UK&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed&amp;hl=pl" allowfullscreen="" style="width:100%; height:100%; border:0;"></iframe>
             <button id="mapRouteBtn" class="map-btn-route" data-i18n="map.route">🚗 Wyznacz trasę do sklepu</button>
           </div>
         </div>
@@ -1376,7 +1376,7 @@ function updateZoomButtonLabel() {
   }
 }
 
-const SHOP_ADDRESS = "145 High St E, Wallsend NE28 7RN, UK";
+const SHOP_ADDRESS = "145 High St E, Wallsend NE28 7RL, UK";
 
 function updateMapLanguage(lang) {
   const iframe = document.getElementById('mapFrame');
