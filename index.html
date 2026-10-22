@@ -9,7 +9,6 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  overflow-x: hidden;
   font-family:var(--font-body, 'Inter', system-ui, sans-serif);
   background: var(--bg-page, #fcfaf8);
   color: var(--text-main, #2a2a2a);
@@ -17,8 +16,6 @@ body{
 }
 
 img{max-width:100%;display:block;border-radius:inherit}
-#holidayBannerWrapper { display: flex !important; }
-#adminPanel:not([data-admin-active="true"]) { display: none !important; }
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;border:none;background:none;cursor:pointer}
 :root{
@@ -88,29 +85,16 @@ body.admin-open .header { right: var(--admin-width); }
 .logo-img{height:160px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));}
 
 .lang-switch{display:flex;align-items:center;gap:.15rem;background:var(--panel-inner);padding:4px;border-radius:var(--radius-pill);}
-  font-size:.75rem;
-  font-weight:700;
-  color:var(--text-muted);
-  border-radius:var(--radius-pill);
-  cursor: pointer;
-  z-index: 100;
-  position: relative;
-}
-.lang-switch button.active{
-  background:var(--card-bg);
-  color:var(--red);
-  box-shadow:var(--shadow-sm);
-}
+.lang-switch button{padding:.35rem .7rem;font-size:.75rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
+.lang-switch button.active{background:var(--card-bg);color:var(--red);box-shadow:var(--shadow-sm);}
 
-#holidayBannerWrapper { position: relative; display: none; align-items: center; z-index: 99999 !important; }
+#holidayBannerWrapper { position: relative; display: none; align-items: center; }
 #holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
 #holidayBanner {
   display: flex; align-items: center; gap: 0.5rem;
   background: var(--red-light); color: var(--red);
   padding: 0.25rem 0.8rem; border-radius: var(--radius-pill);
-  font-size: 0.7rem; font-weight: 700; cursor: help; 
-  white-space: normal; /* Pozwala na zawinięcie tekstu */
-  text-align: center;
+  font-size: 0.7rem; font-weight: 700; cursor: help; white-space: nowrap;
   animation: fadeIn 0.5s ease; border: 1px solid rgba(208, 2, 27, 0.2);
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
@@ -179,7 +163,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   position:relative;
   border-radius:var(--radius);
   overflow:hidden;
-  aspect-ratio:1/1;
+  aspect-ratio:16/9;
   box-shadow:var(--shadow-sm);
   background:#eee;
   transition:box-shadow .35s ease;
@@ -195,8 +179,8 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .cat-card:hover img{transform:scale(1.06);}
 .cat-grid[data-ratio="4/3"] .cat-card{aspect-ratio:4/3;}
 .cat-grid[data-ratio="3/4"] .cat-card{aspect-ratio:3/4;}
-.cat-card { aspect-ratio: 16/9 !important; }
-.cat-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85));display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;color:#fff; text-transform: uppercase;}
+.cat-grid[data-ratio="16/9"] .cat-card{aspect-ratio:16/9;}
+.cat-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85));display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;color:#fff;}
 
 #eventBannerSection { padding: 0 4vw; margin-top: -2rem; margin-bottom: 2rem; display: none; }
 #eventBannerImg { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); object-fit: contain; max-height: none; display: block; }
@@ -217,7 +201,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   display:block;
   border-radius:var(--radius-sm);
   cursor:crosshair;
-  opacity: 1 !important;
+  opacity:0;
   transition:opacity 0.25s ease;
 }
 .promo-img-base.loaded { opacity: 1; }
@@ -229,6 +213,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
 .contact-item{display:flex;gap:1rem;padding:1rem;border-radius:var(--radius-sm);margin-bottom:0.8rem;background:var(--panel-inner);}
 .contact-item .icon{width:40px;height:40px;background:var(--red);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.contact-item .hours-line { display:block; }
 .map-wrap{border-radius:var(--radius);overflow:hidden;min-height:400px; position:relative; display:flex; flex-direction:column;}
 .map-wrap iframe{width:100%;height:100%;border:0; flex:1;}
 .map-btn-route { margin-top: 10px; background: var(--btn-bg); color: #fff; padding: 1rem; border-radius: var(--radius-sm); font-weight: 700; text-align: center; text-decoration: none; display: block; transition: background 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; }
@@ -243,8 +228,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .refer-box input[type=email] { flex:1; min-width:180px; padding:0.6rem 0.8rem; border:1px solid #ccc; border-radius:8px; font-size:0.85rem; }
 .refer-box button { padding:0.6rem 1rem; border-radius:8px; background:var(--btn-bg); color:#fff; font-weight:700; font-size:0.8rem; }
 .refer-box .refer-msg { font-size:0.75rem; margin-top:0.5rem; color:var(--green); font-weight:600; min-height:1em; }
-#adminPanel { display: none !important; }
-#adminPanel[style*="display: block"], #adminPanel:not([hidden]) { display: flex !important; }
+
 .admin-panel{
   position:fixed;top:0;right:0;bottom:0;
   width:var(--admin-width);
@@ -339,50 +323,9 @@ input:checked + .slider:before { transform: translateX(20px); }
   .contact-grid{grid-template-columns:1fr;}
 }
 @media(max-width:600px){
-  /* 1. Nagłówek rośnie, by pomieścić wszystko */
-  .header {
-    height: auto !important;
-    padding: 10px 5px !important;
-    flex-direction: column !important; /* Elementy układają się pionowo */
-    gap: 10px !important;
-  }
-  .header-left-spacer { display: none !important; }
-
-  /* 2. Logo - wraca na swoje miejsce (nie jest już fixed) */
-  .logo-wrapper { 
-    position: relative !important; 
-    top: 0; 
-    left: 0; 
-    display: flex; 
-    justify-content: center; 
-    width: 100%;
-  }
-  .logo-img { height: 80px !important; } 
-
-  /* 3. Menu wraca na środek */
-  .nav { 
-    display: block !important; 
-    width: 100%; 
-  }
-  .nav ul { 
-    justify-content: center; 
-    gap: 1rem !important; 
-  }
-  .nav a { font-size: 0.8rem !important; }
-
-  /* 4. Prawa strona (języki + święta) */
-  .header-actions { 
-    width: 100%; 
-    flex-direction: column !important; 
-    align-items: center !important; 
-    padding-right: 0 !important; 
-  }
-  .lang-switch { 
-    margin-bottom: 5px; 
-    gap: 0.2rem !important; 
-  }
-  
-  .hero { padding-top: 14rem !important; }
+  .logo-img{height:70px;}
+  .header-left-spacer{width:120px;}
+  .hero{padding-top:14rem;}
 }
 </style>
 <link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
@@ -405,8 +348,8 @@ input:checked + .slider:before { transform: translateX(20px); }
       <button data-lang="ro">RO</button>
     </div>
     
-    <div id="holidayBannerWrapper" style="display: flex !important;">
-      <div id="holidayBanner">🎃 Nadchodzi: Halloween za 11 dni 🎃</div>
+    <div id="holidayBannerWrapper" style="display: flex;">
+      <div id="holidayBanner">Nadchodzi: Halloween za 11 dni</div>
       <div id="holidayDropdown">
         <div class="holiday-item" data-country="uk" tabindex="0" aria-label="Halloween">
           <div class="holiday-item-header">
@@ -488,26 +431,17 @@ input:checked + .slider:before { transform: translateX(20px); }
     </div>
   </section>
 
- <section id="eventBannerSection" style="display: block;">
-  <div class="section-content">
-    <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event">
-  </div>
-</section>
+  <section id="eventBannerSection" style="display: block;">
+    <div class="section-content">
+      <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event" loading="lazy">
+    </div>
+  </section>
 
   <section class="categories" id="kategorie">
     <div class="section-content">
       <div class="sticky-header glass" id="headerKategorie"><h2 class="font-logo" data-i18n="cat.title">Co znajdziesz w FoodLand</h2></div>
-     <div class="cat-grid" id="catGrid" data-ratio="16/9" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
-  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Wędliny" src="./images/kategorie/wedliny.jpg"><div class="overlay"><h3>Wędliny</h3></div></div></div>
-  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Warzywa" src="./images/kategorie/warzywa.jpg"><div class="overlay"><h3>Warzywa</h3></div></div></div>
-  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Nabiał" src="./images/kategorie/nabial.jpg"><div class="overlay"><h3>Nabiał</h3></div></div></div>
-  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Pieczywo" src="./images/kategorie/pieczywo.jpg"><div class="overlay"><h3>Pieczywo</h3></div></div></div>
-  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Ciasta" src="./images/kategorie/ciasta.jpg"><div class="overlay"><h3>Ciasta</h3></div></div></div>
-  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Ciastka" src="./images/kategorie/ciastka.jpg"><div class="overlay"><h3>Ciastka</h3></div></div></div>
-  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Miód" src="./images/kategorie/miody.jpg"><div class="overlay"><h3>Miód</h3></div></div></div>
-  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Mrożonki" src="./images/kategorie/mrozonki.jpg"><div class="overlay"><h3>Mrożonki</h3></div></div></div>
-  <div class="cat-card" style="aspect-ratio: 16/9 !important;"><div class="cat-card-inner"><img alt="Okazje" src="./images/kategorie/okazje.jpg"><div class="overlay"><h3>Okazje</h3></div></div></div>
-</div>
+      <div class="cat-grid" id="catGrid" data-ratio="16/9" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));"></div>
+    </div>
   </section>
 
   <section class="promos" id="promocje">
@@ -516,12 +450,8 @@ input:checked + .slider:before { transform: translateX(20px); }
         <h2 class="font-logo" data-i18n="promo.title">Aktualne promocje</h2>
         <button id="zoomToggleBtn" class="zoom-btn-header" data-i18n="promo.zoom.on">Lupa: Włączona</button>
       </div>
-      <div class="promo-list" id="promoList">
-  <div class="promo-banner-container"><img class="promo-img-base" src="./images/promocje/gazetka1.jpg" alt="Gazetka 1"></div>
-  <div class="promo-banner-container"><img class="promo-img-base" src="./images/promocje/gazetka2.jpg" alt="Gazetka 2"></div>
-  <div class="promo-banner-container"><img class="promo-img-base" src="./images/promocje/gazetka3.jpg" alt="Gazetka 3"></div>
-  <div class="promo-banner-container"><img class="promo-img-base" src="./images/promocje/gazetka4.jpg" alt="Gazetka 4"></div>
-</div>
+      <div class="promo-list" id="promoList"></div>
+    </div>
   </section>
 
   <section class="contact" id="kontakt">
@@ -530,9 +460,14 @@ input:checked + .slider:before { transform: translateX(20px); }
       <div class="contact-content glass">
         <div class="contact-grid">
           <div class="contact-data">
-            <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street E, NE28 7RN Wallsend</span></div></div> <div class="contact-item"><div class="icon">🕒</div><div><strong data-i18n="contact.hours">Godziny otwarcia</strong><br><span id="contact-hours-val">Pon-Pt: 9:00–19:00<br>Sob: 9:00–18:00<br>Ndz: 10:00–16:00</span></div></div>
+            <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street E, NE28 7RN Wallsend</span></div></div>
+            <div class="contact-item"><div class="icon">🕒</div><div><strong data-i18n="contact.hours">Godziny otwarcia</strong><br>
+              <span class="hours-line">Pon-Pt: 9:00–19:00</span>
+              <span class="hours-line">Sob: 9:00–18:00</span>
+              <span class="hours-line">Ndz: 10:00–16:00</span>
+            </div></div>
             <div class="contact-item"><div class="icon">📞</div><div><strong data-i18n="contact.phone">Telefon</strong><br><span id="contact-phone-val">+44 1234 567 890</span></div></div>
-            <div class="contact-item"><a href="https://www.facebook.com/foodlandshopsWallsend/" target="_blank" style="display:flex;align-items:center;gap:1rem;"><div class="icon" style="background:#1877f2;">f</div><div><strong>Facebook</strong><br><span data-i18n="contact.facebook">Odwiedź naszą stronę</span></div></a></div>
+            <div class="contact-item"><a href="https://www.facebook.com/foodlandshopsWallsend" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:1rem;"><div class="icon" style="background:#1877f2;">f</div><div><strong>Facebook</strong><br><span data-i18n="contact.facebook">Odwiedź naszą stronę</span></div></a></div>
             <div class="refer-box">
               <h4 data-i18n="refer.title">Poleć nas znajomemu</h4>
               <p data-i18n="refer.desc">Wpisz adres e-mail znajomego – wyślemy mu link do naszej strony.</p>
@@ -619,192 +554,12 @@ input:checked + .slider:before { transform: translateX(20px); }
       <div class="admin-field"><label data-i18n="admin.stats.3">Statystyka 3</label><input type="text" id="stat3-val-input"></div>
 
       <div class="admin-section-title" data-i18n="admin.section.maintexts">Teksty główne</div>
-      <div id="adminFields" style="display:flex;flex-direction:column;gap:.8rem;"><div class="admin-field"><label>nav.categories (PL)</label><textarea rows="2" data-key="nav.categories">Kategorie</textarea></div><div class="admin-field"><label>nav.promos (PL)</label><textarea rows="2" data-key="nav.promos">Promocje</textarea></div><div class="admin-field"><label>nav.contact (PL)</label><textarea rows="2" data-key="nav.contact">Kontakt</textarea></div><div class="admin-field"><label>hero.title1 (PL)</label><textarea rows="2" data-key="hero.title1">Polskie smaki</textarea></div><div class="admin-field"><label>hero.title2 (PL)</label><textarea rows="2" data-key="hero.title2">w Wallsend</textarea></div><div class="admin-field"><label>hero.lead (PL)</label><textarea rows="2" data-key="hero.lead">Serdecznie zapraszamy do naszego polskiego sklepu w Wallsend k. Newcastle. Znajdziecie tu 1500+ produktów, świeże wędliny, sery, pieczywo, pierogi oraz polskie leki i warzywa. Darmowy parking do 2 godzin tuż obok.</textarea></div><div class="admin-field"><label>hero.cta (PL)</label><textarea rows="2" data-key="hero.cta">Zobacz ofertę</textarea></div><div class="admin-field"><label>hero.stat1 (PL)</label><textarea rows="2" data-key="hero.stat1">Produktów</textarea></div><div class="admin-field"><label>hero.stat2 (PL)</label><textarea rows="2" data-key="hero.stat2">Darmowy parking</textarea></div><div class="admin-field"><label>hero.stat3 (PL)</label><textarea rows="2" data-key="hero.stat3">Dni w tygodniu</textarea></div><div class="admin-field"><label>cat.title (PL)</label><textarea rows="2" data-key="cat.title">Co znajdziesz w FoodLand</textarea></div><div class="admin-field"><label>cat.pieczywo (PL)</label><textarea rows="2" data-key="cat.pieczywo">Pieczywo</textarea></div><div class="admin-field"><label>cat.pierogi (PL)</label><textarea rows="2" data-key="cat.pierogi">Pierogi</textarea></div><div class="admin-field"><label>cat.slodycze (PL)</label><textarea rows="2" data-key="cat.slodycze">Słodycze</textarea></div><div class="admin-field"><label>cat.warzywa (PL)</label><textarea rows="2" data-key="cat.warzywa">Warzywa</textarea></div><div class="admin-field"><label>cat.wedliny (PL)</label><textarea rows="2" data-key="cat.wedliny">Wędliny</textarea></div><div class="admin-field"><label>cat.napoje (PL)</label><textarea rows="2" data-key="cat.napoje">Napoje</textarea></div><div class="admin-field"><label>promo.title (PL)</label><textarea rows="2" data-key="promo.title">Aktualne promocje</textarea></div><div class="admin-field"><label>promo.zoom.on (PL)</label><textarea rows="2" data-key="promo.zoom.on">Lupa: Włączona</textarea></div><div class="admin-field"><label>promo.zoom.off (PL)</label><textarea rows="2" data-key="promo.zoom.off">Lupa: Wyłączona</textarea></div><div class="admin-field"><label>contact.title (PL)</label><textarea rows="2" data-key="contact.title">Kontakt</textarea></div><div class="admin-field"><label>contact.address (PL)</label><textarea rows="2" data-key="contact.address">Adres</textarea></div><div class="admin-field"><label>contact.phone (PL)</label><textarea rows="2" data-key="contact.phone">Telefon</textarea></div><div class="admin-field"><label>contact.facebook (PL)</label><textarea rows="2" data-key="contact.facebook">Odwiedź naszą stronę</textarea></div><div class="admin-field"><label>refer.title (PL)</label><textarea rows="2" data-key="refer.title">Poleć nas znajomemu</textarea></div><div class="admin-field"><label>refer.desc (PL)</label><textarea rows="2" data-key="refer.desc">Wpisz adres e-mail znajomego – wyślemy mu link do naszej strony.</textarea></div><div class="admin-field"><label>refer.send (PL)</label><textarea rows="2" data-key="refer.send">Poleć</textarea></div><div class="admin-field"><label>refer.emailPlaceholder (PL)</label><textarea rows="2" data-key="refer.emailPlaceholder">znajomy@email.com</textarea></div><div class="admin-field"><label>footer.rights (PL)</label><textarea rows="2" data-key="footer.rights">Wszelkie prawa zastrzeżone.</textarea></div></div>
+      <div id="adminFields" style="display:flex;flex-direction:column;gap:.8rem;"></div>
     </div>
     
     <div class="admin-tabpage" data-page="themes">
       <div class="admin-section-title" data-i18n="admin.section.themes">Motywy</div>
-      <div id="themeRows" style="display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;"><div class="theme-row">
-      <span class="theme-label">Domyślny</span>
-      <button class="theme-mode-btn active" data-theme="default" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="default" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="default" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="default" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="default__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="default__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Boże Narodzenie</span>
-      <button class="theme-mode-btn " data-theme="christmas" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="christmas" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="christmas" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="christmas" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="christmas__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="christmas__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Wielkanoc</span>
-      <button class="theme-mode-btn " data-theme="easter" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="easter" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="easter" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="easter" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="easter__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="easter__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Halloween</span>
-      <button class="theme-mode-btn " data-theme="halloween" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="halloween" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="halloween" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="halloween" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="halloween__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="halloween__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Walentynki</span>
-      <button class="theme-mode-btn " data-theme="valentines" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="valentines" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="valentines" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="valentines" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="valentines__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="valentines__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Dzień Niepodległości PL</span>
-      <button class="theme-mode-btn " data-theme="independence_pl" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="independence_pl" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="independence_pl" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="independence_pl" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="independence_pl__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="independence_pl__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Dzień Niepodległości RO</span>
-      <button class="theme-mode-btn " data-theme="independence_ro" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="independence_ro" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="independence_ro" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="independence_ro" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="independence_ro__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="independence_ro__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Guy Fawkes Night (UK)</span>
-      <button class="theme-mode-btn " data-theme="guy_fawkes" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="guy_fawkes" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="guy_fawkes" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="guy_fawkes" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="guy_fawkes__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="guy_fawkes__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Dzień Św. Andrzeja</span>
-      <button class="theme-mode-btn " data-theme="st_andrew" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="st_andrew" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="st_andrew" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="st_andrew" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="st_andrew__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="st_andrew__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Dzień Matki</span>
-      <button class="theme-mode-btn " data-theme="mothers_day" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="mothers_day" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="mothers_day" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="mothers_day" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="mothers_day__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="mothers_day__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Dzień Ojca</span>
-      <button class="theme-mode-btn " data-theme="fathers_day" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="fathers_day" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="fathers_day" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="fathers_day" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="fathers_day__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="fathers_day__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Nowy Rok</span>
-      <button class="theme-mode-btn " data-theme="new_year" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="new_year" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="new_year" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="new_year" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="new_year__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="new_year__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Trzech Króli</span>
-      <button class="theme-mode-btn " data-theme="epiphany" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="epiphany" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="epiphany" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="epiphany" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="epiphany__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="epiphany__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Boże Ciało</span>
-      <button class="theme-mode-btn " data-theme="corpus_christi" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="corpus_christi" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="corpus_christi" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="corpus_christi" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="corpus_christi__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="corpus_christi__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Wszystkich Świętych</span>
-      <button class="theme-mode-btn " data-theme="all_saints" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="all_saints" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="all_saints" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="all_saints" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="all_saints__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="all_saints__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Dzień Kobiet</span>
-      <button class="theme-mode-btn " data-theme="women_day" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="women_day" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="women_day" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="women_day" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="women_day__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="women_day__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Dzień Dziecka</span>
-      <button class="theme-mode-btn " data-theme="children_day" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="children_day" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="children_day" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="children_day" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="children_day__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="children_day__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Święto Dziękczynienia</span>
-      <button class="theme-mode-btn " data-theme="thanksgiving" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="thanksgiving" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="thanksgiving" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="thanksgiving" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="thanksgiving__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="thanksgiving__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Święto Pracy</span>
-      <button class="theme-mode-btn " data-theme="labour_day" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="labour_day" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="labour_day" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="labour_day" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="labour_day__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="labour_day__light"><span>1</span></div>
-    </div>
-    </div><div class="theme-row">
-      <span class="theme-label">Dzień Ziemi</span>
-      <button class="theme-mode-btn " data-theme="earth_day" data-mode="light">Jasny</button>
-      <button class="theme-mode-btn " data-theme="earth_day" data-mode="medium">Średni</button>
-      <button class="theme-mode-btn " data-theme="earth_day" data-mode="dark">Ciemny</button>
-      <div class="theme-sliders" data-theme="earth_day" data-mode="light">
-      <div class="theme-slider-row"><label>Nasycenie</label><input type="range" min="0" max="2" step="0.05" value="1" data-f="saturate" data-key="earth_day__light"><span>1</span></div>
-      <div class="theme-slider-row"><label>Jasność</label><input type="range" min="0.5" max="1.5" step="0.05" value="1" data-f="brightness" data-key="earth_day__light"><span>1</span></div>
-    </div>
-    </div></div>
+      <div id="themeRows" style="display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;"></div>
 
       <div class="admin-section-title" data-i18n="admin.section.layout">Układ i efekty</div>
       
@@ -853,29 +608,7 @@ input:checked + .slider:before { transform: translateX(20px); }
         </select>
       </div>
 
-      <div id="imgList" style="display:flex;flex-direction:column;gap:0.6rem;"><div class="img-item">
-      <img src="blob:https://www.foodlandshops.co.uk/febdbe44-deda-488a-857e-0a74ac3b61f6" alt="halloween2026" onerror="this.style.opacity=0.2">
-      <div class="img-meta">
-        <strong>halloween2026</strong>
-        <small>IndexedDB (Blob)</small>
-      </div>
-      <div class="toggle-switch">
-        <input type="checkbox" id="toggle_img_1792607420075_ozgca" checked="">
-        <label for="toggle_img_1792607420075_ozgca" class="slider"></label>
-      </div>
-      <button class="btn-delete" title="Usuń zdjęcie">🗑️</button>
-    </div><div class="img-item">
-      <img src="blob:https://www.foodlandshops.co.uk/ba914c75-e7bb-414e-b1da-7cd63e1d9684" alt="christmas2026" onerror="this.style.opacity=0.2">
-      <div class="img-meta">
-        <strong>christmas2026</strong>
-        <small>IndexedDB (Blob)</small>
-      </div>
-      <div class="toggle-switch">
-        <input type="checkbox" id="toggle_img_1792607437181_455ws" checked="">
-        <label for="toggle_img_1792607437181_455ws" class="slider"></label>
-      </div>
-      <button class="btn-delete" title="Usuń zdjęcie">🗑️</button>
-    </div></div>
+      <div id="imgList" style="display:flex;flex-direction:column;gap:0.6rem;"></div>
 
       <div class="admin-section-title" data-i18n="admin.images.add">Dodaj nowe zdjęcie</div>
       <div class="admin-field">
@@ -900,7 +633,7 @@ input:checked + .slider:before { transform: translateX(20px); }
           <option value="1/1">Kwadrat 1:1</option>
           <option value="4/3">4:3</option>
           <option value="3/4">3:4</option>
-          <option value="16/9">16:9</option>
+          <option value="16/9" selected>16:9</option>
         </select>
       </div>
     </div>
@@ -924,13 +657,13 @@ input:checked + .slider:before { transform: translateX(20px); }
       </div>
       <button id="secSaveBtn" class="btn btn-primary" style="padding:0.6rem;font-size:0.85rem;" data-i18n="admin.sec.save">Zapisz dane logowania</button>
       <button id="secSendMailBtn" class="btn btn-secondary" style="padding:0.6rem;font-size:0.85rem;" data-i18n="admin.sec.sendMail">Wyślij nowe hasło na e-mail</button>
-      <p id="secMsg" style="font-size: 0.75rem; font-weight: 600; min-height: 1em; color: rgb(0, 132, 61);">Otwarto nową kartę z gotową wiadomością e-mail (Gmail).</p>
+      <p id="secMsg" style="font-size: 0.75rem; font-weight: 600; min-height: 1em; color: rgb(0, 132, 61);"></p>
       <p style="font-size:0.7rem;color:#888;margin-top:0.5rem;" data-i18n="admin.sec.info">Uwaga: dane są zapisywane w localStorage przeglądarki. Wysyłka e-mail odbywa się przez klienta pocztowego (mailto).</p>
     </div>
 
     <div class="admin-tabpage" data-page="stats">
       <div class="admin-section-title">Analityka Ruchu (Local Analytics)</div>
-      <div class="stat-grid" id="statsGrid"><div class="stat-box" style="grid-column: span 2; background: #e8f4ea; border-color: #c3e6cb;"><h3 style="font-size: 1.8rem; color: #00843d;">1</h3><p>Całkowite Wizyty</p></div><div class="stat-box"><h3>1</h3><p>Unikalni Użytkownicy</p></div><div class="stat-box"><h3>2</h3><p>Odsłony Strony</p></div><div class="stat-box"><h3>1</h3><p>Powroty</p></div><div class="stat-box"><h3>Chrome</h3><p>Najczęstsza Przeglądarka</p></div><div class="stat-box"><h3>Windows</h3><p>Najczęstszy System</p></div><div class="stat-box"><h3>Desktop</h3><p>Urządzenie</p></div><div class="stat-box"><h3>Bezpośredni</h3><p>Źródło Ruchu</p></div><div class="stat-box"><h3>pl</h3><p>Język przeglądarki</p></div><div class="stat-box"><h3>1920x1080</h3><p>Rozdzielczość</p></div><div class="stat-box"><h3>Europe/London</h3><p>Strefa czasowa</p></div><div class="stat-box"><h3>4g</h3><p>Typ połączenia</p></div><div class="stat-box"><h3>dark</h3><p>Motyw systemowy</p></div><div class="stat-box"><h3>13</h3><p>Kliknięcia</p></div><div class="stat-box"><h3>100%</h3><p>Maks. głębokość scrolla</p></div><div class="stat-box"><h3>100%</h3><p>Śr. głębokość scrolla</p></div><div class="stat-box"><h3>0</h3><p>Zgłoszenia formularza</p></div><div class="stat-box"><h3>0</h3><p>Wysłane polecenia</p></div><div class="stat-box"><h3>1</h3><p>Zmiany języka</p></div><div class="stat-box"><h3>0</h3><p>Logowania admina</p></div><div class="stat-box"><h3>0</h3><p>Błędy (JS)</p></div><div class="stat-box"><h3>21.10.2026, 16:32:40</h3><p>Pierwsza wizyta</p></div><div class="stat-box"><h3>21.10.2026, 19:19:35</h3><p>Ostatnia wizyta</p></div></div>
+      <div class="stat-grid" id="statsGrid"></div>
       <button id="sendReportBtn" class="report-btn">📧 Wyślij raport e-mail</button>
       <p style="font-size:0.7rem; color:#888; text-align:center; margin-top:1rem;">Dane zbierane lokalnie w przeglądarce użytkownika (LocalStorage).</p>
     </div>
@@ -953,15 +686,7 @@ input:checked + .slider:before { transform: translateX(20px); }
       <button id="importHtmlBtn" class="btn btn-primary" style="width:100%; padding:0.5rem; font-size:0.8rem;">Załaduj kod</button>
       
       <div class="admin-section-title" style="margin-top:1rem;">Historia wersji</div>
-      <div id="versionList" class="version-list">
-    <div class="version-item">
-      <span>index.html <small style="color:#888">(21.10.2026, 19:32:14)</small></span>
-      <div>
-        <button onclick="loadVersion(0)" style="background:#00843d;">Wczytaj</button>
-        <button onclick="deleteVersion(0)" style="background:#555;">X</button>
-      </div>
-    </div>
-  </div>
+      <div id="versionList" class="version-list"></div>
     </div>
   </div>
   <footer class="admin-panel-foot">
@@ -980,11 +705,7 @@ const translations = {
     'hero.stat1': 'Produktów', 'hero.stat2': 'Darmowy parking', 'hero.stat3': 'Dni w tygodniu',
     'cat.title': 'Co znajdziesz w FoodLand',
     'cat.pieczywo': 'Pieczywo', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Słodycze', 'cat.warzywa': 'Warzywa', 'cat.wedliny': 'Wędliny', 'cat.napoje': 'Napoje',
-    'contact.title': 'Kontakt', 'contact.address': 'Adres', 'contact.phone': 'Telefon', 'contact.facebook': 'Odwiedź naszą stronę',
-    'contact.hours': 'Godziny otwarcia',
-    'hours.weekdays': 'Pon-Pt: 9:00–19:00',
-    'hours.saturday': 'Sob: 9:00–18:00',
-    'hours.sunday': 'Ndz: 10:00–16:00',
+    'contact.title': 'Kontakt', 'contact.address': 'Adres', 'contact.phone': 'Telefon', 'contact.hours': 'Godziny otwarcia', 'contact.facebook': 'Odwiedź naszą stronę',
     'map.route': '🚗 Wyznacz trasę do sklepu',
     'promo.title': 'Aktualne promocje', 
     'promo.zoom.on': 'Lupa: Włączona',
@@ -1027,11 +748,7 @@ const translations = {
     'hero.stat1': 'Products', 'hero.stat2': 'Free parking', 'hero.stat3': 'Days a week',
     'cat.title': 'What you will find at FoodLand',
     'cat.pieczywo': 'Bread', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Sweets', 'cat.warzywa': 'Vegetables', 'cat.wedliny': 'Cold Cuts', 'cat.napoje': 'Drinks',
-    'contact.title': 'Contact', 'contact.address': 'Address', 'contact.phone': 'Phone', 'contact.facebook': 'Visit our page',
-    'contact.hours': 'Opening hours',
-    'hours.weekdays': 'Mon-Fri: 9:00–19:00',
-    'hours.saturday': 'Sat: 9:00–18:00',
-    'hours.sunday': 'Sun: 10:00–16:00',
+    'contact.title': 'Contact', 'contact.address': 'Address', 'contact.phone': 'Phone', 'contact.hours': 'Opening hours', 'contact.facebook': 'Visit our page',
     'map.route': '🚗 Get directions to the shop',
     'promo.title': 'Current promotions', 
     'promo.zoom.on': 'Magnifier: On',
@@ -1074,11 +791,7 @@ const translations = {
     'hero.stat1': 'Продуктів', 'hero.stat2': 'Безкоштовна парковка', 'hero.stat3': 'Днів на тиждень',
     'cat.title': 'Що ви знайдете у FoodLand',
     'cat.pieczywo': 'Хліб', 'cat.pierogi': 'Вареники', 'cat.slodycze': 'Солодощі', 'cat.warzywa': 'Овочі', 'cat.wedliny': 'Ковбаси', 'cat.napoje': 'Напої',
-    'contact.title': 'Контакти', 'contact.address': 'Адреса', 'contact.phone': 'Телефон', 'contact.facebook': 'Відвідайте нашу сторінку',
-    'contact.hours': 'Години роботи',
-    'hours.weekdays': 'Пн-Пт: 9:00–19:00',
-    'hours.saturday': 'Сб: 9:00–18:00',
-    'hours.sunday': 'Нд: 10:00–16:00',   
+    'contact.title': 'Контакти', 'contact.address': 'Адреса', 'contact.phone': 'Телефон', 'contact.hours': 'Години роботи', 'contact.facebook': 'Відвідайте нашу сторінку',
     'map.route': '🚗 Прокласти маршрут до магазину',
     'promo.title': 'Поточні акції', 
     'promo.zoom.on': 'Лупа: Увімкнена',
@@ -1121,11 +834,7 @@ const translations = {
     'hero.stat1': 'Produse', 'hero.stat2': 'Parcare gratuită', 'hero.stat3': 'Zile pe săptămână',
     'cat.title': 'Ce veți găsi la FoodLand',
     'cat.pieczywo': 'Pâine', 'cat.pierogi': 'Pierogi', 'cat.slodycze': 'Dulciuri', 'cat.warzywa': 'Legume', 'cat.wedliny': 'Mezeluri', 'cat.napoje': 'Băuturi',
-    'contact.title': 'Contact', 'contact.address': 'Adresă', 'contact.phone': 'Telefon', 'contact.facebook': 'Vizitați pagina noastră',
-    'contact.hours': 'Program',
-    'hours.weekdays': 'Lun-Vin: 9:00–19:00',
-    'hours.saturday': 'Sâm: 9:00–18:00',
-    'hours.sunday': 'Dum: 10:00–16:00',
+    'contact.title': 'Contact', 'contact.address': 'Adresă', 'contact.phone': 'Telefon', 'contact.hours': 'Program de lucru', 'contact.facebook': 'Vizitați pagina noastră',
     'map.route': '🚗 Obține indicații către magazin',
     'promo.title': 'Promoții actuale', 
     'promo.zoom.on': 'Lupă: Pornită',
@@ -1166,15 +875,6 @@ const BASE_TRANSLATIONS = JSON.parse(JSON.stringify(translations));
 
 /* ===== SŁOWNIK KATEGORII ===== */
 const CATEGORY_DICTIONARY = [
-  { pl: 'Pieczywo', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
-  { pl: 'Ciasta', en: 'Cakes', uk: 'Торти', ro: 'Torturi' },
-  { pl: 'Ciastka', en: 'Cookies', uk: 'Печиво', ro: 'Biscuiți' },
-  { pl: 'Miody', en: 'Honey', uk: 'Мед', ro: 'Miere' },
-  { pl: 'Mrożonki', en: 'Frozen Food', uk: 'Заморозка', ro: 'Congelate' },
-  { pl: 'Nabiał', en: 'Dairy', uk: 'Молочне', ro: 'Lactate' },
-  { pl: 'Okazje', en: 'Offers', uk: 'Акції', ro: 'Oferte' },
-  { pl: 'Warzywa', en: 'Vegetables', uk: 'Овочі', ro: 'Legume' },
-  { pl: 'Wędliny', en: 'Cold Cuts', uk: 'Ковбаси', ro: 'Mezeluri' },
   { pl: 'Pieczywo', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
   { pl: 'Pierogi', en: 'Pierogi', uk: 'Вареники', ro: 'Pierogi' },
   { pl: 'Słodycze', en: 'Sweets', uk: 'Солодощі', ro: 'Dulciuri' },
@@ -1240,14 +940,14 @@ const DEFAULT_SETTINGS = {
     '--header-font-size':'0.95rem',
     '--header-height':'80px'
   },
-  contactData: { address: '145 High Street East, Wallsend', phone: '+44 1234 567 890' },
+  contactData: { address: '145 High Street E, NE28 7RN Wallsend', phone: '+44 1234 567 890' },
   overrides: {}, statOverrides: {},
   credentials: { login: 'admin', password: '123', email: '' },
   themeName: 'default', themeMode: 'light',
   themeFilters: {},
   reportEmail: '',
   images: { kategorie: [], promocje: [], event: [], logo: [] },
-  imageLayout: { cols: 250, ratio: '1/1' },
+  imageLayout: { cols: 250, ratio: '16/9' },
   imagesInitialized: false
 };
 const STORAGE_KEY = 'foodland:admin';
@@ -1323,7 +1023,8 @@ function loadAdmin() {
       if (!parsed.themeFilters) parsed.themeFilters = {};
       if (!parsed.reportEmail) parsed.reportEmail = '';
       if (!parsed.images) parsed.images = { kategorie: [], promocje: [], event: [], logo: [] };
-      if (!parsed.imageLayout) parsed.imageLayout = { cols: 250, ratio: '1/1' };
+      if (!parsed.imageLayout) parsed.imageLayout = { cols: 250, ratio: '16/9' };
+      if (parsed.imageLayout.ratio !== '16/9') parsed.imageLayout.ratio = '16/9';
       if (!parsed.credentials) parsed.credentials = { login: 'admin', password: '123', email: '' };
       if (parsed.credentials.email === undefined) parsed.credentials.email = '';
       if (!parsed.layout) parsed.layout = {};
@@ -1376,15 +1077,15 @@ function initImageGroups() {
   }
   if (!adminState.images.promocje || adminState.images.promocje.length === 0) {
     adminState.images.promocje = [
-      { id: 'promo_gazetka_1', name: 'Gazetka 1', fileId: null, size: 100, order: 0, active: true },
-      { id: 'promo_gazetka_2', name: 'Gazetka 2', fileId: null, size: 100, order: 1, active: true }
+      { id: 'promo_gazetka_1', name: 'gazetka1', fileId: null, size: 100, order: 0, active: true },
+      { id: 'promo_gazetka_2', name: 'gazetka2', fileId: null, size: 100, order: 1, active: true }
     ];
   }
   if (!adminState.images.event || adminState.images.event.length === 0) {
-    adminState.images.event = [{ id:'event_baner', name:'Baner eventowy', fileId: null, size:100, order:0, active: true }];
+    adminState.images.event = [{ id:'event_baner', name:'baner', fileId: null, size:100, order:0, active: true }];
   }
   if (!adminState.images.logo || adminState.images.logo.length === 0) {
-    adminState.images.logo = [{ id:'logo', name:'Logo', fileId: null, size:100, order:0, active: true }];
+    adminState.images.logo = [{ id:'logo', name:'logo', fileId: null, size:100, order:0, active: true }];
   }
   adminState.imagesInitialized = true;
   saveAdminState();
@@ -1450,15 +1151,7 @@ function applyStats(lang) {
 
 function applyContactData() {
   const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-   const hoursEl = document.getElementById('contact-hours-val');
-  if (hoursEl) {
-      const t = translations[currentLang] || translations['pl'];
-      const wd = t['hours.weekdays'] || 'Pon-Pt: 9:00–19:00';
-      const sat = t['hours.saturday'] || 'Sob: 9:00–18:00';
-      const sun = t['hours.sunday'] || 'Ndz: 10:00–16:00';
-      hoursEl.innerHTML = `${wd}<br>${sat}<br>${sun}`;
-  }
-  set('contact-address-val', '145 High Street E, NE28 7RN Wallsend');
+  set('contact-address-val', adminState.contactData.address);
   set('contact-phone-val', adminState.contactData.phone);
 }
 
@@ -1472,7 +1165,7 @@ function updateZoomButtonLabel() {
 }
 
 /* ===== MAPA ===== */
-const SHOP_ADDRESS = "145 High St E, Wallsend NE28 7RL, UK";
+const SHOP_ADDRESS = "145 High St E, Wallsend NE28 7RN, UK";
 
 function updateMapLanguage(lang) {
   const iframe = document.getElementById('mapFrame');
@@ -1490,29 +1183,12 @@ function showRouteOnMap(lang) {
 
 /* ===== HOLIDAY BANNER ===== */
 function updateHolidayBanner() {
-   setTimeout(() => {
-    const w = document.getElementById('holidayBannerWrapper');
-    const b = document.getElementById('holidayBanner');
-    if (w && b) { w.style.display = 'flex'; if(!b.textContent.trim()) b.textContent = 'Nadchodzi: Halloween za 11 dni'; }
-}, 1000);
-  // AWARYJNE WYŚWIETLANIE BANERA (dla Androida)
-  setTimeout(() => {
-      const wrapperAwaryjny = document.getElementById('holidayBannerWrapper');
-      const bannerAwaryjny = document.getElementById('holidayBanner');
-      if (wrapperAwaryjny && bannerAwaryjny) {
-          wrapperAwaryjny.style.display = 'flex';
-          if (!bannerAwaryjny.textContent.trim()) {
-              bannerAwaryjny.textContent = 'Nadchodzi: Halloween za 11 dni';
-          }
-      }
-  }, 500);
-  // KONIEC AWARYJNEGO KODU
   const wrapper = document.getElementById('holidayBannerWrapper');
   const banner = document.getElementById('holidayBanner');
   const dropdown = document.getElementById('holidayDropdown');
   if (!wrapper || !banner || !dropdown) return;
 
-  coconst today = new Date(new Date().toLocaleString("en-US", {timeZone: "Europe/London"}));nst today = new Date();
+  const today = new Date();
   today.setHours(0,0,0,0);
   const currentYear = today.getFullYear();
 
@@ -1843,7 +1519,7 @@ async function addNewImage() {
 }
 
 function applyImageSettings() {
-  const lay = adminState.imageLayout || { cols: 250, ratio: '1/1' };
+  const lay = adminState.imageLayout || { cols: 250, ratio: '16/9' };
   const grid = document.getElementById('catGrid');
   if (grid) {
     grid.style.gridTemplateColumns = `repeat(auto-fill, minmax(${lay.cols}px, 1fr))`;
@@ -1856,14 +1532,7 @@ async function renderCategories() {
   if (!grid) return;
 
   const myVersion = ++renderCategoriesVersion;
-   // WYMUSZENIE NOWEJ LISTY KATEGORII
-  const noweKategorie = ['Pieczywo','Ciasta','Ciastka','Miody','Mrożonki','Nabiał','Okazje','Warzywa','Wędliny'].map((n, i) => ({
-    id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
-  }));
-  
-  if (!adminState.images) adminState.images = {};
-  adminState.images.kategorie = noweKategorie;
-  // KONIEC WYMUSZANIA
+
   let items = getGroupImages('kategorie').filter(img => img.active !== false);
   items.sort((a, b) => (a.order || 0) - (b.order || 0));
 
@@ -1873,7 +1542,7 @@ async function renderCategories() {
     const title = translateCategoryName(rawName, currentLang);
     let imgSrc = '';
     
-    // NOWA LOGIKA: Próbuj pobrać z IndexedDB, jeśli nie ma - użyj pliku z folderu images
+    // Próbuj pobrać z IndexedDB, jeśli nie ma - użyj pliku z folderu images
     if (item.fileId) {
       try {
         const dbRecord = await getImageFromDB(item.fileId);
@@ -1884,10 +1553,10 @@ async function renderCategories() {
     }
     
     if (!imgSrc) {
-        const safeName = rawName.toLowerCase()     .replace(/ą/g, 'a').replace(/ć/g, 'c').replace(/ę/g, 'e')     .replace(/ł/g, 'l').replace(/ń/g, 'n').replace(/ó/g, 'o')     .replace(/ś/g, 's').replace(/ź/g, 'z').replace(/ż/g, 'z')     .replace(/\s+/g, '');
+        const safeName = rawName.toLowerCase().replace(/\s+/g, '');
         imgSrc = `./images/kategorie/${safeName}.jpg`;
     }
-    document.getElementById('catGrid').dataset.ratio = '16/9';
+
     prepared.push({ item, title, imgSrc });
   }
 
@@ -1909,6 +1578,7 @@ async function renderCategories() {
 
     const img = document.createElement('img');
     img.alt = title;
+    img.loading = 'lazy';
     img.onerror = function () {
       this.onerror = null;
       this.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
@@ -1934,16 +1604,6 @@ async function renderCategories() {
 }
 
 async function renderPromosSection() {
-  return; // Zatrzymujemy skrypt, bo promocje są już w HTML
-   // WYMUSZENIE LISTY 4 PROMOCJI
-  if (!adminState.images) adminState.images = {};
-  adminState.images.promocje = [
-    { id: 'promo_1', name: 'gazetka1', fileId: null, size: 100, order: 0, active: true },
-    { id: 'promo_2', name: 'gazetka2', fileId: null, size: 100, order: 1, active: true },
-    { id: 'promo_3', name: 'gazetka3', fileId: null, size: 100, order: 2, active: true },
-    { id: 'promo_4', name: 'gazetka4', fileId: null, size: 100, order: 3, active: true }
-  ];
-  // KONIEC WYMUSZANIA 
   const list = document.getElementById('promoList');
   if (!list) return;
 
@@ -1963,7 +1623,7 @@ async function renderPromosSection() {
       } catch (e) {}
     }
     
-    // NOWA LOGIKA: Fallback do folderu images/promocje
+    // Fallback do folderu images/promocje
     if (!src && promo.name) {
         const safeName = promo.name.toLowerCase().replace(/\s+/g, '');
         src = `./images/promocje/${safeName}.jpg`;
@@ -1991,7 +1651,7 @@ async function renderPromosSection() {
     img.className = 'promo-img-base';
     img.alt = promo.name || 'Gazetka';
     img.id = `promoImg${id}`;
-    img.loading = 'eager';
+    img.loading = 'lazy';
     img.decoding = 'async';
 
     img.onload = function () {
@@ -2014,7 +1674,6 @@ async function renderPromosSection() {
 }
 
 async function renderEventBanner() {
-  return; // Zatrzymujemy skrypt, bo baner jest już w HTML
   const section = document.getElementById('eventBannerSection');
   const img = document.getElementById('eventBannerImg');
   if (!section || !img) return;
@@ -2039,7 +1698,7 @@ async function renderEventBanner() {
     } catch (e) {}
   }
   
-  // NOWA LOGIKA: Fallback do folderu images/event
+  // Fallback do folderu images/event
   if (!src) {
       src = `./images/event/baner.jpg`;
   }
@@ -2080,7 +1739,7 @@ async function renderLogo() {
     } catch (e) {}
   }
   
-  // NOWA LOGIKA: Fallback do folderu images
+  // Fallback do folderu images
   if (!src) {
       src = `./images/logo.jpg`;
   }
@@ -2277,7 +1936,7 @@ const TEXT_ORDER = [
   'hero.title1', 'hero.title2', 'hero.lead', 'hero.cta', 'hero.stat1', 'hero.stat2', 'hero.stat3',
   'cat.title', 'cat.pieczywo', 'cat.pierogi', 'cat.slodycze', 'cat.warzywa', 'cat.wedliny', 'cat.napoje',
   'promo.title', 'promo.zoom.on', 'promo.zoom.off',
-  'contact.title', 'contact.address', 'contact.phone', 'contact.facebook',
+  'contact.title', 'contact.address', 'contact.phone', 'contact.hours', 'contact.facebook',
   'refer.title', 'refer.desc', 'refer.send', 'refer.emailPlaceholder', 'footer.rights'
 ];
 
@@ -2330,7 +1989,6 @@ function renderTextFields() {
 });
 
 function initStatsTracker() {
-  return; // Wyłączamy analitykę, aby naprawić klikanie przycisków
   const KEY_STATS = 'foodland_analytics';
   let stats = JSON.parse(localStorage.getItem(KEY_STATS)) || {
     totalVisits: 0, uniqueVisits: 0, pageViews: 0,
@@ -2747,7 +2405,7 @@ function renderAdminPanel() {
   renderTextFields();
 
   renderImageList();
-  const lay = adminState.imageLayout || { cols: 250, ratio: '1/1' };
+  const lay = adminState.imageLayout || { cols: 250, ratio: '16/9' };
   if (document.getElementById('imgCols')) {
     document.getElementById('imgCols').value = lay.cols;
     document.getElementById('imgColsVal').textContent = lay.cols + 'px';
@@ -2822,13 +2480,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
   };
   bindRange('imgCols', 'imgColsVal', 'cols', 'px', (v) => {
-    if (!adminState.imageLayout) adminState.imageLayout = { cols: 250, ratio: '1/1' };
+    if (!adminState.imageLayout) adminState.imageLayout = { cols: 250, ratio: '16/9' };
     adminState.imageLayout.cols = v;
     applyImageSettings();
   });
 
   document.getElementById('imgRatio')?.addEventListener('change', (e) => {
-    if (!adminState.imageLayout) adminState.imageLayout = { cols: 250, ratio: '1/1' };
+    if (!adminState.imageLayout) adminState.imageLayout = { cols: 250, ratio: '16/9' };
     adminState.imageLayout.ratio = e.target.value;
     applyImageSettings();
   });
@@ -2850,9 +2508,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       msg.style.color = '#00843d';
     });
   }
-      const adminPanel = document.getElementById('adminPanel');
-  if (adminPanel) adminPanel.hidden = true;
-  document.body.classList.remove('admin-open');
 });
 </script>
 
