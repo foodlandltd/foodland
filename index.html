@@ -1104,7 +1104,8 @@ function buildCandidatePaths(baseFolder, rawName, group) {
     };
     let safeName = raw.toLowerCase().trim();
     if (map[safeName]) safeName = map[safeName];
-    return [`./images/kategorie/${safeName}.jpg`];
+        // Dodano ?v=2, aby zmusić przeglądarkę do pobrania nowego pliku (omijanie cache)
+    return [`./images/kategorie/${safeName}.jpg?v=2`];
   }
 
   // Dla promocji, eventów i logo: przywracamy oryginalne szukanie
@@ -1114,10 +1115,10 @@ function buildCandidatePaths(baseFolder, rawName, group) {
   const out = [];
   const bases = [raw, noSpaces, safe];
   
-  bases.forEach(b => {
+    bases.forEach(b => {
     if (!b) return;
     exts.forEach(ext => {
-      out.push(`./images/${baseFolder}/${b}.${ext}`);
+      out.push(`./images/${baseFolder}/${b}.${ext}?v=2`);
     });
   });
   
@@ -1714,9 +1715,9 @@ async function renderCategories() {
     const inner = document.createElement('div');
     inner.className = 'cat-card-inner';
 
-        const img = document.createElement('img');
+    const img = document.createElement('img');
     img.alt = title;
-
+    // USUŃ KAŻDE "img.loading = ..." I "img.decoding = ..." JEŚLI TAM SĄ
     inner.appendChild(img);
 
     const ov = document.createElement('div');
