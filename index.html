@@ -534,7 +534,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 
   <section id="eventBannerSection" style="display: block;">
     <div class="section-content">
-      <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event" loading="lazy" decoding="async">
+      <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event">
     </div>
   </section>
 
@@ -578,7 +578,7 @@ input:checked + .slider:before { transform: translateX(20px); }
             </div>
           </div>
           <div class="map-wrap">
-            <iframe id="mapFrame" src="https://maps.google.com/maps?q=145%20High%20St%20E%2C%20Wallsend%20NE28%207RN%2C%20UK&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed&amp;hl=pl" allowfullscreen="" loading="lazy" style="width:100%; height:100%; border:0;"></iframe>
+            <iframe id="mapFrame" src="https://maps.google.com/maps?q=145%20High%20St%20E%2C%20Wallsend%20NE28%207RN%2C%20UK&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed&amp;hl=pl" allowfullscreen="" style="width:100%; height:100%; border:0;"></iframe>
             <button id="mapRouteBtn" class="map-btn-route" data-i18n="map.route">🚗 Wyznacz trasę do sklepu</button>
           </div>
         </div>
@@ -1108,38 +1108,29 @@ function buildCandidatePaths(baseFolder, rawName, group) {
     return [`./images/kategorie/${safeName}.jpg?v=2`];
   }
 
-  // Dla promocji, eventów i logo: przywracamy oryginalne szukanie
+    // Dla promocji, eventów i logo: szukamy tylko .jpg
   const safe = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż_-]/g, '');
-  const noSpaces = raw.replace(/\s+/g, '');
-  const exts = ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'];
   const out = [];
-  const bases = [raw, noSpaces, safe];
   
-    bases.forEach(b => {
-    if (!b) return;
-    exts.forEach(ext => {
-      out.push(`./images/${baseFolder}/${b}.${ext}?v=2`);
-    });
-  });
-  
+  // Dodajemy tylko podstawową ścieżkę .jpg
+  out.push(`./images/${baseFolder}/${raw}.jpg?v=2`);
+  if (safe !== raw.toLowerCase()) {
+      out.push(`./images/${baseFolder}/${safe}.jpg?v=2`);
+  }
+
   if (group === 'promocje') {
     const m = safe.match(/^gazetka(\d+)$/);
     if (m) {
       const num = parseInt(m[1], 10);
       if (num >= 3) {
-        exts.forEach(ext => {
-          out.push(`./images/promocje/gazetka${num - 2}.${ext}`);
-          out.push(`./images/promocje/gazetka${num - 1}.${ext}`);
-        });
+        out.push(`./images/promocje/gazetka${num - 2}.jpg?v=2`);
+        out.push(`./images/promocje/gazetka${num - 1}.jpg?v=2`);
       }
     }
-    exts.forEach(ext => {
-      out.push(`./images/promocje/gazetka1.${ext}`);
-    });
+    out.push(`./images/promocje/gazetka1.jpg?v=2`);
   }
   return out;
 }
-
 async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
   if (dbFileId) {
     try {
@@ -1617,7 +1608,7 @@ async function renderImageList() {
       imgSrc = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
     }
     div.innerHTML = `
-      <img src="${imgSrc}" alt="${item.name}" onerror="this.style.opacity=0.2" loading="lazy" decoding="async">
+      <img src="${imgSrc}" alt="${item.name}" onerror="this.style.opacity=0.2">
       <div class="img-meta">
         <strong>${item.name || 'Bez nazwy'}</strong>
         <small>${item.fileId ? 'IndexedDB' : 'Brak pliku'}</small>
