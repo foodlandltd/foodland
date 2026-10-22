@@ -561,10 +561,10 @@ input:checked + .slider:before { transform: translateX(20px); }
         <div class="contact-grid">
           <div class="contact-data">
             <div class="contact-item"><div class="icon">📍</div><div><strong data-i18n="contact.address">Adres</strong><br><span id="contact-address-val">145 High Street E, NE28 7RN Wallsend</span></div></div>
-            <div class="contact-item"><div class="icon">🕒</div><div><strong data-i18n="contact.hours">Godziny otwarcia</strong><br>
-              <span class="hours-line">Pon-Pt: 9:00–19:00</span>
-              <span class="hours-line">Sob: 9:00–18:00</span>
-              <span class="hours-line">Ndz: 10:00–16:00</span>
+                        <div class="contact-item"><div class="icon">🕒</div><div><strong data-i18n="contact.hours">Godziny otwarcia</strong><br>
+              <span class="hours-line" data-i18n="contact.hours.weekdays">Pon-Pt: 9:00–19:00</span>
+              <span class="hours-line" data-i18n="contact.hours.saturday">Sob: 9:00–18:00</span>
+              <span class="hours-line" data-i18n="contact.hours.sunday">Ndz: 10:00–16:00</span>
             </div></div>
             <div class="contact-item"><a href="https://www.facebook.com/foodlandshopsWallsend" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:1rem;"><div class="icon" style="background:#1877f2;">f</div><div><strong>Facebook</strong><br><span data-i18n="contact.facebook">Odwiedź naszą stronę</span></div></a></div>
             <div class="refer-box">
@@ -790,6 +790,9 @@ const translations = {
     'hero.stat1': 'Produktów', 'hero.stat2': 'Darmowy parking', 'hero.stat3': 'Dni w tygodniu',
     'cat.title': 'Co znajdziesz w FoodLand',
     'contact.title': 'Kontakt', 'contact.address': 'Adres', 'contact.hours': 'Godziny otwarcia', 'contact.facebook': 'Odwiedź naszą stronę',
+    'contact.hours.weekdays': 'Pon-Pt: 9:00–19:00',
+    'contact.hours.saturday': 'Sob: 9:00–18:00',
+    'contact.hours.sunday': 'Ndz: 10:00–16:00',
     'map.route': '🚗 Wyznacz trasę do sklepu',
     'promo.title': 'Aktualne promocje',
     'refer.title': 'Poleć nas znajomemu', 'refer.desc': 'Wpisz adres e-mail znajomego – wyślemy mu link do naszej strony.', 'refer.send': 'Poleć',
@@ -828,6 +831,9 @@ const translations = {
     'hero.stat1': 'Products', 'hero.stat2': 'Free parking', 'hero.stat3': 'Days a week',
     'cat.title': 'What you will find at FoodLand',
     'contact.title': 'Contact', 'contact.address': 'Address', 'contact.hours': 'Opening hours', 'contact.facebook': 'Visit our page',
+    'contact.hours.weekdays': 'Mon-Fri: 9:00–19:00',
+    'contact.hours.saturday': 'Sat: 9:00–18:00',
+    'contact.hours.sunday': 'Sun: 10:00–16:00',
     'map.route': '🚗 Get directions to the shop',
     'promo.title': 'Current promotions',
     'refer.title': 'Recommend us to a friend', 'refer.desc': 'Enter your friend\'s e-mail – we will send them a link to our site.', 'refer.send': 'Recommend',
@@ -866,6 +872,9 @@ const translations = {
     'hero.stat1': 'Продуктів', 'hero.stat2': 'Безкоштовна парковка', 'hero.stat3': 'Днів на тиждень',
     'cat.title': 'Що ви знайдете у FoodLand',
     'contact.title': 'Контакти', 'contact.address': 'Адреса', 'contact.hours': 'Години роботи', 'contact.facebook': 'Відвідайте нашу сторінку',
+    'contact.hours.weekdays': 'Пн-Пт: 9:00–19:00',
+    'contact.hours.saturday': 'Сб: 9:00–18:00',
+    'contact.hours.sunday': 'Нд: 10:00–16:00',
     'map.route': '🚗 Прокласти маршрут до магазину',
     'promo.title': 'Поточні акції',
     'refer.title': 'Порадьте нас друзям', 'refer.desc': 'Введіть e-mail друга – ми надішлемо йому посилання на наш сайт.', 'refer.send': 'Порадити',
@@ -904,6 +913,9 @@ const translations = {
     'hero.stat1': 'Produse', 'hero.stat2': 'Parcare gratuită', 'hero.stat3': 'Zile pe săptămână',
     'cat.title': 'Ce veți găsi la FoodLand',
     'contact.title': 'Contact', 'contact.address': 'Adresă', 'contact.hours': 'Program de lucru', 'contact.facebook': 'Vizitați pagina noastră',
+    'contact.hours.weekdays': 'Lun-Vin: 9:00–19:00',
+    'contact.hours.saturday': 'Sâm: 9:00–18:00',
+    'contact.hours.sunday': 'Dum: 10:00–16:00',
     'map.route': '🚗 Obține indicații către magazin',
     'promo.title': 'Promoții actuale',
     'refer.title': 'Recomandă-ne unui prieten', 'refer.desc': 'Introdu e-mailul prietenului – îi vom trimite un link către site-ul nostru.', 'refer.send': 'Recomandă',
@@ -1966,6 +1978,7 @@ const TEXT_ORDER = [
   'hero.title1', 'hero.title2', 'hero.lead', 'hero.cta', 'hero.stat1', 'hero.stat2', 'hero.stat3',
   'cat.title', 'promo.title',
   'contact.title', 'contact.address', 'contact.hours', 'contact.facebook',
+  'contact.hours.weekdays', 'contact.hours.saturday', 'contact.hours.sunday',
   'refer.title', 'refer.desc', 'refer.send', 'refer.emailPlaceholder', 'footer.rights'
 ];
 
