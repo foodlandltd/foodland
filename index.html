@@ -1138,10 +1138,21 @@ async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, gro
       }
     } catch(e) {}
   }
-  const candidates = buildCandidatePaths(baseFolder, rawName, group);
+   const candidates = buildCandidatePaths(baseFolder, rawName, group);
   if (!candidates.length) {
     imgEl.onerror = null;
     imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+    return;
+  }
+  // Dla kategorii: sprawdź pierwszy kandydat, a jeśli zawiedzie – od razu placeholder.
+  // Unika to pętli onerror na Androidzie, gdzie wielokrotne podmiany src
+  // w szybkim tempie potrafią zablokować renderowanie obrazu.
+  if (group === 'kategorie') {
+    imgEl.onerror = function() {
+      this.onerror = null;
+      this.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+    };
+    imgEl.src = candidates[0];
     return;
   }
   imgEl.setAttribute('data-fallbacks', candidates.join('|'));
@@ -1684,10 +1695,10 @@ async function renderCategories() {
     const inner = document.createElement('div');
     inner.className = 'cat-card-inner';
 
-    const img = document.createElement('img');
+        const img = document.createElement('img');
     img.alt = title;
-    img.loading = 'lazy';
-    img.decoding = 'async';
+    // Usunięto loading="lazy" i decoding="async" – Android Chrome błędnie
+    // traktuje obrazy w kartach z overflow:hidden jako poza widokiem.
 
     inner.appendChild(img);
 
