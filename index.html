@@ -1,10 +1,12 @@
-<html lang="pl" style="--bg-page: #fcfaf8; --topbar-bg: rgba(255,255,255,0.75); --footer-bg: rgba(255,255,255,0.95); --text-main: #2a2a2a; --btn-bg: #d0021b; --section-title-size: 2rem; --glass-blur: 2px; --sticky-header-padding: 1.8rem 2.9988rem; --header-font-size: 0.8rem; --header-height: 140px;"><head>
+<!DOCTYPE html>
+<html lang="pl" style="--bg-page: #fcfaf8; --topbar-bg: rgba(255,255,255,0.75); --footer-bg: rgba(255,255,255,0.95); --text-main: #2a2a2a; --btn-bg: #d0021b; --section-title-size: 2rem; --glass-blur: 2px; --sticky-header-padding: 1.8rem 2.9988rem; --header-font-size: 0.8rem; --header-height: 200px;">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FoodLand – Polski Sklep w Wallsend | Świeże produkty codziennie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Playfair+Display:ital,wght@0,700;0,900;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:clip}
@@ -34,7 +36,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer}
   --section-title-size: clamp(1.8rem, 3.5vw, 2.6rem);
   --sticky-header-padding: 1.5rem 2.5rem;
   
-  --header-height: 100px;
+  --header-height: 200px;
   --header-font-size: 0.95rem;
   
   --admin-width: 380px;
@@ -77,7 +79,7 @@ body.admin-open #mainContent {
 }
 body.admin-open .header { right: var(--admin-width); }
 
-/* LEWY BLOK: logo + hamburger (hamburger obok logo, nie zasłania) */
+/* LEWY BLOK: logo */
 .header-left-block{
   display:flex;align-items:center;gap:0.8rem;flex-shrink:0;
   min-width:0;
@@ -88,12 +90,12 @@ body.admin-open .header { right: var(--admin-width); }
   display:flex;align-items:center;
 }
 .logo-img{
-  height:100px;width:auto;max-width:100%;object-fit:contain;
+  height:200px;width:auto;max-width:100%;object-fit:contain;
   filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));
   display:block;
 }
 
-/* Hamburger – obok logo, z wyraźnym marginesem */
+/* Hamburger – teraz w prawym bloku obok lupy */
 .nav-hamburger{
   position:relative;
   display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
@@ -102,7 +104,6 @@ body.admin-open .header { right: var(--admin-width); }
   background:var(--panel-inner);
   cursor:pointer;
   z-index:10001;
-  margin-left:0.4rem;
 }
 .nav-hamburger span{
   display:block;width:26px;height:3px;background:var(--text-main);border-radius:2px;
@@ -113,7 +114,7 @@ body.admin-open .header { right: var(--admin-width); }
 
 /* Dropdown menu */
 .nav-dropdown{
-  position:absolute;top:calc(100% + 10px);left:0;
+  position:absolute;top:calc(100% + 10px);right:0;
   min-width:220px;
   background:var(--card-bg);
   border:1px solid var(--glass-border);
@@ -157,11 +158,11 @@ body.admin-open .header { right: var(--admin-width); }
 .lang-switch button{padding:.32rem .65rem;font-size:.75rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
 .lang-switch button.active{background:var(--card-bg);color:var(--red);box-shadow:var(--shadow-sm);}
 
-/* PRAWY: lupa */
+/* PRAWY: lupa + hamburger */
 .header-right{
   display:flex;align-items:center;justify-content:flex-end;
   flex-shrink:0;
-  gap:0.4rem;
+  gap:0.6rem;
 }
 
 .zoom-toggle-top{
@@ -222,7 +223,7 @@ body.admin-open .header { right: var(--admin-width); }
 
 /* ===== SEKCJE ===== */
 section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
-.hero{padding-top:20rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
+.hero{padding-top:24rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
 .section-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;}
 
 .sticky-header{
@@ -413,40 +414,41 @@ input:checked + .slider:before { transform: translateX(20px); }
 
 /* ===== RESPONSYWNOŚĆ ===== */
 @media(max-width:1100px){
-  :root{--header-height:96px;}
-  .logo-img{height:80px;}
-  .nav-hamburger{width:44px;height:44px;margin-left:0.35rem;}
+  :root{--header-height:180px;}
+  .logo-img{height:180px;}
+  .nav-hamburger{width:44px;height:44px;}
   .nav-hamburger span{width:24px;height:3px;}
   .header{padding:0 0.8rem;}
   .zoom-toggle-top span.zoom-label{display:none;}
   .zoom-toggle-top{padding:0.5rem 0.6rem;}
+  .hero{padding-top:20rem;}
 }
 @media(max-width:900px){
-  :root{--header-height:88px;}
+  :root{--header-height:160px;}
   body.admin-open #mainContent { margin-right: 0; }
   body.admin-open .header { right: 0; }
   .admin-panel { width: 100vw; }
-  .logo-img{height:70px;}
-  .nav-hamburger{width:42px;height:42px;margin-left:0.3rem;}
+  .logo-img{height:160px;}
+  .nav-hamburger{width:42px;height:42px;}
   .contact-grid{grid-template-columns:1fr;}
-  .hero{padding-top:15rem;}
+  .hero{padding-top:18rem;}
   .hero-copy{padding:2rem 1.2rem;}
   .hero-stats{gap:1.5rem;}
   .lang-switch button{padding:.3rem .55rem;font-size:.72rem;}
 }
 @media(max-width:700px){
-  :root{--header-height:76px;}
-  .header{height:76px;padding:0 0.5rem;gap:0.3rem;}
-  .logo-img{height:58px;}
+  :root{--header-height:140px;}
+  .header{height:140px;padding:0 0.5rem;gap:0.3rem;}
+  .logo-img{height:140px;}
   .header-left-block{gap:0.5rem;}
-  .nav-hamburger{width:40px;height:40px;margin-left:0.25rem;gap:4px;}
+  .nav-hamburger{width:40px;height:40px;gap:4px;}
   .nav-hamburger span{width:22px;height:2.5px;}
   .lang-switch button{padding:.26rem .45rem;font-size:.63rem;}
   .header-center{gap:0.25rem;padding:0 0.25rem;}
   #holidayBanner{font-size:0.6rem;padding:0.18rem 0.5rem;}
   .zoom-toggle-top{padding:0.42rem 0.5rem;}
   .zoom-toggle-top .zoom-icon{font-size:1rem;}
-  .hero{padding-top:12rem;min-height:auto;padding-bottom:4rem;}
+  .hero{padding-top:16rem;min-height:auto;padding-bottom:4rem;}
   .hero h1{font-size:2rem;}
   .hero-lead{font-size:1rem;}
   section{padding:5rem 4vw 4rem;}
@@ -455,11 +457,11 @@ input:checked + .slider:before { transform: translateX(20px); }
   .promo-banner-container{padding:0.5rem;}
 }
 @media(max-width:480px){
-  :root{--header-height:70px;}
-  .header{height:70px;padding:0 0.35rem;}
-  .logo-img{height:50px;}
+  :root{--header-height:130px;}
+  .header{height:130px;padding:0 0.35rem;}
+  .logo-img{height:130px;}
   .header-left-block{gap:0.4rem;}
-  .nav-hamburger{width:36px;height:36px;margin-left:0.2rem;gap:4px;}
+  .nav-hamburger{width:36px;height:36px;gap:4px;}
   .nav-hamburger span{width:20px;height:2.5px;}
   .lang-switch{gap:0;}
   .lang-switch button{padding:.24rem .4rem;font-size:.58rem;}
@@ -470,21 +472,13 @@ input:checked + .slider:before { transform: translateX(20px); }
   .sticky-header{top:calc(var(--header-height) + 8px);padding:0.8rem 1rem;}
 }
 </style>
-<link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
+</head>
 <body>
 
 <header class="header">
   <div class="header-left-block">
     <div class="logo-wrapper">
       <a href="#"><img src="./images/logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'" style="display: block;"></a>
-    </div>
-    <div class="nav-hamburger" id="navHamburger" tabindex="0" role="button" aria-label="Menu">
-      <span></span><span></span><span></span>
-      <div class="nav-dropdown" id="navDropdown">
-        <a href="#kategorie" data-i18n="nav.categories">KATEGORIE</a>
-        <a href="#promocje" data-i18n="nav.promos">PROMOCJE</a>
-        <a href="#kontakt" data-i18n="nav.contact">KONTAKT</a>
-      </div>
     </div>
   </div>
 
@@ -506,6 +500,14 @@ input:checked + .slider:before { transform: translateX(20px); }
       <span class="zoom-icon">🔍</span>
       <span class="zoom-label" id="zoomLabel">Lupa: ON</span>
     </button>
+    <div class="nav-hamburger" id="navHamburger" tabindex="0" role="button" aria-label="Menu">
+      <span></span><span></span><span></span>
+      <div class="nav-dropdown" id="navDropdown">
+        <a href="#kategorie" data-i18n="nav.categories">KATEGORIE</a>
+        <a href="#promocje" data-i18n="nav.promos">PROMOCJE</a>
+        <a href="#kontakt" data-i18n="nav.contact">KONTAKT</a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -519,7 +521,7 @@ input:checked + .slider:before { transform: translateX(20px); }
         </h1>
         <p class="hero-lead" data-i18n="hero.lead">Serdecznie zapraszamy do naszego polskiego sklepu w Wallsend k. Newcastle. Znajdziecie tu 1500+ produktów, świeże wędliny, sery, pieczywo, pierogi oraz polskie leki i warzywa. Darmowy parking do 2 godzin tuż obok.</p>
         <div class="hero-actions">
-          <a href="#kategorie" class="btn btn-primary" data-i18n="hero.cta">Zobacz ofertę</a>
+          <a href="#promocje" class="btn btn-primary" data-i18n="hero.cta">Zobacz ofertę</a>
         </div>
         <div class="hero-stats">
           <div><strong id="stat1-val">1500+</strong><span id="stat1-label" data-i18n="hero.stat1">Produktów</span></div>
@@ -679,8 +681,8 @@ input:checked + .slider:before { transform: translateX(20px); }
       </div>
       <div class="admin-field">
         <label>Wysokość / padding topbaru</label>
-        <input type="range" id="headerHeightRange" min="40" max="150" step="5" style="width:100%;">
-        <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">140px</span>
+        <input type="range" id="headerHeightRange" min="40" max="250" step="5" style="width:100%;">
+        <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">200px</span>
       </div>
     </div>
 
@@ -1022,7 +1024,7 @@ const DEFAULT_SETTINGS = {
     '--glass-blur':'0px', 
     '--sticky-header-padding':'1.5rem 2.5rem',
     '--header-font-size':'0.95rem',
-    '--header-height':'100px'
+    '--header-height':'200px'
   },
   contactData: { address: '145 High Street E, NE28 7RN Wallsend', phone: '+44 1234 567 890' },
   overrides: {}, statOverrides: {},
@@ -1053,7 +1055,6 @@ window.__imgFallback = function(imgEl) {
     const list = fb.split('|');
     const cur = parseInt(imgEl.getAttribute('data-fb-idx') || '0', 10);
     if (cur + 1 >= list.length) {
-      // wyczerpano listę – wstaw placeholder
       imgEl.onerror = null;
       imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
       return;
@@ -1064,13 +1065,11 @@ window.__imgFallback = function(imgEl) {
 };
 
 function buildCandidatePaths(baseFolder, rawName, group) {
-  // normalize
   const raw = String(rawName || '').trim();
   const safe = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż_-]/g, '');
   const noSpaces = raw.replace(/\s+/g, '');
   const exts = ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'];
   const out = [];
-  // najpierw nazwa oryginalna i znormalizowana
   const bases = [raw, noSpaces, safe];
   bases.forEach(b => {
     if (!b) return;
@@ -1078,7 +1077,6 @@ function buildCandidatePaths(baseFolder, rawName, group) {
       out.push(`./images/${baseFolder}/${b}.${ext}`);
     });
   });
-  // fallback dla gazetek: gazetka3 → gazetka1, gazetka4 → gazetka2 (żeby zawsze coś pokazać)
   if (group === 'promocje') {
     const m = safe.match(/^gazetka(\d+)$/);
     if (m) {
@@ -1090,7 +1088,6 @@ function buildCandidatePaths(baseFolder, rawName, group) {
         });
       }
     }
-    // ostateczny fallback: gazetka1
     exts.forEach(ext => {
       out.push(`./images/promocje/gazetka1.${ext}`);
     });
@@ -1099,7 +1096,6 @@ function buildCandidatePaths(baseFolder, rawName, group) {
 }
 
 async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
-  // 1) IndexedDB
   if (dbFileId) {
     try {
       const dbRecord = await getImageFromDB(dbFileId);
@@ -1113,7 +1109,6 @@ async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, gro
       }
     } catch(e) {}
   }
-  // 2) fallback plików
   const candidates = buildCandidatePaths(baseFolder, rawName, group);
   if (!candidates.length) {
     imgEl.onerror = null;
@@ -1192,6 +1187,7 @@ function loadAdmin() {
       if (parsed.credentials.email === undefined) parsed.credentials.email = '';
       if (!parsed.layout) parsed.layout = {};
       if (!parsed.layout['--sticky-header-padding']) parsed.layout['--sticky-header-padding'] = '1.5rem 2.5rem';
+      if (!parsed.layout['--header-height']) parsed.layout['--header-height'] = '200px';
       return { ...DEFAULT_SETTINGS, ...parsed };
     }
     return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
@@ -1664,7 +1660,6 @@ async function renderCategories() {
     img.alt = title;
     img.loading = 'lazy';
     img.decoding = 'async';
-    // UWAGA: nie dodajemy crossorigin/referrerpolicy dla plików lokalnych – na Androidzie potrafi blokować
 
     inner.appendChild(img);
 
@@ -2296,7 +2291,7 @@ function renderAdminPanel() {
   const blurSize = adminState.layout['--glass-blur'] || '0px';
   const stickyPad = adminState.layout['--sticky-header-padding'] || '1.5rem 2.5rem';
   const headerFontSize = adminState.layout['--header-font-size'] || '0.95rem';
-  const headerHeight = adminState.layout['--header-height'] || '100px';
+  const headerHeight = adminState.layout['--header-height'] || '200px';
   if(document.getElementById('titleSizeRange')) {
       document.getElementById('titleSizeRange').value = parseFloat(titleSize);
       document.getElementById('titleSizeVal').textContent = titleSize;
