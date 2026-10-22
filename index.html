@@ -335,7 +335,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   display:block;
   border-radius:var(--radius-sm);
   cursor:crosshair;
-  opacity:0;
+  opacity:1;              /* zawsze widoczne – nie czekamy na onload */
   transition:opacity 0.25s ease;
 }
 .promo-img-base.loaded { opacity: 1; }
@@ -1279,10 +1279,16 @@ const CATEGORY_DICTIONARY = [
 
 function translateCategoryName(rawName, lang) {
   if (!rawName) return '';
-  const dictEntry = CATEGORY_DICTIONARY.find(
-    d => d.pl.toLowerCase() === rawName.toLowerCase().trim()
-  );
+  const norm = (s) => String(s)
+    .toLowerCase()
+    .trim()
+    .replace(/ą/g,'a').replace(/ć/g,'c').replace(/ę/g,'e')
+    .replace(/ł/g,'l').replace(/ń/g,'n').replace(/ó/g,'o')
+    .replace(/ś/g,'s').replace(/ź/g,'z').replace(/ż/g,'z');
+  const rawNorm = norm(rawName);
+  const dictEntry = CATEGORY_DICTIONARY.find(d => norm(d.pl) === rawNorm);
   if (dictEntry && dictEntry[lang]) return dictEntry[lang];
+  // fallback: jeśli brak w słowniku, ale nazwa jest po polsku – zwróć oryginał
   return rawName;
 }
 
@@ -1977,10 +1983,23 @@ async function renderPromosSection() {
     img.loading = 'lazy';
     img.decoding = 'async';
 
-    img.onload = function () {
+       const markLoaded = function () {
       this.classList.add('loaded');
       initZoom(`promoContainer${id}`, `promoImg${id}`, `zoomLens${id}`);
     };
+    img.onload = markLoaded;
+    // Android: jeśli obraz już jest w cache, onload może nie odpalić
+    img.addEventListener('load', markLoaded, { once: true });
+    // Fallback: po 1.5s sprawdź, czy obraz jest kompletny – jeśli tak, pokaż go
+    setTimeout(() => {
+      if (img.complete && img.naturalWidth > 0) {
+        img.classList.add('loaded');
+        initZoom(`promoContainer${id}`, `promoImg${id}`, `zoomLens${id}`);
+      } else if (img.complete && img.naturalWidth === 0) {
+        // obraz się nie załadował – pokaż placeholder zamiast pustki
+        img.classList.add('loaded');
+      }
+    }, 1500);
 
     const lens = document.createElement('div');
     lens.className = 'zoom-lens';
