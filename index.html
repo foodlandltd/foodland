@@ -1007,10 +1007,28 @@ const CATEGORY_DICTIONARY = [
   { pl: 'Promocje', en: 'Promotions', uk: 'Акції', ro: 'Promoții' }
 ];
 
+function normalizeCategoryKey(str) {
+  if (!str) return '';
+  return String(str)
+    .toLowerCase()
+    .trim()
+    .replace(/ą/g, 'a')
+    .replace(/ć/g, 'c')
+    .replace(/ę/g, 'e')
+    .replace(/ł/g, 'l')
+    .replace(/ń/g, 'n')
+    .replace(/ó/g, 'o')
+    .replace(/ś/g, 's')
+    .replace(/ź/g, 'z')
+    .replace(/ż/g, 'z')
+    .replace(/[^a-z0-9]/g, '');
+}
+
 function translateCategoryName(rawName, lang) {
   if (!rawName) return '';
+  const rawKey = normalizeCategoryKey(rawName);
   const dictEntry = CATEGORY_DICTIONARY.find(
-    d => d.pl.toLowerCase() === rawName.toLowerCase().trim()
+    d => normalizeCategoryKey(d.pl) === rawKey
   );
   if (dictEntry && dictEntry[lang]) return dictEntry[lang];
   return rawName;
