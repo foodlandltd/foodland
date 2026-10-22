@@ -1899,20 +1899,29 @@ async function addNewImage() {
   const fileInput = document.getElementById('imgUpload');
   const nameInput = document.getElementById('imgNewName');
   const f = fileInput?.files[0];
-  if (!f) return alert('Wybierz plik zdjęcia.');
   let name = (nameInput?.value || '').trim();
-  if (!name) name = f.name.replace(/\.[^/.]+$/, '');
+
+  if (!name) return alert('Wpisz nazwę zdjęcia (np. "nabial" bez polskich znaków).');
+
   const id = 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+
   try {
-    await saveImageToDB(id, f);
+    let fileId = null;
+    if (f) {
+      await saveImageToDB(id, f);
+      fileId = id;
+    }
+    
     const items = getGroupImages(group).slice();
-    items.push({ id, fileId: id, name, size: 100, order: items.length, active: true });
+    items.push({ id, fileId, name, size: 100, order: items.length, active: true });
     saveGroupImages(group, items);
+    
     renderImageList();
     if (group === 'kategorie') renderCategories();
     if (group === 'promocje') renderPromosSection();
     if (group === 'event') renderEventBanner();
     if (group === 'logo') renderLogo();
+    
     if (fileInput) fileInput.value = '';
     if (nameInput) nameInput.value = '';
   } catch(e) { alert('Błąd zapisu: ' + e); }
