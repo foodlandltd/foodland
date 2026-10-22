@@ -34,7 +34,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer}
   --section-title-size: clamp(1.8rem, 3.5vw, 2.6rem);
   --sticky-header-padding: 1.5rem 2.5rem;
   
-  --header-height: 90px;
+  --header-height: 100px;
   --header-font-size: 0.95rem;
   
   --admin-width: 380px;
@@ -77,35 +77,35 @@ body.admin-open #mainContent {
 }
 body.admin-open .header { right: var(--admin-width); }
 
-/* LEWY BLOK: logo + hamburger */
+/* LEWY BLOK: logo + hamburger (hamburger obok logo, nie zasłania) */
 .header-left-block{
-  display:flex;align-items:center;gap:0.5rem;flex-shrink:0;
+  display:flex;align-items:center;gap:0.8rem;flex-shrink:0;
   min-width:0;
 }
 
 .logo-wrapper{
-  position:static;
   flex-shrink:0;
-  max-width:38vw;
+  display:flex;align-items:center;
 }
 .logo-img{
-  height:70px;width:auto;max-width:100%;object-fit:contain;
+  height:100px;width:auto;max-width:100%;object-fit:contain;
   filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));
   display:block;
 }
 
-/* Hamburger */
+/* Hamburger – obok logo, z wyraźnym marginesem */
 .nav-hamburger{
   position:relative;
   display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
-  width:44px;height:44px;flex-shrink:0;
+  width:48px;height:48px;flex-shrink:0;
   border-radius:10px;
   background:var(--panel-inner);
   cursor:pointer;
   z-index:10001;
+  margin-left:0.4rem;
 }
 .nav-hamburger span{
-  display:block;width:24px;height:3px;background:var(--text-main);border-radius:2px;
+  display:block;width:26px;height:3px;background:var(--text-main);border-radius:2px;
   transition:all .25s ease;
 }
 .nav-hamburger:hover{background:var(--red-light);}
@@ -154,7 +154,7 @@ body.admin-open .header { right: var(--admin-width); }
   padding:3px;border-radius:var(--radius-pill);
   flex-wrap:nowrap;
 }
-.lang-switch button{padding:.3rem .6rem;font-size:.72rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
+.lang-switch button{padding:.32rem .65rem;font-size:.75rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
 .lang-switch button.active{background:var(--card-bg);color:var(--red);box-shadow:var(--shadow-sm);}
 
 /* PRAWY: lupa */
@@ -179,7 +179,7 @@ body.admin-open .header { right: var(--admin-width); }
 .zoom-toggle-top.active{background:var(--red);color:#fff;}
 .zoom-toggle-top .zoom-icon{font-size:0.95rem;}
 
-/* Holiday banner (w header-center) */
+/* Holiday banner */
 #holidayBannerWrapper { position: relative; display: none; align-items: center; justify-content:center; flex-shrink:0; max-width:100%;}
 #holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
 #holidayBanner {
@@ -222,10 +222,9 @@ body.admin-open .header { right: var(--admin-width); }
 
 /* ===== SEKCJE ===== */
 section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
-.hero{padding-top:18rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
+.hero{padding-top:20rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
 .section-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;}
 
-/* STICKY HEADER – naprawiony */
 .sticky-header{
   position:-webkit-sticky;
   position:sticky;
@@ -256,7 +255,6 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .hero-stats div strong{display:block;font-size:1.8rem;font-weight:900;color:var(--red);}
 .hero-stats div span{font-size:.75rem;text-transform:uppercase;font-weight:700;color:var(--text-muted);}
 
-/* ===== KATEGORIE: DRUKOWANE LITERY ===== */
 .cat-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
@@ -341,7 +339,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .refer-box button { padding:0.6rem 1rem; border-radius:8px; background:var(--btn-bg); color:#fff; font-weight:700; font-size:0.8rem; }
 .refer-box .refer-msg { font-size:0.75rem; margin-top:0.5rem; color:var(--green); font-weight:600; min-height:1em; }
 
-/* ADMIN PANEL (bez zmian) */
+/* ADMIN PANEL */
 .admin-panel{
   position:fixed;top:0;right:0;bottom:0;width:var(--admin-width);
   background:rgba(255,255,255,0.65) !important;
@@ -415,35 +413,40 @@ input:checked + .slider:before { transform: translateX(20px); }
 
 /* ===== RESPONSYWNOŚĆ ===== */
 @media(max-width:1100px){
-  .logo-img{height:60px;}
-  .header{padding:0 0.6rem;}
+  :root{--header-height:96px;}
+  .logo-img{height:80px;}
+  .nav-hamburger{width:44px;height:44px;margin-left:0.35rem;}
+  .nav-hamburger span{width:24px;height:3px;}
+  .header{padding:0 0.8rem;}
   .zoom-toggle-top span.zoom-label{display:none;}
   .zoom-toggle-top{padding:0.5rem 0.6rem;}
 }
 @media(max-width:900px){
+  :root{--header-height:88px;}
   body.admin-open #mainContent { margin-right: 0; }
   body.admin-open .header { right: 0; }
   .admin-panel { width: 100vw; }
-  .logo-img{height:52px;}
+  .logo-img{height:70px;}
+  .nav-hamburger{width:42px;height:42px;margin-left:0.3rem;}
   .contact-grid{grid-template-columns:1fr;}
-  .hero{padding-top:14rem;}
+  .hero{padding-top:15rem;}
   .hero-copy{padding:2rem 1.2rem;}
   .hero-stats{gap:1.5rem;}
-  .header{height:80px;}
-  .lang-switch button{padding:.28rem .5rem;font-size:.68rem;}
+  .lang-switch button{padding:.3rem .55rem;font-size:.72rem;}
 }
 @media(max-width:700px){
-  :root{--header-height:70px;}
-  .header{height:70px;padding:0 0.5rem;gap:0.3rem;}
-  .logo-img{height:44px;}
-  .nav-hamburger{width:38px;height:38px;}
+  :root{--header-height:76px;}
+  .header{height:76px;padding:0 0.5rem;gap:0.3rem;}
+  .logo-img{height:58px;}
+  .header-left-block{gap:0.5rem;}
+  .nav-hamburger{width:40px;height:40px;margin-left:0.25rem;gap:4px;}
   .nav-hamburger span{width:22px;height:2.5px;}
-  .lang-switch button{padding:.24rem .42rem;font-size:.6rem;}
+  .lang-switch button{padding:.26rem .45rem;font-size:.63rem;}
   .header-center{gap:0.25rem;padding:0 0.25rem;}
   #holidayBanner{font-size:0.6rem;padding:0.18rem 0.5rem;}
   .zoom-toggle-top{padding:0.42rem 0.5rem;}
   .zoom-toggle-top .zoom-icon{font-size:1rem;}
-  .hero{padding-top:11rem;min-height:auto;padding-bottom:4rem;}
+  .hero{padding-top:12rem;min-height:auto;padding-bottom:4rem;}
   .hero h1{font-size:2rem;}
   .hero-lead{font-size:1rem;}
   section{padding:5rem 4vw 4rem;}
@@ -452,14 +455,14 @@ input:checked + .slider:before { transform: translateX(20px); }
   .promo-banner-container{padding:0.5rem;}
 }
 @media(max-width:480px){
-  :root{--header-height:64px;}
-  .header{height:64px;padding:0 0.35rem;}
-  .logo-img{height:38px;}
-  .lang-switch{gap:0;}
-  .lang-switch button{padding:.22rem .34rem;font-size:.55rem;}
-  .header-left-block{gap:0.3rem;}
-  .nav-hamburger{width:34px;height:34px;}
+  :root{--header-height:70px;}
+  .header{height:70px;padding:0 0.35rem;}
+  .logo-img{height:50px;}
+  .header-left-block{gap:0.4rem;}
+  .nav-hamburger{width:36px;height:36px;margin-left:0.2rem;gap:4px;}
   .nav-hamburger span{width:20px;height:2.5px;}
+  .lang-switch{gap:0;}
+  .lang-switch button{padding:.24rem .4rem;font-size:.58rem;}
   .hero-stats{gap:1rem;}
   .cat-grid{grid-template-columns:1fr 1fr !important;gap:0.8rem;}
   .cat-card .overlay{padding:0.8rem;}
@@ -589,7 +592,6 @@ input:checked + .slider:before { transform: translateX(20px); }
   </footer>
 </div>
 
-<!-- MODAL LOGOWANIA -->
 <div id="adminLoginModal" class="admin-modal" hidden="">
   <form class="admin-box" onsubmit="event.preventDefault();">
     <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:1.5rem;" data-i18n="admin.login.title">Panel administratora</h3>
@@ -604,7 +606,6 @@ input:checked + .slider:before { transform: translateX(20px); }
   </form>
 </div>
 
-<!-- MODAL ODBLOKOWANIA HASŁA -->
 <div id="forgotModal" class="admin-modal" hidden="">
   <div class="admin-box">
     <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;" data-i18n="admin.forgot.title">Odzyskiwanie hasła</h3>
@@ -656,31 +657,26 @@ input:checked + .slider:before { transform: translateX(20px); }
       <div id="themeRows" style="display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;"></div>
 
       <div class="admin-section-title" data-i18n="admin.section.layout">Układ i efekty</div>
-      
       <div class="admin-field">
         <label data-i18n="admin.layout.title">Rozmiar tytułów</label>
         <input type="range" id="titleSizeRange" min="1.5" max="4" step="0.1" style="width:100%;">
         <span id="titleSizeVal" style="font-size:0.7rem; color:#666;">2rem</span>
       </div>
-      
       <div class="admin-field">
         <label data-i18n="admin.layout.blur">Rozmycie tła</label>
         <input type="range" id="blurRange" min="0" max="20" step="1" style="width:100%;">
         <span id="blurVal" style="font-size:0.7rem; color:#666;">2px</span>
       </div>
-      
       <div class="admin-field">
         <label data-i18n="admin.layout.sticky">Wielkość okienek sekcji (padding)</label>
         <input type="range" id="stickyPadRange" min="0" max="5" step="0.1" style="width:100%;">
         <span id="stickyPadVal" style="font-size:0.7rem; color:#666;">1.8rem</span>
       </div>
-
       <div class="admin-field">
         <label>Rozmiar czcionki w topbarze</label>
         <input type="range" id="headerFontSizeRange" min="0.6" max="1.5" step="0.05" style="width:100%;">
         <span id="headerFontSizeVal" style="font-size:0.7rem; color:#666;">0.8rem</span>
       </div>
-
       <div class="admin-field">
         <label>Wysokość / padding topbaru</label>
         <input type="range" id="headerHeightRange" min="40" max="150" step="5" style="width:100%;">
@@ -1026,7 +1022,7 @@ const DEFAULT_SETTINGS = {
     '--glass-blur':'0px', 
     '--sticky-header-padding':'1.5rem 2.5rem',
     '--header-font-size':'0.95rem',
-    '--header-height':'90px'
+    '--header-height':'100px'
   },
   contactData: { address: '145 High Street E, NE28 7RN Wallsend', phone: '+44 1234 567 890' },
   overrides: {}, statOverrides: {},
@@ -1048,6 +1044,87 @@ let renderCategoriesVersion = 0;
 let renderPromosVersion = 0;
 let renderEventVersion = 0;
 let renderLogoVersion = 0;
+
+/* ===== GLOBALNY HANDLER FALLBACKÓW OBRAZÓW (dla Androida) ===== */
+window.__imgFallback = function(imgEl) {
+  try {
+    const fb = imgEl.getAttribute('data-fallbacks');
+    if (!fb) return;
+    const list = fb.split('|');
+    const cur = parseInt(imgEl.getAttribute('data-fb-idx') || '0', 10);
+    if (cur + 1 >= list.length) {
+      // wyczerpano listę – wstaw placeholder
+      imgEl.onerror = null;
+      imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+      return;
+    }
+    imgEl.setAttribute('data-fb-idx', cur + 1);
+    imgEl.src = list[cur + 1];
+  } catch(e) { /* ignore */ }
+};
+
+function buildCandidatePaths(baseFolder, rawName, group) {
+  // normalize
+  const raw = String(rawName || '').trim();
+  const safe = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż_-]/g, '');
+  const noSpaces = raw.replace(/\s+/g, '');
+  const exts = ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'];
+  const out = [];
+  // najpierw nazwa oryginalna i znormalizowana
+  const bases = [raw, noSpaces, safe];
+  bases.forEach(b => {
+    if (!b) return;
+    exts.forEach(ext => {
+      out.push(`./images/${baseFolder}/${b}.${ext}`);
+    });
+  });
+  // fallback dla gazetek: gazetka3 → gazetka1, gazetka4 → gazetka2 (żeby zawsze coś pokazać)
+  if (group === 'promocje') {
+    const m = safe.match(/^gazetka(\d+)$/);
+    if (m) {
+      const num = parseInt(m[1], 10);
+      if (num >= 3) {
+        exts.forEach(ext => {
+          out.push(`./images/promocje/gazetka${num - 2}.${ext}`);
+          out.push(`./images/promocje/gazetka${num - 1}.${ext}`);
+        });
+      }
+    }
+    // ostateczny fallback: gazetka1
+    exts.forEach(ext => {
+      out.push(`./images/promocje/gazetka1.${ext}`);
+    });
+  }
+  return out;
+}
+
+async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
+  // 1) IndexedDB
+  if (dbFileId) {
+    try {
+      const dbRecord = await getImageFromDB(dbFileId);
+      if (dbRecord && dbRecord.blob) {
+        const blobUrl = URL.createObjectURL(dbRecord.blob);
+        imgEl.removeAttribute('data-fallbacks');
+        imgEl.removeAttribute('data-fb-idx');
+        imgEl.onerror = null;
+        imgEl.src = blobUrl;
+        return;
+      }
+    } catch(e) {}
+  }
+  // 2) fallback plików
+  const candidates = buildCandidatePaths(baseFolder, rawName, group);
+  if (!candidates.length) {
+    imgEl.onerror = null;
+    imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+    return;
+  }
+  imgEl.setAttribute('data-fallbacks', candidates.join('|'));
+  imgEl.setAttribute('data-fb-idx', '0');
+  imgEl.onerror = function() { window.__imgFallback(this); };
+  imgEl.src = candidates[0];
+}
 
 /* ===== INDEXED DB ===== */
 let db;
@@ -1559,45 +1636,6 @@ function applyImageSettings() {
   }
 }
 
-/* ===== WIELOPOZIOMOWY FALLBACK ZDJĘĆ ===== */
-function buildCandidatePaths(baseFolder, rawName) {
-  const safeName = rawName.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż]/g, '');
-  const original = rawName.replace(/\s+/g, '');
-  const candidates = [];
-  ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'].forEach(ext => {
-    candidates.push(`./images/${baseFolder}/${safeName}.${ext}`);
-    candidates.push(`./images/${baseFolder}/${original}.${ext}`);
-    candidates.push(`./images/${baseFolder}/${rawName}.${ext}`);
-  });
-  return candidates;
-}
-
-async function loadImageWithFallback(imgEl, baseFolder, rawName, dbFileId) {
-  // 1) najpierw próbuj IndexedDB
-  if (dbFileId) {
-    try {
-      const dbRecord = await getImageFromDB(dbFileId);
-      if (dbRecord && dbRecord.blob) {
-        imgEl.src = URL.createObjectURL(dbRecord.blob);
-        return;
-      }
-    } catch(e) {}
-  }
-  // 2) fallback – wiele ścieżek
-  const candidates = buildCandidatePaths(baseFolder, rawName);
-  let idx = 0;
-  const tryNext = () => {
-    if (idx >= candidates.length) {
-      imgEl.onerror = null;
-      imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
-      return;
-    }
-    imgEl.src = candidates[idx++];
-  };
-  imgEl.onerror = tryNext;
-  tryNext();
-}
-
 async function renderCategories() {
   const grid = document.getElementById('catGrid');
   if (!grid) return;
@@ -1626,8 +1664,7 @@ async function renderCategories() {
     img.alt = title;
     img.loading = 'lazy';
     img.decoding = 'async';
-    img.setAttribute('referrerpolicy', 'no-referrer');
-    img.setAttribute('crossorigin', 'anonymous');
+    // UWAGA: nie dodajemy crossorigin/referrerpolicy dla plików lokalnych – na Androidzie potrafi blokować
 
     inner.appendChild(img);
 
@@ -1640,8 +1677,7 @@ async function renderCategories() {
     div.appendChild(inner);
     grid.appendChild(div);
 
-    // asynchroniczne ładowanie z fallbackiem
-    loadImageWithFallback(img, 'kategorie', rawName, item.fileId);
+    setImageSrcWithFallback(img, 'kategorie', rawName, item.fileId, 'kategorie');
   }
 
   if (myVersion !== renderCategoriesVersion) return;
@@ -1676,15 +1712,10 @@ async function renderPromosSection() {
     img.id = `promoImg${id}`;
     img.loading = 'lazy';
     img.decoding = 'async';
-    img.setAttribute('referrerpolicy', 'no-referrer');
-    img.setAttribute('crossorigin', 'anonymous');
 
     img.onload = function () {
       this.classList.add('loaded');
       initZoom(`promoContainer${id}`, `promoImg${id}`, `zoomLens${id}`);
-    };
-    img.onerror = function () {
-      this.style.display = 'none';
     };
 
     const lens = document.createElement('div');
@@ -1695,7 +1726,7 @@ async function renderPromosSection() {
     container.appendChild(lens);
     list.appendChild(container);
 
-    loadImageWithFallback(img, 'promocje', promo.name || 'gazetka', promo.fileId);
+    setImageSrcWithFallback(img, 'promocje', promo.name || 'gazetka', promo.fileId, 'promocje');
   });
 }
 
@@ -1715,7 +1746,6 @@ async function renderEventBanner() {
 
   img.onload = () => { section.style.display = 'block'; };
   img.onerror = () => { section.style.display = 'none'; };
-  img.setAttribute('referrerpolicy', 'no-referrer');
 
   if (event.fileId) {
     try {
@@ -1797,7 +1827,6 @@ if (zoomToggleTop) {
   });
 }
 
-/* ===== HAMBURGER ===== */
 (function(){
   const hamburger = document.getElementById('navHamburger');
   if (!hamburger) return;
@@ -1813,7 +1842,6 @@ if (zoomToggleTop) {
   });
 })();
 
-/* ===== SECRET TRIGGER ===== */
 (function () {
   const SECRET = 'dnaldoof';
   let buffer = '', resetTimer = null, overFooter = false;
@@ -2268,7 +2296,7 @@ function renderAdminPanel() {
   const blurSize = adminState.layout['--glass-blur'] || '0px';
   const stickyPad = adminState.layout['--sticky-header-padding'] || '1.5rem 2.5rem';
   const headerFontSize = adminState.layout['--header-font-size'] || '0.95rem';
-  const headerHeight = adminState.layout['--header-height'] || '90px';
+  const headerHeight = adminState.layout['--header-height'] || '100px';
   if(document.getElementById('titleSizeRange')) {
       document.getElementById('titleSizeRange').value = parseFloat(titleSize);
       document.getElementById('titleSizeVal').textContent = titleSize;
