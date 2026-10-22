@@ -1237,6 +1237,8 @@ function loadAdmin() {
       if (!parsed.credentials) parsed.credentials = { login: 'admin', password: '123', email: '' };
       if (parsed.credentials.email === undefined) parsed.credentials.email = '';
       if (!parsed.layout) parsed.layout = {};
+      // WYŁĄCZAMY nadpisywanie adresu z pamięci, aby kod HTML miał priorytet
+      parsed.contactData = {}; 
       if (!parsed.layout['--sticky-header-padding']) parsed.layout['--sticky-header-padding'] = '1.5rem 2.5rem';
       if (!parsed.layout['--header-height']) parsed.layout['--header-height'] = '162px';
       
