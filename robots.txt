@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://foodlandshops.co.uk/sitemap.xml
