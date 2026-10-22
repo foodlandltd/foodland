@@ -1055,7 +1055,7 @@ const DEFAULT_SETTINGS = {
     '--header-font-size':'0.95rem',
     '--header-height':'162px'
   },
-  contactData: { address: '145 High Street E, NE28 7RN Wallsend' },
+  contactData: {}, 
   overrides: {}, statOverrides: {},
   credentials: { login: 'admin', password: '123', email: '' },
   themeName: 'default', themeMode: 'light',
@@ -1381,7 +1381,8 @@ const SHOP_ADDRESS = "145 High St E, Wallsend NE28 7RL, UK";
 function updateMapLanguage(lang) {
   const iframe = document.getElementById('mapFrame');
   if (iframe) {
-    iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(SHOP_ADDRESS)}&t=&z=15&ie=UTF8&iwloc=&output=embed&hl=${lang}`;
+    // Dodano "&v=2" na końcu, aby wymusić nowe pobranie mapy
+    iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(SHOP_ADDRESS)}&t=&z=15&ie=UTF8&iwloc=&output=embed&hl=${lang}&v=2`;
   }
 }
 
@@ -1481,8 +1482,8 @@ function setLang(lang) {
   updateMapLanguage(lang);
   updateHolidayBanner();
   document.querySelectorAll('#lang button').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
-  applyStats(lang);
-  applyContactData();
+    applyStats(lang);
+  // applyContactData(); - USUNIĘTE, aby adres z HTML był widoczny
   updateZoomButtonLabel();
   renderCategories(); 
 }
