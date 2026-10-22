@@ -1,4 +1,4 @@
-<html lang="pl" style="--bg-page: #fcfaf8; --topbar-bg: rgba(255,255,255,0.75); --footer-bg: rgba(255,255,255,0.95); --text-main: #2a2a2a; --btn-bg: #d0021b; --section-title-size: 2rem; --glass-blur: 2px; --sticky-header-padding: 1.8rem 2.9988rem; --header-font-size: 0.8rem; --header-height: 110px;"><head>
+<html lang="pl" style="--bg-page: #fcfaf8; --topbar-bg: rgba(255,255,255,0.75); --footer-bg: rgba(255,255,255,0.95); --text-main: #2a2a2a; --btn-bg: #d0021b; --section-title-size: 2rem; --glass-blur: 2px; --sticky-header-padding: 1.8rem 2.9988rem; --header-font-size: 0.8rem; --header-height: 140px;"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FoodLand – Polski Sklep w Wallsend | Świeże produkty codziennie</title>
@@ -34,7 +34,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer}
   --section-title-size: clamp(1.8rem, 3.5vw, 2.6rem);
   --sticky-header-padding: 1.5rem 2.5rem;
   
-  --header-height: 220px;
+  --header-height: 100px;
   --header-font-size: 0.95rem;
   
   --admin-width: 380px;
@@ -64,27 +64,23 @@ body.admin-open #mainContent {
 /* ===== TOPBAR ===== */
 .header{
   position:fixed;top:0;left:0;right:0;z-index:9999;
-  display:grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items:center;
+  display:flex;align-items:center;justify-content:space-between;
   height:var(--header-height);
-  padding:0 1.5rem;
-  column-gap:1rem;
+  padding:0 1rem;
   background: rgba(255, 255, 255, 0.78) !important;
   backdrop-filter: blur(15px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
   transition: right .3s ease;
   box-shadow: 0 2px 15px rgba(0,0,0,0.05);
   border-bottom: 1px solid rgba(255,255,255,0.3);
+  gap:0.5rem;
 }
 body.admin-open .header { right: var(--admin-width); }
 
 /* LEWY BLOK: logo + hamburger (hamburger obok logo, nie zasłania) */
 .header-left-block{
-  justify-self: start;
-  display:flex;align-items:center;gap:1.6rem;flex-shrink:0;
+  display:flex;align-items:center;gap:0.8rem;flex-shrink:0;
   min-width:0;
-  padding-left:0.5rem;
 }
 
 .logo-wrapper{
@@ -92,22 +88,10 @@ body.admin-open .header { right: var(--admin-width); }
   display:flex;align-items:center;
 }
 .logo-img{
-  position: fixed;
-  top: 8px;
-  left: 16px;
-  height: 140px;
-  width: auto;
-  max-width: none;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.22));
-  display: block;
-  z-index: 10050;
-  pointer-events: auto;
+  height:100px;width:auto;max-width:100%;object-fit:contain;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+  display:block;
 }
-@media(max-width:1100px){ .logo-img{ height: 120px; top: 6px; left: 12px; } }
-@media(max-width:900px){  .logo-img{ height: 104px; top: 5px; left: 10px; } }
-@media(max-width:700px){  .logo-img{ height: 88px;  top: 4px; left: 8px;  } }
-@media(max-width:480px){  .logo-img{ height: 76px;  top: 4px; left: 6px;  } }
 
 /* Hamburger – obok logo, z wyraźnym marginesem */
 .nav-hamburger{
@@ -118,7 +102,7 @@ body.admin-open .header { right: var(--admin-width); }
   background:var(--panel-inner);
   cursor:pointer;
   z-index:10001;
-  margin-left:0;
+  margin-left:0.4rem;
 }
 .nav-hamburger span{
   display:block;width:26px;height:3px;background:var(--text-main);border-radius:2px;
@@ -156,33 +140,28 @@ body.admin-open .header { right: var(--admin-width); }
 }
 .nav-dropdown a:hover{background:var(--red-light);color:var(--red);}
 
-/* ŚRODEK: języki + baner świąt – dokładnie w osi strony */
+/* ŚRODEK: języki + baner świąt */
 .header-center{
-  justify-self:center;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:0.35rem;
-  width:max-content;
-  max-width:100%;
-  padding:0;
-  text-align:center;
+  flex:1;
+  min-width:0;
+  padding:0 0.5rem;
 }
 
 .lang-switch{
   display:flex;align-items:center;gap:.1rem;background:var(--panel-inner);
   padding:3px;border-radius:var(--radius-pill);
   flex-wrap:nowrap;
-  margin:0 auto;
 }
 .lang-switch button{padding:.32rem .65rem;font-size:.75rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
 .lang-switch button.active{background:var(--card-bg);color:var(--red);box-shadow:var(--shadow-sm);}
 
-/* PRAWY: lupa – symetrycznie do hamburgera */
+/* PRAWY: lupa */
 .header-right{
-  justify-self:end;
   display:flex;align-items:center;justify-content:flex-end;
   flex-shrink:0;
   gap:0.4rem;
-  padding-right:0.5rem;
 }
 
 .zoom-toggle-top{
@@ -201,7 +180,7 @@ body.admin-open .header { right: var(--admin-width); }
 .zoom-toggle-top .zoom-icon{font-size:0.95rem;}
 
 /* Holiday banner */
-#holidayBannerWrapper { position: relative; display: none; align-items: center; justify-content:center; flex-shrink:0; max-width:100%; margin:0 auto;}
+#holidayBannerWrapper { position: relative; display: none; align-items: center; justify-content:center; flex-shrink:0; max-width:100%;}
 #holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
 #holidayBanner {
   display: flex; align-items: center; gap: 0.5rem;
@@ -243,7 +222,7 @@ body.admin-open .header { right: var(--admin-width); }
 
 /* ===== SEKCJE ===== */
 section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
-.hero{padding-top:22rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
+.hero{padding-top:20rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
 .section-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;}
 
 .sticky-header{
@@ -253,9 +232,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   z-index:100;
   padding:var(--sticky-header-padding);
   border-radius:var(--radius-pill);
-  margin-left:auto;
-  margin-right:auto;
-  margin-bottom:3rem;
+  margin:0 auto 3rem auto;
   text-align:center;
   width:fit-content;
   max-width:100%;
@@ -282,6 +259,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
   gap:1.5rem;
+  perspective:var(--img-perspective, 0px);
 }
 .cat-card{
   position:relative;
@@ -297,9 +275,9 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .cat-card:hover{ box-shadow:0 25px 50px rgba(0,0,0,.25); }
 .cat-card-inner{
   position:absolute; inset:0; border-radius:inherit; overflow:hidden;
-  transition:transform .35s ease;
+  transform-style:preserve-3d; transition:transform .35s ease; will-change:transform;
 }
-.cat-card img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
+.cat-card img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; will-change:transform; }
 .cat-card:hover img{transform:scale(1.06);}
 .cat-grid[data-ratio="4/3"] .cat-card{aspect-ratio:4/3;}
 .cat-grid[data-ratio="3/4"] .cat-card{aspect-ratio:3/4;}
@@ -334,7 +312,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   display:block;
   border-radius:var(--radius-sm);
   cursor:crosshair;
-  opacity:1;              /* zawsze widoczne – nie czekamy na onload */
+  opacity:0;
   transition:opacity 0.25s ease;
 }
 .promo-img-base.loaded { opacity: 1; }
@@ -435,37 +413,40 @@ input:checked + .slider:before { transform: translateX(20px); }
 
 /* ===== RESPONSYWNOŚĆ ===== */
 @media(max-width:1100px){
-  :root{--header-height:180px;}
-  .nav-hamburger{width:44px;height:44px;}
+  :root{--header-height:96px;}
+  .logo-img{height:80px;}
+  .nav-hamburger{width:44px;height:44px;margin-left:0.35rem;}
   .nav-hamburger span{width:24px;height:3px;}
-  .header{padding:0 1rem;}
+  .header{padding:0 0.8rem;}
   .zoom-toggle-top span.zoom-label{display:none;}
   .zoom-toggle-top{padding:0.5rem 0.6rem;}
 }
 @media(max-width:900px){
-  :root{--header-height:160px;}
+  :root{--header-height:88px;}
   body.admin-open #mainContent { margin-right: 0; }
   body.admin-open .header { right: 0; }
   .admin-panel { width: 100vw; }
-  .nav-hamburger{width:42px;height:42px;}
+  .logo-img{height:70px;}
+  .nav-hamburger{width:42px;height:42px;margin-left:0.3rem;}
   .contact-grid{grid-template-columns:1fr;}
-  .hero{padding-top:17rem;}
+  .hero{padding-top:15rem;}
   .hero-copy{padding:2rem 1.2rem;}
   .hero-stats{gap:1.5rem;}
   .lang-switch button{padding:.3rem .55rem;font-size:.72rem;}
 }
 @media(max-width:700px){
-  :root{--header-height:130px;}
-  .header{height:130px;padding:0 0.6rem;gap:0.3rem;}
-  .header-left-block{gap:1rem;}
-  .nav-hamburger{width:40px;height:40px;gap:4px;}
+  :root{--header-height:76px;}
+  .header{height:76px;padding:0 0.5rem;gap:0.3rem;}
+  .logo-img{height:58px;}
+  .header-left-block{gap:0.5rem;}
+  .nav-hamburger{width:40px;height:40px;margin-left:0.25rem;gap:4px;}
   .nav-hamburger span{width:22px;height:2.5px;}
   .lang-switch button{padding:.26rem .45rem;font-size:.63rem;}
-  .header-center{gap:0.25rem;}
+  .header-center{gap:0.25rem;padding:0 0.25rem;}
   #holidayBanner{font-size:0.6rem;padding:0.18rem 0.5rem;}
   .zoom-toggle-top{padding:0.42rem 0.5rem;}
   .zoom-toggle-top .zoom-icon{font-size:1rem;}
-  .hero{padding-top:14rem;min-height:auto;padding-bottom:4rem;}
+  .hero{padding-top:12rem;min-height:auto;padding-bottom:4rem;}
   .hero h1{font-size:2rem;}
   .hero-lead{font-size:1rem;}
   section{padding:5rem 4vw 4rem;}
@@ -474,10 +455,11 @@ input:checked + .slider:before { transform: translateX(20px); }
   .promo-banner-container{padding:0.5rem;}
 }
 @media(max-width:480px){
-  :root{--header-height:115px;}
-  .header{height:115px;padding:0 0.4rem;}
-  .header-left-block{gap:0.7rem;}
-  .nav-hamburger{width:36px;height:36px;gap:4px;}
+  :root{--header-height:70px;}
+  .header{height:70px;padding:0 0.35rem;}
+  .logo-img{height:50px;}
+  .header-left-block{gap:0.4rem;}
+  .nav-hamburger{width:36px;height:36px;margin-left:0.2rem;gap:4px;}
   .nav-hamburger span{width:20px;height:2.5px;}
   .lang-switch{gap:0;}
   .lang-switch button{padding:.24rem .4rem;font-size:.58rem;}
@@ -487,266 +469,22 @@ input:checked + .slider:before { transform: translateX(20px); }
   .cat-card .overlay h3{font-size:0.85rem;}
   .sticky-header{top:calc(var(--header-height) + 8px);padding:0.8rem 1rem;}
 }
-
-/* ===== TOPBAR – wersja 2× niższa, logo FIXED ===== */
-
-:root{
-  --header-height: 110px;
-}
-@media(max-width:1100px){ :root{ --header-height: 100px; } }
-@media(max-width:900px){  :root{ --header-height: 92px;  } }
-@media(max-width:700px){  :root{ --header-height: 80px;  } }
-@media(max-width:480px){  :root{ --header-height: 68px;  } }
-
-.header{
-  height: var(--header-height);
-  padding: 0 1.2rem;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  column-gap: 1rem;
-  overflow: visible;
-  z-index: 9999;
-}
-@media(max-width:700px){
-  .header{ padding: 0 0.8rem; column-gap: 0.6rem; }
-}
-@media(max-width:480px){
-  .header{ padding: 0 0.5rem; column-gap: 0.4rem; }
-}
-
-/* Lewy blok – tylko rezerwa miejsca na logo (logo jest fixed) */
-.header-left-block{
-  justify-self: start;
-  display: flex;
-  align-items: center;
-  gap: 0;
-  padding-left: 0.4rem;
-  min-width: 0;
-  height: 100%;
-}
-
-/* Logo: position: fixed – odłączone od topbaru, zawsze widoczne, nie ucinane */
-.logo-wrapper{
-  position: static;        /* nie tworzymy kontekstu dla fixed */
-  width: 0;                /* nie rezerwuje szerokości w gridzie */
-  height: 0;
-}
-.logo-img{
-  position: fixed;
-  top: 8px;                /* odstęp od góry ekranu */
-  left: 16px;              /* odstęp od lewej */
-  height: 140px;           /* rozmiar logo – dopasuj wg potrzeb */
-  width: auto;
-  max-width: none;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.22));
-  z-index: 10050;          /* ponad topbarem i panelem admina */
-  pointer-events: auto;
-}
-@media(max-width:1100px){ .logo-img{ height: 120px; top: 6px; left: 12px; } }
-@media(max-width:900px){  .logo-img{ height: 104px; top: 5px; left: 10px; } }
-@media(max-width:700px){  .logo-img{ height: 88px;  top: 4px; left: 8px;  } }
-@media(max-width:480px){  .logo-img{ height: 76px;  top: 4px; left: 6px;  } }
-
-/* Prawy blok – hamburger + lupa w jednej linii, na wysokości języków */
-.header-right{
-  justify-self: end;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-shrink: 0;
-  gap: 0.5rem;
-  padding-right: 0.4rem;
-  height: 100%;
-}
-
-/* Hamburger – między językami a lupą */
-.nav-hamburger{
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: var(--panel-inner);
-  cursor: pointer;
-  z-index: 10001;
-  margin: 0;
-}
-.nav-hamburger span{
-  display: block;
-  width: 24px;
-  height: 3px;
-  background: var(--text-main);
-  border-radius: 2px;
-  transition: all .25s ease;
-}
-@media(max-width:700px){
-  .nav-hamburger{ width: 38px; height: 38px; gap: 4px; }
-  .nav-hamburger span{ width: 20px; height: 2.5px; }
-}
-@media(max-width:480px){
-  .nav-hamburger{ width: 34px; height: 34px; gap: 3px; }
-  .nav-hamburger span{ width: 18px; height: 2.5px; }
-}
-
-/* Dropdown hamburgera – otwiera się w prawo-dół (bo jest po prawej stronie) */
-.nav-dropdown{
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  left: auto;
-  min-width: 220px;
-  background: var(--card-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-  padding: 0.6rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px);
-  transition: all .22s ease;
-  z-index: 10005;
-}
-.nav-hamburger:hover .nav-dropdown,
-.nav-hamburger:focus-within .nav-dropdown,
-.nav-hamburger.open .nav-dropdown{
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-.nav-dropdown a{
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text-main);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  transition: all .2s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-.nav-dropdown a:hover{
-  background: var(--red-light);
-  color: var(--red);
-}
-
-/* Środek – języki i baner w osi */
-.header-center{
-  justify-self: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  width: max-content;
-  max-width: 100%;
-  padding: 0;
-  text-align: center;
-  height: 100%;
-}
-
-.lang-switch{
-  display: flex;
-  align-items: center;
-  gap: .1rem;
-  background: var(--panel-inner);
-  padding: 3px;
-  border-radius: var(--radius-pill);
-  flex-wrap: nowrap;
-  margin: 0 auto;
-}
-.lang-switch button{
-  padding: .32rem .65rem;
-  font-size: .75rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  border-radius: var(--radius-pill);
-}
-.lang-switch button.active{
-  background: var(--card-bg);
-  color: var(--red);
-  box-shadow: var(--shadow-sm);
-}
-@media(max-width:700px){
-  .lang-switch button{ padding: .26rem .45rem; font-size: .63rem; }
-}
-@media(max-width:480px){
-  .lang-switch button{ padding: .22rem .38rem; font-size: .58rem; }
-}
-
-/* Lupa */
-.zoom-toggle-top{
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: var(--panel-inner);
-  color: var(--text-main);
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--radius-pill);
-  font-size: 0.72rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background .2s;
-}
-@media(max-width:700px){
-  .zoom-toggle-top{ padding: 0.4rem 0.55rem; }
-  .zoom-toggle-top .zoom-label{ display: none; }
-}
-
-/* Baner świąt */
-#holidayBannerWrapper{
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  max-width: 100%;
-  margin: 0 auto;
-}
-#holidayBanner{
-  font-size: 0.62rem;
-  padding: 0.16rem 0.55rem;
-}
-@media(max-width:700px){
-  #holidayBanner{ font-size: 0.56rem; padding: 0.14rem 0.45rem; }
-}
-
-/* Sticky header sekcji – offset zgodny z nową wysokością topbaru */
-.sticky-header{
-  top: calc(var(--header-height) + 16px);
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-@media(max-width:700px){
-  .sticky-header{ top: calc(var(--header-height) + 10px); }
-}
-
-/* Hero – padding-top uwzględnia logo (fixed, 140px) + topbar */
-.hero{ padding-top: 16rem; }
-@media(max-width:900px){ .hero{ padding-top: 13rem; } }
-@media(max-width:700px){ .hero{ padding-top: 10.5rem; } }
-@media(max-width:480px){ .hero{ padding-top: 9rem; } }
-
 </style>
-</head>
+<link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
 <body>
 
 <header class="header">
   <div class="header-left-block">
     <div class="logo-wrapper">
       <a href="#"><img src="./images/logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'" style="display: block;"></a>
+    </div>
+    <div class="nav-hamburger" id="navHamburger" tabindex="0" role="button" aria-label="Menu">
+      <span></span><span></span><span></span>
+      <div class="nav-dropdown" id="navDropdown">
+        <a href="#kategorie" data-i18n="nav.categories">KATEGORIE</a>
+        <a href="#promocje" data-i18n="nav.promos">PROMOCJE</a>
+        <a href="#kontakt" data-i18n="nav.contact">KONTAKT</a>
+      </div>
     </div>
   </div>
 
@@ -764,14 +502,6 @@ input:checked + .slider:before { transform: translateX(20px); }
   </div>
 
   <div class="header-right">
-    <div class="nav-hamburger" id="navHamburger" tabindex="0" role="button" aria-label="Menu">
-      <span></span><span></span><span></span>
-      <div class="nav-dropdown" id="navDropdown">
-        <a href="#kategorie" data-i18n="nav.categories">KATEGORIE</a>
-        <a href="#promocje" data-i18n="nav.promos">PROMOCJE</a>
-        <a href="#kontakt" data-i18n="nav.contact">KONTAKT</a>
-      </div>
-    </div>
     <button id="zoomToggleTop" class="zoom-toggle-top" title="Lupa">
       <span class="zoom-icon">🔍</span>
       <span class="zoom-label" id="zoomLabel">Lupa: ON</span>
@@ -802,7 +532,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 
   <section id="eventBannerSection" style="display: block;">
     <div class="section-content">
-      <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event" loading="eager" decoding="async">
+      <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event" loading="lazy" decoding="async">
     </div>
   </section>
 
@@ -948,10 +678,10 @@ input:checked + .slider:before { transform: translateX(20px); }
         <span id="headerFontSizeVal" style="font-size:0.7rem; color:#666;">0.8rem</span>
       </div>
       <div class="admin-field">
-  <label>Wysokość / padding topbaru</label>
-  <input type="range" id="headerHeightRange" min="40" max="250" step="5" style="width:100%;">
-  <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">110px</span>
-</div>
+        <label>Wysokość / padding topbaru</label>
+        <input type="range" id="headerHeightRange" min="40" max="150" step="5" style="width:100%;">
+        <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">140px</span>
+      </div>
     </div>
 
     <div class="admin-tabpage" data-page="images">
@@ -1278,28 +1008,22 @@ const CATEGORY_DICTIONARY = [
 
 function translateCategoryName(rawName, lang) {
   if (!rawName) return '';
-  const norm = (s) => String(s)
-    .toLowerCase()
-    .trim()
-    .replace(/ą/g,'a').replace(/ć/g,'c').replace(/ę/g,'e')
-    .replace(/ł/g,'l').replace(/ń/g,'n').replace(/ó/g,'o')
-    .replace(/ś/g,'s').replace(/ź/g,'z').replace(/ż/g,'z');
-  const rawNorm = norm(rawName);
-  const dictEntry = CATEGORY_DICTIONARY.find(d => norm(d.pl) === rawNorm);
+  const dictEntry = CATEGORY_DICTIONARY.find(
+    d => d.pl.toLowerCase() === rawName.toLowerCase().trim()
+  );
   if (dictEntry && dictEntry[lang]) return dictEntry[lang];
-  // fallback: jeśli brak w słowniku, ale nazwa jest po polsku – zwróć oryginał
   return rawName;
 }
 
 const DEFAULT_SETTINGS = {
   theme: {'--bg-page':'#fcfaf8','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'rgba(255,255,255,0.95)','--text-main':'#2a2a2a','--btn-bg':'#d0021b'},
   layout: {
-  '--section-title-size':'2.6rem', 
-  '--glass-blur':'0px', 
-  '--sticky-header-padding':'1.5rem 2.5rem',
-  '--header-font-size':'0.95rem',
-  '--header-height':'110px'
-},
+    '--section-title-size':'2.6rem', 
+    '--glass-blur':'0px', 
+    '--sticky-header-padding':'1.5rem 2.5rem',
+    '--header-font-size':'0.95rem',
+    '--header-height':'100px'
+  },
   contactData: { address: '145 High Street E, NE28 7RN Wallsend', phone: '+44 1234 567 890' },
   overrides: {}, statOverrides: {},
   credentials: { login: 'admin', password: '123', email: '' },
@@ -1329,93 +1053,79 @@ window.__imgFallback = function(imgEl) {
     const list = fb.split('|');
     const cur = parseInt(imgEl.getAttribute('data-fb-idx') || '0', 10);
     if (cur + 1 >= list.length) {
+      // wyczerpano listę – wstaw placeholder
       imgEl.onerror = null;
-      imgEl.removeAttribute('data-fallbacks');
-      imgEl.setAttribute('data-fb-done', '1');
       imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
       return;
     }
     imgEl.setAttribute('data-fb-idx', cur + 1);
     imgEl.src = list[cur + 1];
-  } catch(e) { }
+  } catch(e) { /* ignore */ }
 };
 
 function buildCandidatePaths(baseFolder, rawName, group) {
+  // normalize
   const raw = String(rawName || '').trim();
   const safe = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż_-]/g, '');
   const noSpaces = raw.replace(/\s+/g, '');
-  const lower = raw.toLowerCase();
   const exts = ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'];
   const out = [];
-  // dodaj warianty nazwy: oryginał, bez spacji, lowercase, znormalizowany
-  const bases = [raw, noSpaces, lower, safe];
-  const seen = new Set();
+  // najpierw nazwa oryginalna i znormalizowana
+  const bases = [raw, noSpaces, safe];
   bases.forEach(b => {
     if (!b) return;
     exts.forEach(ext => {
-      const p = `./images/${baseFolder}/${b}.${ext}`;
-      if (!seen.has(p)) { seen.add(p); out.push(p); }
+      out.push(`./images/${baseFolder}/${b}.${ext}`);
     });
   });
-  // fallback dla gazetek
+  // fallback dla gazetek: gazetka3 → gazetka1, gazetka4 → gazetka2 (żeby zawsze coś pokazać)
   if (group === 'promocje') {
     const m = safe.match(/^gazetka(\d+)$/);
     if (m) {
       const num = parseInt(m[1], 10);
       if (num >= 3) {
         exts.forEach(ext => {
-          const p1 = `./images/promocje/gazetka${num - 2}.${ext}`;
-          const p2 = `./images/promocje/gazetka${num - 1}.${ext}`;
-          if (!seen.has(p1)) { seen.add(p1); out.push(p1); }
-          if (!seen.has(p2)) { seen.add(p2); out.push(p2); }
+          out.push(`./images/promocje/gazetka${num - 2}.${ext}`);
+          out.push(`./images/promocje/gazetka${num - 1}.${ext}`);
         });
       }
     }
+    // ostateczny fallback: gazetka1
     exts.forEach(ext => {
-      const p = `./images/promocje/gazetka1.${ext}`;
-      if (!seen.has(p)) { seen.add(p); out.push(p); }
+      out.push(`./images/promocje/gazetka1.${ext}`);
     });
   }
   return out;
 }
 
-function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
+async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
+  // 1) IndexedDB
+  if (dbFileId) {
+    try {
+      const dbRecord = await getImageFromDB(dbFileId);
+      if (dbRecord && dbRecord.blob) {
+        const blobUrl = URL.createObjectURL(dbRecord.blob);
+        imgEl.removeAttribute('data-fallbacks');
+        imgEl.removeAttribute('data-fb-idx');
+        imgEl.onerror = null;
+        imgEl.src = blobUrl;
+        return;
+      }
+    } catch(e) {}
+  }
+  // 2) fallback plików
   const candidates = buildCandidatePaths(baseFolder, rawName, group);
-  if (candidates.length) {
-    imgEl.setAttribute('data-fallbacks', candidates.join('|'));
-    imgEl.setAttribute('data-fb-idx', '0');
-    imgEl.onerror = function() { window.__imgFallback(this); };
-    imgEl.src = candidates[0];
-  } else {
+  if (!candidates.length) {
     imgEl.onerror = null;
     imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+    return;
   }
+  imgEl.setAttribute('data-fallbacks', candidates.join('|'));
+  imgEl.setAttribute('data-fb-idx', '0');
+  imgEl.onerror = function() { window.__imgFallback(this); };
+  imgEl.src = candidates[0];
 }
 
-  // 2) IndexedDB – tylko jeśli plik z folderu się NIE załadował
-  if (dbFileId) {
-    getImageFromDB(dbFileId).then(dbRecord => {
-      if (!dbRecord || !dbRecord.blob) return;
-      // jeśli obrazek już się załadował z folderu – nie nadpisuj
-      if (imgEl.complete && imgEl.naturalWidth > 0) return;
-      const blobUrl = URL.createObjectURL(dbRecord.blob);
-      imgEl.removeAttribute('data-fallbacks');
-      imgEl.removeAttribute('data-fb-idx');
-      imgEl.onerror = null;
-      imgEl.src = blobUrl;
-    }).catch(() => {});
-  }
-
-  // 3) Android: niektóre 404 nie odpalają onerror – sprawdź po 3s
-  if (candidates.length) {
-    setTimeout(() => {
-      if (imgEl.getAttribute('data-fb-idx') === '0' &&
-          (!imgEl.complete || imgEl.naturalWidth === 0)) {
-        window.__imgFallback(imgEl);
-      }
-    }, 3000);
-  }
-}
 /* ===== INDEXED DB ===== */
 let db;
 const DB_NAME = 'FoodLandDB';
@@ -1482,7 +1192,6 @@ function loadAdmin() {
       if (parsed.credentials.email === undefined) parsed.credentials.email = '';
       if (!parsed.layout) parsed.layout = {};
       if (!parsed.layout['--sticky-header-padding']) parsed.layout['--sticky-header-padding'] = '1.5rem 2.5rem';
-      if (!parsed.layout['--header-height']) parsed.layout['--header-height'] = '110px';
       return { ...DEFAULT_SETTINGS, ...parsed };
     }
     return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
@@ -1899,29 +1608,20 @@ async function addNewImage() {
   const fileInput = document.getElementById('imgUpload');
   const nameInput = document.getElementById('imgNewName');
   const f = fileInput?.files[0];
+  if (!f) return alert('Wybierz plik zdjęcia.');
   let name = (nameInput?.value || '').trim();
-
-  if (!name) return alert('Wpisz nazwę zdjęcia (np. "nabial" bez polskich znaków).');
-
+  if (!name) name = f.name.replace(/\.[^/.]+$/, '');
   const id = 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
-
   try {
-    let fileId = null;
-    if (f) {
-      await saveImageToDB(id, f);
-      fileId = id;
-    }
-    
+    await saveImageToDB(id, f);
     const items = getGroupImages(group).slice();
-    items.push({ id, fileId, name, size: 100, order: items.length, active: true });
+    items.push({ id, fileId: id, name, size: 100, order: items.length, active: true });
     saveGroupImages(group, items);
-    
     renderImageList();
     if (group === 'kategorie') renderCategories();
     if (group === 'promocje') renderPromosSection();
     if (group === 'event') renderEventBanner();
     if (group === 'logo') renderLogo();
-    
     if (fileInput) fileInput.value = '';
     if (nameInput) nameInput.value = '';
   } catch(e) { alert('Błąd zapisu: ' + e); }
@@ -1962,8 +1662,10 @@ async function renderCategories() {
 
     const img = document.createElement('img');
     img.alt = title;
-    img.loading = 'eager';
-    img.decoding = 'sync';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    // UWAGA: nie dodajemy crossorigin/referrerpolicy dla plików lokalnych – na Androidzie potrafi blokować
+
     inner.appendChild(img);
 
     const ov = document.createElement('div');
@@ -2008,26 +1710,13 @@ async function renderPromosSection() {
     img.className = 'promo-img-base';
     img.alt = promo.name || 'Gazetka';
     img.id = `promoImg${id}`;
-    img.loading = 'eager';
-    img.decoding = 'sync';
+    img.loading = 'lazy';
+    img.decoding = 'async';
 
-       const markLoaded = function () {
+    img.onload = function () {
       this.classList.add('loaded');
       initZoom(`promoContainer${id}`, `promoImg${id}`, `zoomLens${id}`);
     };
-    img.onload = markLoaded;
-    // Android: jeśli obraz już jest w cache, onload może nie odpalić
-    img.addEventListener('load', markLoaded, { once: true });
-    // Fallback: po 1.5s sprawdź, czy obraz jest kompletny – jeśli tak, pokaż go
-    setTimeout(() => {
-      if (img.complete && img.naturalWidth > 0) {
-        img.classList.add('loaded');
-        initZoom(`promoContainer${id}`, `promoImg${id}`, `zoomLens${id}`);
-      } else if (img.complete && img.naturalWidth === 0) {
-        // obraz się nie załadował – pokaż placeholder zamiast pustki
-        img.classList.add('loaded');
-      }
-    }, 1500);
 
     const lens = document.createElement('div');
     lens.className = 'zoom-lens';
@@ -2607,7 +2296,7 @@ function renderAdminPanel() {
   const blurSize = adminState.layout['--glass-blur'] || '0px';
   const stickyPad = adminState.layout['--sticky-header-padding'] || '1.5rem 2.5rem';
   const headerFontSize = adminState.layout['--header-font-size'] || '0.95rem';
-  const headerHeight = adminState.layout['--header-height'] || '110px';
+  const headerHeight = adminState.layout['--header-height'] || '100px';
   if(document.getElementById('titleSizeRange')) {
       document.getElementById('titleSizeRange').value = parseFloat(titleSize);
       document.getElementById('titleSizeVal').textContent = titleSize;
