@@ -2299,7 +2299,26 @@ document.getElementById('saveVersionBtn')?.addEventListener('click', () => {
 });
 
 document.getElementById('downloadHtmlBtn')?.addEventListener('click', () => {
-  const html = document.documentElement.outerHTML;
+  // 1. Tworzymy kopię strony, żeby nie psuć widoku admina w przeglądarce
+  const clone = document.documentElement.cloneNode(true);
+  
+  // 2. Sprzątamy kopię: ukrywamy panel admina i usuwamy klasy z body
+  const panel = clone.querySelector('#adminPanel');
+  if (panel) panel.setAttribute('hidden', '');
+  
+  const loginModal = clone.querySelector('#adminLoginModal');
+  if (loginModal) loginModal.setAttribute('hidden', '');
+  
+  const forgotModal = clone.querySelector('#forgotModal');
+  if (forgotModal) forgotModal.setAttribute('hidden', '');
+  
+  const body = clone.querySelector('body');
+  if (body) {
+    body.classList.remove('admin-open');
+  }
+
+  // 3. Zapisujemy "wyczyszczony" kod
+  const html = clone.outerHTML;
   const blob = new Blob([html], {type: 'text/html'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -2496,6 +2515,16 @@ window.addEventListener('DOMContentLoaded', async () => {
       msg.style.color = '#00843d';
     });
   }
+});
+// OSTATECZNE ZABEZPIECZENIE: Ukryj panel admina przy każdym wejściu na stronę
+window.addEventListener('load', () => {
+  document.body.classList.remove('admin-open');
+  const adminPanel = document.getElementById('adminPanel');
+  if (adminPanel) adminPanel.hidden = true;
+  const adminLoginModal = document.getElementById('adminLoginModal');
+  if (adminLoginModal) adminLoginModal.hidden = true;
+  const forgotModal = document.getElementById('forgotModal');
+  if (forgotModal) forgotModal.hidden = true;
 });
 </script>
 
