@@ -1343,34 +1343,52 @@ function buildCandidatePaths(baseFolder, rawName, group) {
   const raw = String(rawName || '').trim();
   const safe = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż_-]/g, '');
   const noSpaces = raw.replace(/\s+/g, '');
+  const lower = raw.toLowerCase();
   const exts = ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'];
   const out = [];
-  const bases = [raw, noSpaces, safe];
+  // dodaj warianty nazwy: oryginał, bez spacji, lowercase, znormalizowany
+  const bases = [raw, noSpaces, lower, safe];
+  const seen = new Set();
   bases.forEach(b => {
     if (!b) return;
     exts.forEach(ext => {
-      out.push(`./images/${baseFolder}/${b}.${ext}`);
+      const p = `./images/${baseFolder}/${b}.${ext}`;
+      if (!seen.has(p)) { seen.add(p); out.push(p); }
     });
   });
+  // fallback dla gazetek
   if (group === 'promocje') {
     const m = safe.match(/^gazetka(\d+)$/);
     if (m) {
       const num = parseInt(m[1], 10);
       if (num >= 3) {
         exts.forEach(ext => {
-          out.push(`./images/promocje/gazetka${num - 2}.${ext}`);
-          out.push(`./images/promocje/gazetka${num - 1}.${ext}`);
+          const p1 = `./images/promocje/gazetka${num - 2}.${ext}`;
+          const p2 = `./images/promocje/gazetka${num - 1}.${ext}`;
+          if (!seen.has(p1)) { seen.add(p1); out.push(p1); }
+          if (!seen.has(p2)) { seen.add(p2); out.push(p2); }
         });
       }
     }
     exts.forEach(ext => {
-      out.push(`./images/promocje/gazetka1.${ext}`);
+      const p = `./images/promocje/gazetka1.${ext}`;
+      if (!seen.has(p)) { seen.add(p); out.push(p); }
     });
   }
   return out;
 }
 
 async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
+  // 1) NAJPIERW ustaw src z plików – natychmiast, bez czekania na DB
+  const candidates = buildCandidatePaths(baseFolder, rawName, group);
+  if (candidates.length) {
+    imgEl.setAttribute('data-fallbacks', candidates.join('|'));
+    imgEl.setAttribute('data-fb-idx', '0');
+    imgEl.onerror = function() { window.__imgFallback(this); };
+    imgEl.src = candidates[0];
+  }
+
+  // 2) Dopiero potem sprawdź IndexedDB – jeśli jest blob, nadpisz src
   if (dbFileId) {
     try {
       const dbRecord = await getImageFromDB(dbFileId);
@@ -1384,18 +1402,23 @@ async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, gro
       }
     } catch(e) {}
   }
-  const candidates = buildCandidatePaths(baseFolder, rawName, group);
+
+  // 3) Jeśli nie było kandydatów i nie było blobu – placeholder
   if (!candidates.length) {
     imgEl.onerror = null;
     imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
-    return;
   }
-  imgEl.setAttribute('data-fallbacks', candidates.join('|'));
-  imgEl.setAttribute('data-fb-idx', '0');
-  imgEl.onerror = function() { window.__imgFallback(this); };
-  imgEl.src = candidates[0];
-}
 
+  // 4) Android: niektóre 404 nie odpalają onerror – sprawdź po 3s
+  if (candidates.length) {
+    setTimeout(() => {
+      if (imgEl.getAttribute('data-fb-idx') === '0' &&
+          (!imgEl.complete || imgEl.naturalWidth === 0)) {
+        window.__imgFallback(imgEl);
+      }
+    }, 3000);
+  }
+}
 /* ===== INDEXED DB ===== */
 let db;
 const DB_NAME = 'FoodLandDB';
@@ -1933,9 +1956,8 @@ async function renderCategories() {
 
     const img = document.createElement('img');
     img.alt = title;
-    img.loading = 'lazy';
+    img.loading = 'eager';
     img.decoding = 'async';
-
     inner.appendChild(img);
 
     const ov = document.createElement('div');
