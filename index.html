@@ -282,7 +282,6 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
   gap:1.5rem;
-  perspective:var(--img-perspective, 0px);
 }
 .cat-card{
   position:relative;
@@ -298,9 +297,9 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .cat-card:hover{ box-shadow:0 25px 50px rgba(0,0,0,.25); }
 .cat-card-inner{
   position:absolute; inset:0; border-radius:inherit; overflow:hidden;
-  transform-style:preserve-3d; transition:transform .35s ease; will-change:transform;
+  transition:transform .35s ease;
 }
-.cat-card img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; will-change:transform; }
+.cat-card img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
 .cat-card:hover img{transform:scale(1.06);}
 .cat-grid[data-ratio="4/3"] .cat-card{aspect-ratio:4/3;}
 .cat-grid[data-ratio="3/4"] .cat-card{aspect-ratio:3/4;}
@@ -1331,6 +1330,8 @@ window.__imgFallback = function(imgEl) {
     const cur = parseInt(imgEl.getAttribute('data-fb-idx') || '0', 10);
     if (cur + 1 >= list.length) {
       imgEl.onerror = null;
+      imgEl.removeAttribute('data-fallbacks');
+      imgEl.setAttribute('data-fb-done', '1');
       imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
       return;
     }
@@ -1378,30 +1379,32 @@ function buildCandidatePaths(baseFolder, rawName, group) {
   return out;
 }
 
-async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
-  // 1) NAJPIERW ustaw src z plików – natychmiast, bez czekania na DB
+function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
+  // 1) NAJPIERW ustaw src z plików – natychmiast
   const candidates = buildCandidatePaths(baseFolder, rawName, group);
   if (candidates.length) {
     imgEl.setAttribute('data-fallbacks', candidates.join('|'));
     imgEl.setAttribute('data-fb-idx', '0');
     imgEl.onerror = function() { window.__imgFallback(this); };
     imgEl.src = candidates[0];
+  } else {
+    imgEl.onerror = null;
+    imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
   }
 
-  // 2) Dopiero potem sprawdź IndexedDB – jeśli jest blob, nadpisz src
+  // 2) Równolegle sprawdź IndexedDB – jeśli jest blob, nadpisz src (bez await)
   if (dbFileId) {
-    try {
-      const dbRecord = await getImageFromDB(dbFileId);
+    getImageFromDB(dbFileId).then(dbRecord => {
       if (dbRecord && dbRecord.blob) {
         const blobUrl = URL.createObjectURL(dbRecord.blob);
         imgEl.removeAttribute('data-fallbacks');
         imgEl.removeAttribute('data-fb-idx');
         imgEl.onerror = null;
         imgEl.src = blobUrl;
-        return;
       }
-    } catch(e) {}
+    }).catch(() => {});
   }
+}
 
   // 3) Jeśli nie było kandydatów i nie było blobu – placeholder
   if (!candidates.length) {
@@ -1957,7 +1960,7 @@ async function renderCategories() {
     const img = document.createElement('img');
     img.alt = title;
     img.loading = 'eager';
-    img.decoding = 'async';
+    img.decoding = 'sync';
     inner.appendChild(img);
 
     const ov = document.createElement('div');
@@ -2002,8 +2005,8 @@ async function renderPromosSection() {
     img.className = 'promo-img-base';
     img.alt = promo.name || 'Gazetka';
     img.id = `promoImg${id}`;
-    img.loading = 'lazy';
-    img.decoding = 'async';
+    img.loading = 'eager';
+    img.decoding = 'sync';
 
        const markLoaded = function () {
       this.classList.add('loaded');
