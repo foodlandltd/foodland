@@ -1,4 +1,4 @@
-<html lang="pl" style="--bg-page: #fcfaf8; --topbar-bg: rgba(255,255,255,0.75); --footer-bg: rgba(255,255,255,0.95); --text-main: #2a2a2a; --btn-bg: #d0021b; --section-title-size: 2rem; --glass-blur: 2px; --sticky-header-padding: 1.8rem 2.9988rem; --header-font-size: 0.8rem; --header-height: 220px;"><head>
+<html lang="pl" style="--bg-page: #fcfaf8; --topbar-bg: rgba(255,255,255,0.75); --footer-bg: rgba(255,255,255,0.95); --text-main: #2a2a2a; --btn-bg: #d0021b; --section-title-size: 2rem; --glass-blur: 2px; --sticky-header-padding: 1.8rem 2.9988rem; --header-font-size: 0.8rem; --header-height: 110px;"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FoodLand – Polski Sklep w Wallsend | Świeże produkty codziennie</title>
@@ -480,8 +480,219 @@ input:checked + .slider:before { transform: translateX(20px); }
   .cat-card .overlay h3{font-size:0.85rem;}
   .sticky-header{top:calc(var(--header-height) + 8px);padding:0.8rem 1rem;}
 }
+
+/* ===== TOPBAR – wersja 2× niższa, logo lewituje ===== */
+
+/* Nowa, niska wysokość topbaru */
+:root{
+  --header-height: 110px;
+}
+@media(max-width:1100px){ :root{ --header-height: 100px; } }
+@media(max-width:900px){  :root{ --header-height: 92px;  } }
+@media(max-width:700px){  :root{ --header-height: 80px;  } }
+@media(max-width:480px){  :root{ --header-height: 68px;  } }
+
+.header{
+  height: var(--header-height);
+  padding: 0 1.2rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: 1rem;
+  overflow: visible;
+}
+@media(max-width:700px){
+  .header{ padding: 0 0.8rem; column-gap: 0.6rem; }
+}
+@media(max-width:480px){
+  .header{ padding: 0 0.5rem; column-gap: 0.4rem; }
+}
+
+.header-left-block{
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 0.4rem;
+  min-width: 0;
+  position: relative;
+  height: 100%;
+}
+
+.logo-wrapper{
+  position: relative;
+  width: 160px;
+  height: 100%;
+  flex-shrink: 0;
+}
+.logo-img{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-58%);
+  height: 200px;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.22));
+  z-index: 5;
+  pointer-events: auto;
+}
+@media(max-width:1100px){
+  .logo-wrapper{ width: 140px; }
+  .logo-img{ height: 170px; }
+}
+@media(max-width:900px){
+  .logo-wrapper{ width: 120px; }
+  .logo-img{ height: 140px; }
+}
+@media(max-width:700px){
+  .logo-wrapper{ width: 100px; }
+  .logo-img{ height: 118px; }
+}
+@media(max-width:480px){
+  .logo-wrapper{ width: 84px; }
+  .logo-img{ height: 98px; }
+}
+
+.nav-hamburger{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--panel-inner);
+  cursor: pointer;
+  z-index: 10001;
+  margin: 0;
+}
+.nav-hamburger span{
+  display: block;
+  width: 24px;
+  height: 3px;
+  background: var(--text-main);
+  border-radius: 2px;
+  transition: all .25s ease;
+}
+@media(max-width:700px){
+  .nav-hamburger{ width: 38px; height: 38px; gap: 4px; }
+  .nav-hamburger span{ width: 20px; height: 2.5px; }
+}
+@media(max-width:480px){
+  .nav-hamburger{ width: 34px; height: 34px; gap: 3px; }
+  .nav-hamburger span{ width: 18px; height: 2.5px; }
+}
+
+.header-center{
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: max-content;
+  max-width: 100%;
+  padding: 0;
+  text-align: center;
+  height: 100%;
+}
+
+.lang-switch{
+  display: flex;
+  align-items: center;
+  gap: .1rem;
+  background: var(--panel-inner);
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  flex-wrap: nowrap;
+  margin: 0 auto;
+}
+.lang-switch button{
+  padding: .32rem .65rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-radius: var(--radius-pill);
+}
+.lang-switch button.active{
+  background: var(--card-bg);
+  color: var(--red);
+  box-shadow: var(--shadow-sm);
+}
+@media(max-width:700px){
+  .lang-switch button{ padding: .26rem .45rem; font-size: .63rem; }
+}
+@media(max-width:480px){
+  .lang-switch button{ padding: .22rem .38rem; font-size: .58rem; }
+}
+
+.header-right{
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  gap: 0.4rem;
+  padding-right: 0.4rem;
+  height: 100%;
+}
+
+.zoom-toggle-top{
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--panel-inner);
+  color: var(--text-main);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s;
+}
+@media(max-width:700px){
+  .zoom-toggle-top{ padding: 0.4rem 0.55rem; }
+  .zoom-toggle-top .zoom-label{ display: none; }
+}
+
+#holidayBannerWrapper{
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  max-width: 100%;
+  margin: 0 auto;
+}
+#holidayBanner{
+  font-size: 0.62rem;
+  padding: 0.16rem 0.55rem;
+}
+@media(max-width:700px){
+  #holidayBanner{ font-size: 0.56rem; padding: 0.14rem 0.45rem; }
+}
+
+.sticky-header{
+  top: calc(var(--header-height) + 16px);
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+@media(max-width:700px){
+  .sticky-header{ top: calc(var(--header-height) + 10px); }
+}
+
+.hero{ padding-top: 14rem; }
+@media(max-width:900px){ .hero{ padding-top: 11rem; } }
+@media(max-width:700px){ .hero{ padding-top: 9rem; } }
+
 </style>
-<link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
+</head>
 <body>
 
 <header class="header">
@@ -689,10 +900,10 @@ input:checked + .slider:before { transform: translateX(20px); }
         <span id="headerFontSizeVal" style="font-size:0.7rem; color:#666;">0.8rem</span>
       </div>
       <div class="admin-field">
-        <label>Wysokość / padding topbaru</label>
-        <input type="range" id="headerHeightRange" min="40" max="250" step="5" style="width:100%;">
-        <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">220px</span>
-      </div>
+  <label>Wysokość / padding topbaru</label>
+  <input type="range" id="headerHeightRange" min="40" max="250" step="5" style="width:100%;">
+  <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">110px</span>
+</div>
     </div>
 
     <div class="admin-tabpage" data-page="images">
@@ -1029,12 +1240,12 @@ function translateCategoryName(rawName, lang) {
 const DEFAULT_SETTINGS = {
   theme: {'--bg-page':'#fcfaf8','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'rgba(255,255,255,0.95)','--text-main':'#2a2a2a','--btn-bg':'#d0021b'},
   layout: {
-    '--section-title-size':'2.6rem', 
-    '--glass-blur':'0px', 
-    '--sticky-header-padding':'1.5rem 2.5rem',
-    '--header-font-size':'0.95rem',
-    '--header-height':'220px'
-  },
+  '--section-title-size':'2.6rem', 
+  '--glass-blur':'0px', 
+  '--sticky-header-padding':'1.5rem 2.5rem',
+  '--header-font-size':'0.95rem',
+  '--header-height':'110px'
+},
   contactData: { address: '145 High Street E, NE28 7RN Wallsend', phone: '+44 1234 567 890' },
   overrides: {}, statOverrides: {},
   credentials: { login: 'admin', password: '123', email: '' },
@@ -1196,7 +1407,7 @@ function loadAdmin() {
       if (parsed.credentials.email === undefined) parsed.credentials.email = '';
       if (!parsed.layout) parsed.layout = {};
       if (!parsed.layout['--sticky-header-padding']) parsed.layout['--sticky-header-padding'] = '1.5rem 2.5rem';
-      if (!parsed.layout['--header-height']) parsed.layout['--header-height'] = '220px';
+      if (!parsed.layout['--header-height']) parsed.layout['--header-height'] = '110px';
       return { ...DEFAULT_SETTINGS, ...parsed };
     }
     return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
@@ -2300,7 +2511,7 @@ function renderAdminPanel() {
   const blurSize = adminState.layout['--glass-blur'] || '0px';
   const stickyPad = adminState.layout['--sticky-header-padding'] || '1.5rem 2.5rem';
   const headerFontSize = adminState.layout['--header-font-size'] || '0.95rem';
-  const headerHeight = adminState.layout['--header-height'] || '220px';
+  const headerHeight = adminState.layout['--header-height'] || '110px';
   if(document.getElementById('titleSizeRange')) {
       document.getElementById('titleSizeRange').value = parseFloat(titleSize);
       document.getElementById('titleSizeVal').textContent = titleSize;
