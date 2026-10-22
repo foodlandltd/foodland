@@ -12,12 +12,11 @@
 html{scroll-behavior:smooth;overflow-x:clip}
 body{
   font-family:var(--font-body, 'Inter', system-ui, sans-serif);
-  background-color: var(--dynamic-bg, var(--bg-page, #fcfaf8)) !important;
-  color: var(--dynamic-text, var(--text-main, #2a2a2a));
+  background: var(--bg-page, #fcfaf8);
+  color: var(--text-main, #2a2a2a);
   line-height:1.5; -webkit-font-smoothing:antialiased;
   overflow-x:clip;
   max-width:100vw;
-  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 img{max-width:100%;display:block;border-radius:inherit}
@@ -58,8 +57,6 @@ button{font-family:inherit;border:none;background:none;cursor:pointer}
   position: relative;
   max-width:100vw;
   overflow-x:clip;
-  /* Dodano płynne przejście dla jasności */
-  transition: margin-right 0.3s ease, filter 0.3s ease;
   filter: saturate(var(--theme-saturate, 1)) brightness(var(--theme-brightness, 1)) contrast(var(--theme-contrast, 1)) hue-rotate(var(--theme-hue, 0deg));
 }
 body.admin-open #mainContent {
@@ -298,18 +295,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 }
 
 #eventBannerSection { padding: 0 4vw; margin-top: -2rem; margin-bottom: 2rem; display: none; }
-#eventBannerImg { 
-  width: 100%; 
-  height: auto; 
-  border-radius: var(--radius); 
-  box-shadow: var(--shadow); 
-  object-fit: cover; 
-  max-height: 60vh; 
-  display: block;
-  /* Efekt płynnego wtapiania krawędzi */
-  -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
-  mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
-}
+#eventBannerImg { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); object-fit: contain; max-height: none; display: block; }
 
 .promo-list { display: flex; flex-direction: column; gap: 2rem; }
 .promo-banner-container{
@@ -692,16 +678,12 @@ input:checked + .slider:before { transform: translateX(20px); }
         <input type="range" id="headerFontSizeRange" min="0.6" max="1.5" step="0.05" style="width:100%;">
         <span id="headerFontSizeVal" style="font-size:0.7rem; color:#666;">0.8rem</span>
       </div>
-            <div class="admin-field">
-        <label>Wysokość / padding topbaru</label>
+      <div class="admin-field">
+                <label>Wysokość / padding topbaru</label>
         <input type="range" id="headerHeightRange" min="40" max="250" step="5" style="width:100%;">
         <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">162px</span>
       </div>
-      <div class="admin-field">
-        <label>Jasność tła (z banera)</label>
-        <input type="range" id="bgBrightnessRange" min="10" max="100" step="1" value="100" style="width:100%;">
-        <span id="bgBrightnessVal" style="font-size:0.7rem; color:#666;">100%</span>
-      </div>
+    </div>
 
     <div class="admin-tabpage" data-page="images">
       <div class="admin-section-title" data-i18n="admin.images.section">Zarządzanie zdjęciami</div>
@@ -1071,8 +1053,7 @@ const DEFAULT_SETTINGS = {
     '--glass-blur':'0px', 
     '--sticky-header-padding':'1.5rem 2.5rem',
     '--header-font-size':'0.95rem',
-    '--header-height':'162px',
-    '--bg-brightness':'100%'
+    '--header-height':'162px'
   },
   contactData: {}, 
   overrides: {}, statOverrides: {},
@@ -1847,10 +1828,7 @@ async function renderEventBanner() {
   const event = activeEvents[0];
   if (myVersion !== renderEventVersion) return;
 
-  img.onload = () => { 
-    section.style.display = 'block'; 
-    applyEventColor(img); // Uruchamia wyciąganie koloru
-  };
+  img.onload = () => { section.style.display = 'block'; };
   img.onerror = () => { section.style.display = 'none'; };
 
   if (event.fileId) {
@@ -1862,39 +1840,9 @@ async function renderEventBanner() {
       }
     } catch(e) {}
   }
-  img.src = `./images/event/baner.jpg?v=3`;
+  img.src = `./images/event/baner.jpg`;
 }
 
-// Nowa funkcja: pobiera kolor ze zdjęcia i ustawia tło
-function applyEventColor(imgElement) {
-  try {
-    // Sprawdzamy, czy obrazek jest już załadowany
-    if (!imgElement.complete || imgElement.naturalWidth === 0) return;
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 1;
-    canvas.height = 1;
-    
-    // Rysujemy obrazek na malutkim canvasie (1x1 px), aby uśrednić kolor
-    ctx.drawImage(imgElement, 0, 0, 1, 1);
-    const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-    
-    // Ustawiamy kolor jako zmienną CSS
-    document.documentElement.style.setProperty('--dynamic-bg', `rgb(${r}, ${g}, ${b})`);
-    
-    // Automatyczne dopasowanie koloru tekstu (jeśli tło jest ciemne, tekst na biało)
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    const textColor = brightness < 128 ? '#ffffff' : '#2a2a2a';
-    document.documentElement.style.setProperty('--dynamic-text', textColor);
-    
-    // Aplikujemy suwak jasności (jeśli został ustawiony)
-    applyDynamicBrightness();
-  } catch (e) {
-    // Ciche przechwycenie błędu (np. jeśli obrazek jest z innej domeny)
-    console.log("Nie udało się pobrać koloru ze zdjęcia:", e);
-  }
-}
 async function renderLogo() {
   const logoImg = document.querySelector('.logo-img');
   if (!logoImg) return;
@@ -2441,29 +2389,7 @@ if(headerHeightRange) {
     adminState.layout['--header-height'] = val + 'px';
   });
 }
-// --- OBSŁUGA SUWAKA JASNOŚCI TŁA ---
-const bgBrightnessRange = document.getElementById('bgBrightnessRange');
-if(bgBrightnessRange) {
-  bgBrightnessRange.addEventListener('input', (e) => {
-    const val = e.target.value;
-    document.getElementById('bgBrightnessVal').textContent = val + '%';
-    if (!adminState.layout) adminState.layout = {};
-    adminState.layout['--bg-brightness'] = val + '%';
-    applyDynamicBrightness();
-  });
-}
 
-function applyDynamicBrightness() {
-  const brightness = (adminState.layout && adminState.layout['--bg-brightness']) ? adminState.layout['--bg-brightness'] : '100%';
-  const val = parseInt(brightness);
-  
-  // Wykorzystujemy zmienną --theme-brightness, która jest już używana w CSS dla #mainContent
-  const mainContent = document.getElementById('mainContent');
-  if (mainContent) {
-    mainContent.style.setProperty('--theme-brightness', val / 100);
-  }
-}
-  
 function renderAdminPanel() {
   setLang(editLang);
   renderThemes();
@@ -2496,11 +2422,6 @@ function renderAdminPanel() {
   if(document.getElementById('headerHeightRange')) {
       document.getElementById('headerHeightRange').value = parseInt(headerHeight);
       document.getElementById('headerHeightVal').textContent = headerHeight;
-  }
-    const bgBrightness = adminState.layout['--bg-brightness'] || '100%';
-  if(document.getElementById('bgBrightnessRange')) {
-      document.getElementById('bgBrightnessRange').value = parseInt(bgBrightness);
-      document.getElementById('bgBrightnessVal').textContent = bgBrightness;
   }
   document.getElementById('stat1-val-input').value = (adminState.statOverrides?.[editLang]?.v1) || '1500+';
   document.getElementById('stat2-val-input').value = (adminState.statOverrides?.[editLang]?.v2) || '2h';
