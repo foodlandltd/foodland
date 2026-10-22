@@ -1140,7 +1140,6 @@ function buildCandidatePaths(baseFolder, rawName, group) {
 }
 
 async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
-  // 1. Próba z bazy IndexedDB (jeśli zdjęcie dodano przez panel)
   if (dbFileId) {
     try {
       const dbRecord = await getImageFromDB(dbFileId);
@@ -1154,8 +1153,7 @@ async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, gro
       }
     } catch(e) {}
   }
-
-  // 2. Próba z plików na serwerze
+  
   const candidates = buildCandidatePaths(baseFolder, rawName, group);
   if (!candidates.length) {
     imgEl.onerror = null;
@@ -1166,12 +1164,14 @@ async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, gro
   imgEl.removeAttribute('data-fallbacks');
   imgEl.removeAttribute('data-fb-idx');
 
-  // Mechanizm "drugiej szansy" dla Androida (zapobiega znikaniu zdjęć)
+  // Mechanizm ponawiania dla Androida
   imgEl.onerror = function() {
-    this.onerror = null;
+    const el = this; // <-- KLUCZOWA POPRAWKA: zapisujemy referencję do obrazka
+    el.onerror = null; // zapobiega pętli
+    
     setTimeout(() => {
-      this.src = candidates[0] + '?retry=' + Date.now();
-      this.onerror = function() {
+      el.src = candidates[0] + '?retry=' + Date.now();
+      el.onerror = function() {
         this.onerror = null;
         this.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
       };
