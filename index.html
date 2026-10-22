@@ -11,15 +11,11 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:clip}
 
-/* ===== KROK 4: BLOKADA GOOGLE LENS (nakładek na zdjęciach) ===== */
+/* ===== BLOKADA SYSTEMOWEGO MENU NA ZDJĘCIACH (bez psucia wyświetlania) ===== */
 .logo-img, .promo-img-base, .cat-card img {
-    pointer-events: none !important;
     -webkit-touch-callout: none !important;
     -webkit-user-select: none !important;
-}
-/* Przywrócenie klikalności dla kontenerów, aby lupa i linki działały */
-.logo-wrapper, .promo-banner-container, .cat-card-inner {
-    pointer-events: auto !important;
+    user-select: none !important;
 }
 /* ============================================================= */
 
@@ -1117,21 +1113,18 @@ window.__imgFallback = function(imgEl) {
 function buildCandidatePaths(baseFolder, rawName, group) {
   const raw = String(rawName || '').trim();
   
-  // Dla kategorii wszystkie pliki to .jpg, więc nie ma sensu szukać .png, .webp itp.
+  // Dla kategorii: mapujemy polskie znaki i szukamy tylko .jpg
   if (group === 'kategorie') {
-    // Mapowanie nazw z polskimi znakami (gdyby ktoś dodał przez panel) na pliki z serwera
     const map = {
       'wędliny': 'wedliny', 'słodycze': 'slodycze', 'napoje': 'napoje', 
       'mrożonki': 'mrozonki', 'nabiał': 'nabial'
     };
     let safeName = raw.toLowerCase().trim();
     if (map[safeName]) safeName = map[safeName];
-    
-    // Zwracamy tylko i wyłącznie ścieżkę .jpg
     return [`./images/kategorie/${safeName}.jpg`];
   }
 
-  // Dla promocji i innych grup zostawiamy dotychczasowe szukanie
+  // Dla promocji, eventów i logo: przywracamy oryginalne szukanie (działało!)
   const safe = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż_-]/g, '');
   const noSpaces = raw.replace(/\s+/g, '');
   const exts = ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'];
@@ -1162,7 +1155,6 @@ function buildCandidatePaths(baseFolder, rawName, group) {
   }
   return out;
 }
-
 async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
   if (dbFileId) {
     try {
