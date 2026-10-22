@@ -1240,12 +1240,11 @@ function loadAdmin() {
       if (!parsed.layout['--sticky-header-padding']) parsed.layout['--sticky-header-padding'] = '1.5rem 2.5rem';
       if (!parsed.layout['--header-height']) parsed.layout['--header-height'] = '162px';
       
-      // RESET KATEGORII: Jeśli w pamięci jest stary znacznik, czyścimy listę zdjęć
-      if (!parsed.version3) {
-          // Bezpieczne czyszczenie zamiast przypisywania null
+        // RESET KATEGORII: Jeśli w pamięci jest stary znacznik, czyścimy listę zdjęć
+      if (!parsed.version5) {
           parsed.images = { kategorie: [], promocje: [], event: [], logo: [] };
-          parsed.imagesInitialized = false; // Wymusza ponowne wygenerowanie domyślnych kategorii
-          parsed.version3 = true; // Ustawia nowy znacznik
+          parsed.imagesInitialized = false; 
+          parsed.version5 = true; 
       }
       
       return { ...DEFAULT_SETTINGS, ...parsed };
@@ -1273,8 +1272,14 @@ function initImageGroups() {
   if (adminState.imagesInitialized) { saveAdminState(); return; }
 
     // Dokładnie te pliki, które masz na GitHubie
-  const defaultKategorie = ['pieczywo','ciasta','ciastka','miody','mrozonki','nabial','okazje','warzywa','wedliny'].map((n, i) => ({
-    id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
+    // Automatycznie pobieramy wszystkie kategorie z Twojego wielkiego słownika
+  const defaultKategorie = CATEGORY_DICTIONARY.map((cat, i) => ({
+    id: 'cat_' + normalizeCategoryKey(cat.pl), 
+    name: cat.pl, // Zapisujemy ładną, polską nazwę (np. "Mięso")
+    fileId: null, 
+    size: 100, 
+    order: i, 
+    active: true
   }));
   if (!adminState.images.kategorie || adminState.images.kategorie.length === 0) {
     adminState.images.kategorie = defaultKategorie;
@@ -1732,7 +1737,28 @@ async function renderCategories() {
     div.appendChild(inner);
     grid.appendChild(div);
 
-    setImageSrcWithFallback(img, 'kategorie', rawName, item.fileId, 'kategorie');
+        // --- INTELIGENTNE SPRAWDZANIE PLIKU (CZY ISTNIEJE?) ---
+    const candidatePaths = buildCandidatePaths('kategorie', rawName, 'kategorie');
+    
+    if (item.fileId) {
+      // Jeśli zdjęcie dodano przez Panel Admina (IndexedDB), po prostu je ładujemy
+      setImageSrcWithFallback(img, 'kategorie', rawName, item.fileId, 'kategorie');
+    } else if (candidatePaths.length > 0) {
+      // Jeśli to plik z GitHuba, sprawdzamy "na sucho", czy istnieje
+      const testImg = new Image();
+      testImg.onload = () => {
+        // Plik istnieje! Ładujemy go do kafelka.
+        setImageSrcWithFallback(img, 'kategorie', rawName, item.fileId, 'kategorie');
+      };
+      testImg.onerror = () => {
+        // Plik NIE istnieje (np. brak mieso.jpg). Ukrywamy cały kafelek.
+        div.style.display = 'none'; 
+      };
+      testImg.src = candidatePaths[0];
+    } else {
+      div.style.display = 'none';
+    }
+    // -----------------------------------------------------
   }
 
   if (myVersion !== renderCategoriesVersion) return;
