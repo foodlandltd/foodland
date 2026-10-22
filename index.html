@@ -230,8 +230,9 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   max-width:1280px;
   margin:0 auto;
   width:100%;
-  padding-left: 1rem; 
-  padding-right: 1rem;
+  /* Używamy tej samej matematyki co w topbarze, aby idealnie wyrównać krawędzie */
+  padding-left: max(1rem, calc((100vw - 1280px) / 2));
+  padding-right: max(1rem, calc((100vw - 1280px) / 2));
   box-sizing: border-box;
 }
   padding-left: 1rem;  /* Taki sam margines jak w header */
@@ -246,14 +247,14 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   z-index:100;
   padding:var(--sticky-header-padding);
   border-radius:var(--radius-pill);
-  margin: 0 0 3rem 0;
-  text-align: left;
-  width:fit-content;
-  max-width:100%;
-  box-sizing:border-box;
-  overflow-wrap:break-word;
-  word-wrap:break-word;
-  will-change:transform;
+  margin: 0 auto 3rem auto; /* Wyśrodkowanie */
+  text-align: center; /* Tekst na środku */
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  will-change: transform;
 }
 .sticky-header h2{font-size:var(--section-title-size);font-weight:900;color:var(--text-main);}
 
