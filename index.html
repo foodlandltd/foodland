@@ -1239,12 +1239,23 @@ function loadAdmin() {
       if (!parsed.layout) parsed.layout = {};
       if (!parsed.layout['--sticky-header-padding']) parsed.layout['--sticky-header-padding'] = '1.5rem 2.5rem';
       if (!parsed.layout['--header-height']) parsed.layout['--header-height'] = '162px';
+      
+      // RESET KATEGORII: Jeśli w pamięci jest stary znacznik, czyścimy listę zdjęć
+      if (!parsed.version3) {
+          // Bezpieczne czyszczenie zamiast przypisywania null
+          parsed.images = { kategorie: [], promocje: [], event: [], logo: [] };
+          parsed.imagesInitialized = false; // Wymusza ponowne wygenerowanie domyślnych kategorii
+          parsed.version3 = true; // Ustawia nowy znacznik
+      }
+      
       return { ...DEFAULT_SETTINGS, ...parsed };
     }
     return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
-  } catch { return JSON.parse(JSON.stringify(DEFAULT_SETTINGS)); }
+  } catch (e) { 
+    console.error("Błąd wczytywania pamięci:", e);
+    return JSON.parse(JSON.stringify(DEFAULT_SETTINGS)); 
+  }
 }
-
 function saveAdminState() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(adminState));
@@ -1261,7 +1272,8 @@ function initImageGroups() {
   if (!adminState.images) adminState.images = { kategorie: [], promocje: [], event: [], logo: [] };
   if (adminState.imagesInitialized) { saveAdminState(); return; }
 
-  const defaultKategorie = ['pieczywo','pierogi','slodycze','warzywa','wedliny','napoje'].map((n, i) => ({
+    // Dokładnie te pliki, które masz na GitHubie
+  const defaultKategorie = ['pieczywo','ciasta','ciastka','miody','mrozonki','nabial','okazje','warzywa','wedliny'].map((n, i) => ({
     id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
   }));
   if (!adminState.images.kategorie || adminState.images.kategorie.length === 0) {
