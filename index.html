@@ -10,6 +10,19 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:clip}
+
+/* ===== KROK 4: BLOKADA GOOGLE LENS (nakładek na zdjęciach) ===== */
+.logo-img, .promo-img-base, .cat-card img {
+    pointer-events: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+}
+/* Przywrócenie klikalności dla kontenerów, aby lupa i linki działały */
+.logo-wrapper, .promo-banner-container, .cat-card-inner {
+    pointer-events: auto !important;
+}
+/* ============================================================= */
+
 body{
   font-family:var(--font-body, 'Inter', system-ui, sans-serif);
   background: var(--bg-page, #fcfaf8);
@@ -1103,17 +1116,35 @@ window.__imgFallback = function(imgEl) {
 
 function buildCandidatePaths(baseFolder, rawName, group) {
   const raw = String(rawName || '').trim();
+  
+  // Dla kategorii wszystkie pliki to .jpg, więc nie ma sensu szukać .png, .webp itp.
+  if (group === 'kategorie') {
+    // Mapowanie nazw z polskimi znakami (gdyby ktoś dodał przez panel) na pliki z serwera
+    const map = {
+      'wędliny': 'wedliny', 'słodycze': 'slodycze', 'napoje': 'napoje', 
+      'mrożonki': 'mrozonki', 'nabiał': 'nabial'
+    };
+    let safeName = raw.toLowerCase().trim();
+    if (map[safeName]) safeName = map[safeName];
+    
+    // Zwracamy tylko i wyłącznie ścieżkę .jpg
+    return [`./images/kategorie/${safeName}.jpg`];
+  }
+
+  // Dla promocji i innych grup zostawiamy dotychczasowe szukanie
   const safe = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż_-]/g, '');
   const noSpaces = raw.replace(/\s+/g, '');
   const exts = ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'];
   const out = [];
   const bases = [raw, noSpaces, safe];
+  
   bases.forEach(b => {
     if (!b) return;
     exts.forEach(ext => {
       out.push(`./images/${baseFolder}/${b}.${ext}`);
     });
   });
+  
   if (group === 'promocje') {
     const m = safe.match(/^gazetka(\d+)$/);
     if (m) {
@@ -1243,7 +1274,15 @@ function loadAdmin() {
       if (!parsed.reportEmail) parsed.reportEmail = '';
       if (!parsed.images) parsed.images = { kategorie: [], promocje: [], event: [], logo: [] };
       if (!parsed.imageLayout) parsed.imageLayout = { cols: 250, ratio: '16/9' };
-      if (parsed.imageLayout.ratio !== '16/9') parsed.imageLayout.ratio = '16/9';
+           if (parsed.imageLayout.ratio !== '16/9') parsed.imageLayout.ratio = '16/9';
+      
+      // Wymuszenie odświeżenia starych kategorii na Androidzie:
+      // Jeśli w pamięci nie ma nowego znacznika, czyścimy stare kategorie.
+      if (!parsed.isV2Images) {
+          parsed.images = null; // wyczyść starą listę
+          parsed.isV2Images = true; // oznacz, że nowa wersja została wdrożona
+      }
+      
       if (!parsed.credentials) parsed.credentials = { login: 'admin', password: '123', email: '' };
       if (parsed.credentials.email === undefined) parsed.credentials.email = '';
       if (!parsed.layout) parsed.layout = {};
@@ -1271,7 +1310,8 @@ function initImageGroups() {
   if (!adminState.images) adminState.images = { kategorie: [], promocje: [], event: [], logo: [] };
   if (adminState.imagesInitialized) { saveAdminState(); return; }
 
-  const defaultKategorie = ['pieczywo','pierogi','slodycze','warzywa','wedliny','napoje'].map((n, i) => ({
+   // Zaktualizowana lista dokładnie tych plików, które masz na serwerze (bez pierogi, slodycze, napoje)
+  const defaultKategorie = ['pieczywo','ciasta','ciastka','miody','mrozonki','nabial','okazje','warzywa','wedliny'].map((n, i) => ({
     id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
   }));
   if (!adminState.images.kategorie || adminState.images.kategorie.length === 0) {
