@@ -1095,17 +1095,32 @@ window.__imgFallback = function(imgEl) {
 
 function buildCandidatePaths(baseFolder, rawName, group) {
   const raw = String(rawName || '').trim();
+  
+  // Dla kategorii mapujemy polskie znaki i szukamy tylko .jpg (bo takie masz pliki)
+  if (group === 'kategorie') {
+    const map = {
+      'wędliny': 'wedliny', 'słodycze': 'slodycze', 'napoje': 'napoje', 
+      'mrożonki': 'mrozonki', 'nabiał': 'nabial', 'ciasta': 'ciasta', 'ciastka': 'ciastka'
+    };
+    let safeName = raw.toLowerCase().trim();
+    if (map[safeName]) safeName = map[safeName];
+    return [`./images/kategorie/${safeName}.jpg`];
+  }
+
+  // Dla promocji, eventów i logo: przywracamy oryginalne szukanie
   const safe = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż_-]/g, '');
   const noSpaces = raw.replace(/\s+/g, '');
   const exts = ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'];
   const out = [];
   const bases = [raw, noSpaces, safe];
+  
   bases.forEach(b => {
     if (!b) return;
     exts.forEach(ext => {
       out.push(`./images/${baseFolder}/${b}.${ext}`);
     });
   });
+  
   if (group === 'promocje') {
     const m = safe.match(/^gazetka(\d+)$/);
     if (m) {
@@ -1125,6 +1140,7 @@ function buildCandidatePaths(baseFolder, rawName, group) {
 }
 
 async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, group) {
+  // 1. Próba z bazy IndexedDB (jeśli zdjęcie dodano przez panel)
   if (dbFileId) {
     try {
       const dbRecord = await getImageFromDB(dbFileId);
@@ -1138,18 +1154,32 @@ async function setImageSrcWithFallback(imgEl, baseFolder, rawName, dbFileId, gro
       }
     } catch(e) {}
   }
+
+  // 2. Próba z plików na serwerze
   const candidates = buildCandidatePaths(baseFolder, rawName, group);
   if (!candidates.length) {
     imgEl.onerror = null;
     imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
     return;
   }
-  imgEl.setAttribute('data-fallbacks', candidates.join('|'));
-  imgEl.setAttribute('data-fb-idx', '0');
-  imgEl.onerror = function() { window.__imgFallback(this); };
+
+  imgEl.removeAttribute('data-fallbacks');
+  imgEl.removeAttribute('data-fb-idx');
+
+  // Mechanizm "drugiej szansy" dla Androida (zapobiega znikaniu zdjęć)
+  imgEl.onerror = function() {
+    this.onerror = null;
+    setTimeout(() => {
+      this.src = candidates[0] + '?retry=' + Date.now();
+      this.onerror = function() {
+        this.onerror = null;
+        this.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+      };
+    }, 400);
+  };
+  
   imgEl.src = candidates[0];
 }
-
 /* ===== INDEXED DB ===== */
 let db;
 const DB_NAME = 'FoodLandDB';
@@ -1684,10 +1714,8 @@ async function renderCategories() {
     const inner = document.createElement('div');
     inner.className = 'cat-card-inner';
 
-    const img = document.createElement('img');
+        const img = document.createElement('img');
     img.alt = title;
-    img.loading = 'lazy';
-    img.decoding = 'async';
 
     inner.appendChild(img);
 
@@ -1789,7 +1817,9 @@ async function renderLogo() {
 
   const activeLogos = getGroupImages('logo').filter(img => img.active !== false);
   if (activeLogos.length === 0 || !activeLogos[0]) {
-    logoImg.style.display = 'none';
+    // Jeśli nie ma w panelu, po prostu ustawiamy domyślne zdjęcie
+    logoImg.style.display = 'block';
+    logoImg.src = `./images/logo.jpg`;
     return;
   }
   const logo = activeLogos[0];
@@ -1808,7 +1838,6 @@ async function renderLogo() {
   logoImg.style.display = 'block';
   logoImg.src = `./images/logo.jpg`;
 }
-
 function initZoom(containerId, imgId, lensId) {
   const container = document.getElementById(containerId);
   const img = document.getElementById(imgId);
