@@ -68,7 +68,7 @@ body.admin-open #mainContent {
   position:fixed;top:0;left:0;right:0;z-index:9999;
   display:flex;align-items:center;justify-content:space-between;
   height:var(--header-height);
-  padding: 0 max(1rem, calc((100vw - 1280px) / 2));
+  padding:0 1rem;
   background: rgba(255, 255, 255, 0.78) !important;
   backdrop-filter: blur(15px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
@@ -224,21 +224,7 @@ body.admin-open .header { right: var(--admin-width); }
 /* ===== SEKCJE ===== */
 section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .hero{padding-top:24rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
-.section-content{
-  position:relative;
-  z-index:2;
-  max-width:1280px;
-  margin:0 auto;
-  width:100%;
-  /* Używamy tej samej matematyki co w topbarze, aby idealnie wyrównać krawędzie */
-  padding-left: max(1rem, calc((100vw - 1280px) / 2));
-  padding-right: max(1rem, calc((100vw - 1280px) / 2));
-  box-sizing: border-box;
-}
-  padding-left: 1rem;  /* Taki sam margines jak w header */
-  padding-right: 1rem;
-  box-sizing: border-box;
-}
+.section-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;}
 
 .sticky-header{
   position:-webkit-sticky;
@@ -247,14 +233,14 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   z-index:100;
   padding:var(--sticky-header-padding);
   border-radius:var(--radius-pill);
-  margin: 0 auto 3rem auto; /* Wyśrodkowanie */
-  text-align: center; /* Tekst na środku */
-  width: fit-content;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  will-change: transform;
+  margin:0 auto 3rem auto;
+  text-align:center;
+  width:fit-content;
+  max-width:100%;
+  box-sizing:border-box;
+  overflow-wrap:break-word;
+  word-wrap:break-word;
+  will-change:transform;
 }
 .sticky-header h2{font-size:var(--section-title-size);font-weight:900;color:var(--text-main);}
 
@@ -320,7 +306,6 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   background:var(--glass-bg);
   margin:0 auto;
   min-height: 120px;
-  box-sizing: border-box;
 }
 .promo-img-base{
   width:100%;
