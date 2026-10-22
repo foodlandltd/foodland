@@ -7,13 +7,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Playfair+Display:ital,wght@0,700;0,900;1,700&amp;display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:clip}
 body{
   font-family:var(--font-body, 'Inter', system-ui, sans-serif);
   background: var(--bg-page, #fcfaf8);
   color: var(--text-main, #2a2a2a);
   line-height:1.5; -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+  overflow-x:clip;
   max-width:100vw;
 }
 
@@ -34,9 +34,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer}
   --section-title-size: clamp(1.8rem, 3.5vw, 2.6rem);
   --sticky-header-padding: 1.5rem 2.5rem;
   
-  --header-height: 80px;
+  --header-height: 90px;
   --header-font-size: 0.95rem;
-  --header-link-padding: 0 4vw;
   
   --admin-width: 380px;
   --img-perspective: 0px;
@@ -55,7 +54,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer}
   min-height: 100vh;
   position: relative;
   max-width:100vw;
-  overflow-x:hidden;
+  overflow-x:clip;
   filter: saturate(var(--theme-saturate, 1)) brightness(var(--theme-brightness, 1)) contrast(var(--theme-contrast, 1)) hue-rotate(var(--theme-hue, 0deg));
 }
 body.admin-open #mainContent {
@@ -67,8 +66,8 @@ body.admin-open #mainContent {
   position:fixed;top:0;left:0;right:0;z-index:9999;
   display:flex;align-items:center;justify-content:space-between;
   height:var(--header-height);
-  padding:0 1rem 0 2vw;
-  background: rgba(255, 255, 255, 0.75) !important;
+  padding:0 1rem;
+  background: rgba(255, 255, 255, 0.78) !important;
   backdrop-filter: blur(15px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
   transition: right .3s ease;
@@ -78,7 +77,24 @@ body.admin-open #mainContent {
 }
 body.admin-open .header { right: var(--admin-width); }
 
-/* Hamburger menu */
+/* LEWY BLOK: logo + hamburger */
+.header-left-block{
+  display:flex;align-items:center;gap:0.5rem;flex-shrink:0;
+  min-width:0;
+}
+
+.logo-wrapper{
+  position:static;
+  flex-shrink:0;
+  max-width:38vw;
+}
+.logo-img{
+  height:70px;width:auto;max-width:100%;object-fit:contain;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+  display:block;
+}
+
+/* Hamburger */
 .nav-hamburger{
   position:relative;
   display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
@@ -86,7 +102,6 @@ body.admin-open .header { right: var(--admin-width); }
   border-radius:10px;
   background:var(--panel-inner);
   cursor:pointer;
-  margin-left:auto;
   z-index:10001;
 }
 .nav-hamburger span{
@@ -98,7 +113,7 @@ body.admin-open .header { right: var(--admin-width); }
 
 /* Dropdown menu */
 .nav-dropdown{
-  position:absolute;top:calc(100% + 10px);right:0;
+  position:absolute;top:calc(100% + 10px);left:0;
   min-width:220px;
   background:var(--card-bg);
   border:1px solid var(--glass-border);
@@ -120,16 +135,18 @@ body.admin-open .header { right: var(--admin-width); }
   color:var(--text-main);
   display:flex;align-items:center;gap:0.6rem;
   transition:all .2s ease;
+  text-transform:uppercase;
+  letter-spacing:0.03em;
 }
 .nav-dropdown a:hover{background:var(--red-light);color:var(--red);}
 
-/* Logo (mobile smaller) */
-.logo-wrapper{position:fixed;top:8px;left:2vw;z-index:10000;max-width:38vw;}
-.logo-img{height:160px;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));}
-
-/* Header actions */
-.header-actions{
-  display:flex;align-items:center;gap:0.5rem;flex-shrink:0;
+/* ŚRODEK: języki + baner świąt */
+.header-center{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0.35rem;
+  flex:1;
+  min-width:0;
+  padding:0 0.5rem;
 }
 
 .lang-switch{
@@ -137,15 +154,21 @@ body.admin-open .header { right: var(--admin-width); }
   padding:3px;border-radius:var(--radius-pill);
   flex-wrap:nowrap;
 }
-.lang-switch button{padding:.3rem .55rem;font-size:.72rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
+.lang-switch button{padding:.3rem .6rem;font-size:.72rem;font-weight:700;color:var(--text-muted);border-radius:var(--radius-pill);}
 .lang-switch button.active{background:var(--card-bg);color:var(--red);box-shadow:var(--shadow-sm);}
 
-/* Zoom toggle in topbar */
+/* PRAWY: lupa */
+.header-right{
+  display:flex;align-items:center;justify-content:flex-end;
+  flex-shrink:0;
+  gap:0.4rem;
+}
+
 .zoom-toggle-top{
   display:flex;align-items:center;gap:0.4rem;
   background:var(--panel-inner);
   color:var(--text-main);
-  padding:0.45rem 0.7rem;
+  padding:0.5rem 0.75rem;
   border-radius:var(--radius-pill);
   font-size:0.72rem;font-weight:700;
   cursor:pointer;
@@ -156,60 +179,71 @@ body.admin-open .header { right: var(--admin-width); }
 .zoom-toggle-top.active{background:var(--red);color:#fff;}
 .zoom-toggle-top .zoom-icon{font-size:0.95rem;}
 
-/* Holiday banner */
-#holidayBannerWrapper { position: relative; display: none; align-items: center; flex-shrink:0;}
+/* Holiday banner (w header-center) */
+#holidayBannerWrapper { position: relative; display: none; align-items: center; justify-content:center; flex-shrink:0; max-width:100%;}
 #holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
 #holidayBanner {
   display: flex; align-items: center; gap: 0.5rem;
   background: var(--red-light); color: var(--red);
-  padding: 0.25rem 0.7rem; border-radius: var(--radius-pill);
-  font-size: 0.7rem; font-weight: 700; cursor: help; white-space: nowrap;
-  max-width: 200px; overflow: hidden; text-overflow: ellipsis;
+  padding: 0.22rem 0.7rem; border-radius: var(--radius-pill);
+  font-size: 0.68rem; font-weight: 700; cursor: help; white-space: nowrap;
+  max-width: 100%; overflow: hidden; text-overflow: ellipsis;
   animation: fadeIn 0.5s ease; border: 1px solid rgba(208, 2, 27, 0.2);
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 #holidayDropdown {
-  position: absolute; top: calc(100% + 10px); right: 0;
+  position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%);
   background: var(--card-bg); border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm); box-shadow: var(--shadow);
-  padding: 0.5rem; width: 340px; max-width:90vw; max-height: min(70vh, 520px);
+  padding: 0.5rem; width: 340px; max-width:92vw; max-height: min(70vh, 520px);
   overflow-y: auto; overscroll-behavior: contain; display: none;
   flex-direction: column; gap: 0.5rem; z-index: 10000;
 }
 #holidayBannerWrapper:hover #holidayDropdown { display: flex; }
-.holiday-item { position: relative; display: flex; flex-direction: column; padding: 0.55rem 0.7rem 0.55rem 0.85rem; border-radius: 6px; background: var(--panel-inner); border: 1px solid transparent; transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease, background .25s ease; cursor: pointer; overflow: hidden; }
-.holiday-item::before { content: ''; position: absolute; inset: 0; opacity: 0.05; transition: opacity 0.3s ease; pointer-events: none; z-index: 0; background-size: cover; background-position: center; background-repeat: no-repeat; }
-.holiday-item[data-country="pl"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' preserveAspectRatio='none'%3E%3Crect width='10' height='3' fill='%23ffffff'/%3E%3Crect y='3' width='10' height='3' fill='%23dc143c'/%3E%3C/svg%3E"); }
-.holiday-item[data-country="uk"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' preserveAspectRatio='none'%3E%3CclipPath id='s'%3E%3Cpath d='M0,0 v30 h60 v-30 z'/%3E%3C/clipPath%3E%3CclipPath id='t'%3E%3Cpath d='M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23s)'%3E%3Cpath d='M0,0 v30 h60 v-30 z' fill='%23012169'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' clip-path='url(%23t)' stroke='%23C8102E' stroke-width='4'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23fff' stroke-width='10'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23C8102E' stroke-width='6'/%3E%3C/g%3E%3C/svg%3E"); }
-.holiday-item[data-country="ua"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' preserveAspectRatio='none'%3E%3Crect width='10' height='3' fill='%23005BBB'/%3E%3Crect y='3' width='10' height='3' fill='%23FFD500'/%3E%3C/svg%3E"); }
-.holiday-item[data-country="ro"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6' preserveAspectRatio='none'%3E%3Crect width='3' height='6' fill='%23002B7F'/%3E%3Crect x='3' width='3' height='6' fill='%23FCD116'/%3E%3Crect x='6' width='3' height='6' fill='%23CE1126'/%3E%3C/svg%3E"); }
-.holiday-item:hover::before { opacity: 0.18; }
+.holiday-item { position: relative; display: flex; flex-direction: column; padding: 0.55rem 0.7rem 0.55rem 0.85rem; border-radius: 6px; background: var(--panel-inner); border: 1px solid transparent; transition: all .25s ease; cursor: pointer; overflow: hidden; }
 .holiday-item:hover { border-color: var(--red); background: var(--card-bg); box-shadow: 0 4px 14px rgba(0,0,0,0.10); transform: translateY(-1px); }
-.holiday-item > * { position: relative; z-index: 1; }
 .holiday-item-header { display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; font-weight: 800; font-size: 0.85rem; color: var(--text-main); }
 .holiday-name-wrap { display: flex; align-items: center; gap: 0.45rem; flex: 1; min-width: 0; }
 .holiday-name-wrap > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.holiday-flag-badge { width: 22px; height: 15px; border-radius: 2px; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(0,0,0,0.1); background-size: cover; background-position: center; background-repeat: no-repeat; }
+.holiday-flag-badge { width: 22px; height: 15px; border-radius: 2px; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.2); background-size: cover; background-position: center; }
 .holiday-flag-badge[data-country="pl"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' preserveAspectRatio='none'%3E%3Crect width='10' height='3' fill='%23ffffff'/%3E%3Crect y='3' width='10' height='3' fill='%23dc143c'/%3E%3C/svg%3E"); }
-.holiday-flag-badge[data-country="uk"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' preserveAspectRatio='none'%3E%3CclipPath id='s'%3E%3Cpath d='M0,0 v30 h60 v-30 z'/%3E%3C/clipPath%3E%3CclipPath id='t'%3E%3Cpath d='M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23s)'%3E%3Cpath d='M0,0 v30 h60 v-30 z' fill='%23012169'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' clip-path='url(%23t)' stroke='%23C8102E' stroke-width='4'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23fff' stroke-width='10'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23C8102E' stroke-width='6'/%3E%3C/g%3E%3C/svg%3E"); }
+.holiday-flag-badge[data-country="uk"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' preserveAspectRatio='none'%3E%3Cpath d='M0,0 v30 h60 v-30 z' fill='%23012169'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23fff' stroke-width='10'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23C8102E' stroke-width='6'/%3E%3C/svg%3E"); }
 .holiday-flag-badge[data-country="ua"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' preserveAspectRatio='none'%3E%3Crect width='10' height='3' fill='%23005BBB'/%3E%3Crect y='3' width='10' height='3' fill='%23FFD500'/%3E%3C/svg%3E"); }
 .holiday-flag-badge[data-country="ro"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6' preserveAspectRatio='none'%3E%3Crect width='3' height='6' fill='%23002B7F'/%3E%3Crect x='3' width='3' height='6' fill='%23FCD116'/%3E%3Crect x='6' width='3' height='6' fill='%23CE1126'/%3E%3C/svg%3E"); }
 .holiday-item-header .holiday-days { color: var(--red); font-size: 0.72rem; background: var(--red-light); padding: 2px 7px; border-radius: 4px; flex-shrink: 0; white-space: nowrap; font-weight: 800; }
-.holiday-chevron { flex-shrink: 0; font-size: 0.7rem; color: var(--text-muted); transition: transform .3s ease, color .3s ease; }
-.holiday-item:hover .holiday-chevron, .holiday-item:focus-within .holiday-chevron { transform: rotate(180deg); color: var(--red); }
-.holiday-item-desc { display: grid; grid-template-rows: 0fr; opacity: 0; margin-top: 0; transition: grid-template-rows .35s ease, opacity .25s ease, margin-top .25s ease; font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
+.holiday-chevron { flex-shrink: 0; font-size: 0.7rem; color: var(--text-muted); }
+.holiday-item-desc { display: grid; grid-template-rows: 0fr; opacity: 0; margin-top: 0; transition: all .35s ease; font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
 .holiday-item-desc > div { overflow: hidden; }
-.holiday-item:hover .holiday-item-desc, .holiday-item:focus-within .holiday-item-desc { grid-template-rows: 1fr; opacity: 1; margin-top: 0.5rem; }
+.holiday-item:hover .holiday-item-desc { grid-template-rows: 1fr; opacity: 1; margin-top: 0.5rem; }
 .holiday-date-line { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; font-weight: 800; color: var(--red); margin-bottom: 0.35rem; }
 .holiday-item-desc p { margin: 0 0 0.5rem 0; }
-.holiday-link { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--red); text-decoration: underline; margin-top: 0.2rem; cursor: pointer; }
+.holiday-link { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--red); text-decoration: underline; margin-top: 0.2rem; }
 .holiday-link:hover { color: #a00015; }
 
+/* ===== SEKCJE ===== */
 section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .hero{padding-top:18rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
 .section-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;}
-.sticky-header{position:sticky;top:calc(var(--header-height) + 15px);z-index:3;padding:var(--sticky-header-padding);border-radius:var(--radius-pill);margin:0 auto 3rem auto;text-align:center;width:fit-content;max-width:100%;box-sizing:border-box;overflow-wrap:break-word;word-wrap:break-word;}
+
+/* STICKY HEADER – naprawiony */
+.sticky-header{
+  position:-webkit-sticky;
+  position:sticky;
+  top:calc(var(--header-height) + 20px);
+  z-index:100;
+  padding:var(--sticky-header-padding);
+  border-radius:var(--radius-pill);
+  margin:0 auto 3rem auto;
+  text-align:center;
+  width:fit-content;
+  max-width:100%;
+  box-sizing:border-box;
+  overflow-wrap:break-word;
+  word-wrap:break-word;
+  will-change:transform;
+}
 .sticky-header h2{font-size:var(--section-title-size);font-weight:900;color:var(--text-main);}
+
 .hero-copy{max-width:850px;padding:4rem 3rem;border-radius:var(--radius);margin:0 auto;display:flex;flex-direction:column;align-items:center;background:var(--glass-bg);}
 .hero h1{font-size:clamp(2.4rem,5vw,4rem);line-height:1.1;margin-bottom:1.5rem;}
 .hero h1 .highlight{color:var(--red);}
@@ -307,15 +341,14 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .refer-box button { padding:0.6rem 1rem; border-radius:8px; background:var(--btn-bg); color:#fff; font-weight:700; font-size:0.8rem; }
 .refer-box .refer-msg { font-size:0.75rem; margin-top:0.5rem; color:var(--green); font-weight:600; min-height:1em; }
 
+/* ADMIN PANEL (bez zmian) */
 .admin-panel{
-  position:fixed;top:0;right:0;bottom:0;
-  width:var(--admin-width);
-  background:rgba(255, 255, 255, 0.65) !important;
+  position:fixed;top:0;right:0;bottom:0;width:var(--admin-width);
+  background:rgba(255,255,255,0.65) !important;
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   box-shadow:-10px 0 30px rgba(0,0,0,.15);
-  z-index:10002;
-  display:flex;flex-direction:column;
+  z-index:10002;display:flex;flex-direction:column;
   border-left:1px solid rgba(255,255,255,0.4);
   font-family:'Inter',sans-serif;color:#222;
 }
@@ -362,18 +395,11 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,.05); border-radius: 8px;
   padding: 0.5rem; font-size: 0.78rem;
 }
-.img-item img {
-  width: 54px; height: 54px; object-fit: cover; border-radius: 6px; flex-shrink: 0;
-  background: #eee;
-}
+.img-item img { width: 54px; height: 54px; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: #eee; }
 .img-item .img-meta { flex: 1; display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
 .img-item .img-meta strong { font-size: 0.8rem; display: block; margin-bottom: 2px;}
 .img-item .img-meta small { font-size: 0.65rem; color: #888; word-break: break-all; }
-.btn-delete {
-  background: #d0021b; color: #fff; border: none; border-radius: 6px;
-  padding: 0.4rem 0.6rem; font-size: 0.7rem; font-weight: 700; cursor: pointer;
-  flex-shrink: 0; transition: background 0.2s;
-}
+.btn-delete { background: #d0021b; color: #fff; border: none; border-radius: 6px; padding: 0.4rem 0.6rem; font-size: 0.7rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
 .btn-delete:hover { background: #a00015; }
 
 .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
@@ -381,74 +407,85 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
 .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
 input:checked + .slider { background-color: #00843d; }
-input:focus + .slider { box-shadow: 0 0 1px #00843d; }
 input:checked + .slider:before { transform: translateX(20px); }
 
 .password-wrapper { position: relative; display: flex; align-items: center; }
 .password-wrapper input { padding-right: 40px !important; }
-.toggle-password-btn {
-  position: absolute; right: 10px; background: none; border: none; cursor: pointer;
-  font-size: 1.1rem; color: #666; padding: 0; display: flex; align-items: center; justify-content: center;
-}
-.toggle-password-btn:hover { color: #d0021b; }
+.toggle-password-btn { position: absolute; right: 10px; background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #666; padding: 0; }
 
 /* ===== RESPONSYWNOŚĆ ===== */
-@media(max-width:1150px){
-  #holidayBannerWrapper{display:none !important;}
-}
 @media(max-width:1100px){
-  .header{padding:0 0.5rem 0 1vw;gap:0.4rem;}
-  .logo-wrapper{max-width:34vw;}
-  .logo-img{height:110px;}
+  .logo-img{height:60px;}
+  .header{padding:0 0.6rem;}
   .zoom-toggle-top span.zoom-label{display:none;}
-  .zoom-toggle-top{padding:0.45rem 0.55rem;}
-  .lang-switch button{padding:.28rem .5rem;font-size:.68rem;}
+  .zoom-toggle-top{padding:0.5rem 0.6rem;}
 }
 @media(max-width:900px){
   body.admin-open #mainContent { margin-right: 0; }
   body.admin-open .header { right: 0; }
   .admin-panel { width: 100vw; }
-  .logo-img{height:90px;}
-  .logo-wrapper{max-width:30vw;}
+  .logo-img{height:52px;}
   .contact-grid{grid-template-columns:1fr;}
   .hero{padding-top:14rem;}
   .hero-copy{padding:2rem 1.2rem;}
   .hero-stats{gap:1.5rem;}
-  .header{height:90px;}
-  .zoom-toggle-top .zoom-icon{font-size:1.1rem;}
+  .header{height:80px;}
+  .lang-switch button{padding:.28rem .5rem;font-size:.68rem;}
 }
 @media(max-width:700px){
-  .logo-img{height:70px;}
-  .logo-wrapper{max-width:26vw;top:6px;left:1.5vw;}
-  .header{height:80px;padding:0 0.4rem;}
-  .nav-hamburger{width:40px;height:40px;}
+  :root{--header-height:70px;}
+  .header{height:70px;padding:0 0.5rem;gap:0.3rem;}
+  .logo-img{height:44px;}
+  .nav-hamburger{width:38px;height:38px;}
   .nav-hamburger span{width:22px;height:2.5px;}
-  .lang-switch button{padding:.25rem .42rem;font-size:.62rem;}
+  .lang-switch button{padding:.24rem .42rem;font-size:.6rem;}
+  .header-center{gap:0.25rem;padding:0 0.25rem;}
+  #holidayBanner{font-size:0.6rem;padding:0.18rem 0.5rem;}
+  .zoom-toggle-top{padding:0.42rem 0.5rem;}
+  .zoom-toggle-top .zoom-icon{font-size:1rem;}
   .hero{padding-top:11rem;min-height:auto;padding-bottom:4rem;}
   .hero h1{font-size:2rem;}
   .hero-lead{font-size:1rem;}
   section{padding:5rem 4vw 4rem;}
-  .sticky-header{padding:1rem 1.2rem;margin-bottom:2rem;}
+  .sticky-header{padding:1rem 1.2rem;margin-bottom:2rem;top:calc(var(--header-height) + 12px);}
   .contact-content{padding:1.2rem;}
   .promo-banner-container{padding:0.5rem;}
 }
 @media(max-width:480px){
-  .logo-img{height:56px;}
-  .header{height:70px;}
+  :root{--header-height:64px;}
+  .header{height:64px;padding:0 0.35rem;}
+  .logo-img{height:38px;}
   .lang-switch{gap:0;}
-  .lang-switch button{padding:.22rem .35rem;font-size:.58rem;}
-  .header-actions{gap:0.3rem;}
-  .hero-stats{gap:1rem;flex-wrap:wrap;}
+  .lang-switch button{padding:.22rem .34rem;font-size:.55rem;}
+  .header-left-block{gap:0.3rem;}
+  .nav-hamburger{width:34px;height:34px;}
+  .nav-hamburger span{width:20px;height:2.5px;}
+  .hero-stats{gap:1rem;}
   .cat-grid{grid-template-columns:1fr 1fr !important;gap:0.8rem;}
   .cat-card .overlay{padding:0.8rem;}
   .cat-card .overlay h3{font-size:0.85rem;}
+  .sticky-header{top:calc(var(--header-height) + 8px);padding:0.8rem 1rem;}
 }
 </style>
 <link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-shared.css"><link rel="stylesheet" type="text/css" href="chrome-extension://pefhciejnkgdgoahgfeklebcbpmhnhhd/css/content-lite.css"></head>
 <body>
 
 <header class="header">
-  <div class="header-actions" style="margin-right:auto;">
+  <div class="header-left-block">
+    <div class="logo-wrapper">
+      <a href="#"><img src="./images/logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'" style="display: block;"></a>
+    </div>
+    <div class="nav-hamburger" id="navHamburger" tabindex="0" role="button" aria-label="Menu">
+      <span></span><span></span><span></span>
+      <div class="nav-dropdown" id="navDropdown">
+        <a href="#kategorie" data-i18n="nav.categories">KATEGORIE</a>
+        <a href="#promocje" data-i18n="nav.promos">PROMOCJE</a>
+        <a href="#kontakt" data-i18n="nav.contact">KONTAKT</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-center">
     <div class="lang-switch" id="lang">
       <button data-lang="pl" class="active">PL</button>
       <button data-lang="en">EN</button>
@@ -461,26 +498,13 @@ input:checked + .slider:before { transform: translateX(20px); }
     </div>
   </div>
 
-  <div class="header-actions" style="justify-content:flex-end;">
+  <div class="header-right">
     <button id="zoomToggleTop" class="zoom-toggle-top" title="Lupa">
       <span class="zoom-icon">🔍</span>
       <span class="zoom-label" id="zoomLabel">Lupa: ON</span>
     </button>
-
-    <div class="nav-hamburger" id="navHamburger" tabindex="0" role="button" aria-label="Menu">
-      <span></span><span></span><span></span>
-      <div class="nav-dropdown" id="navDropdown">
-        <a href="#kategorie" data-i18n="nav.categories">KATEGORIE</a>
-        <a href="#promocje" data-i18n="nav.promos">PROMOCJE</a>
-        <a href="#kontakt" data-i18n="nav.contact">KONTAKT</a>
-      </div>
-    </div>
   </div>
 </header>
-
-<div class="logo-wrapper">
-  <a href="#"><img src="./images/logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'" style="display: block;"></a>
-</div>
 
 <div id="mainContent" style="--theme-saturate: 1; --theme-brightness: 1;">
   <section class="hero">
@@ -608,7 +632,6 @@ input:checked + .slider:before { transform: translateX(20px); }
     <button data-tab="html" data-i18n="admin.tab.html" class="active">Kod HTML</button>
   </nav>
   <div class="admin-panel-body">
-    
     <div class="admin-tabpage" data-page="texts">
       <div class="admin-section-title" data-i18n="admin.section.lang">Język edycji</div>
       <div style="display:flex;gap:.3rem;margin-bottom:1rem;">
@@ -663,12 +686,10 @@ input:checked + .slider:before { transform: translateX(20px); }
         <input type="range" id="headerHeightRange" min="40" max="150" step="5" style="width:100%;">
         <span id="headerHeightVal" style="font-size:0.7rem; color:#666;">140px</span>
       </div>
-
     </div>
 
     <div class="admin-tabpage" data-page="images">
       <div class="admin-section-title" data-i18n="admin.images.section">Zarządzanie zdjęciami</div>
-
       <div class="admin-field">
         <label data-i18n="admin.images.group">Grupa zdjęć</label>
         <select id="imgGroupSelect">
@@ -678,9 +699,7 @@ input:checked + .slider:before { transform: translateX(20px); }
           <option value="logo">Logo</option>
         </select>
       </div>
-
       <div id="imgList" style="display:flex;flex-direction:column;gap:0.6rem;"></div>
-
       <div class="admin-section-title" data-i18n="admin.images.add">Dodaj nowe zdjęcie</div>
       <div class="admin-field">
         <label data-i18n="admin.images.file">Plik (jpg/png/webp)</label>
@@ -749,13 +768,11 @@ input:checked + .slider:before { transform: translateX(20px); }
         <button id="saveVersionBtn" class="btn btn-primary" style="flex:1; padding:0.5rem; font-size:0.8rem;">Zapisz wersję</button>
         <button id="downloadHtmlBtn" class="btn btn-secondary" style="flex:1; padding:0.5rem; font-size:0.8rem;">Pobierz .html</button>
       </div>
-      
       <div class="admin-section-title">Import z pliku</div>
       <div class="admin-field">
         <textarea id="importHtmlArea" rows="3" placeholder="Wklej tutaj kod HTML..."></textarea>
       </div>
       <button id="importHtmlBtn" class="btn btn-primary" style="width:100%; padding:0.5rem; font-size:0.8rem;">Załaduj kod</button>
-      
       <div class="admin-section-title" style="margin-top:1rem;">Historia wersji</div>
       <div id="versionList" class="version-list"></div>
     </div>
@@ -924,68 +941,48 @@ const translations = {
 
 const BASE_TRANSLATIONS = JSON.parse(JSON.stringify(translations));
 
-/* ===== SŁOWNIK KATEGORII – ROZBUDOWANY ===== */
-/* Kategorie mogą być dodawane w przyszłości. Wystarczy dodać nowy wpis do CATEGORY_DICTIONARY
-   i dodać kategorię w panelu admina (nazwa musi pasować do 'pl'). */
+/* ===== SŁOWNIK KATEGORII ===== */
 const CATEGORY_DICTIONARY = [
-  // === PIEKARNIA ===
   { pl: 'Pieczywo', en: 'Bread & Bakery', uk: 'Хліб та випічка', ro: 'Pâine și panificație' },
   { pl: 'Chleb', en: 'Bread', uk: 'Хліб', ro: 'Pâine' },
   { pl: 'Bułki', en: 'Bread rolls', uk: 'Булочки', ro: 'Chifle' },
   { pl: 'Piekarnia', en: 'Bakery', uk: 'Пекарня', ro: 'Brutărie' },
   { pl: 'Ciasta', en: 'Cakes', uk: 'Торти', ro: 'Torturi' },
   { pl: 'Ciastka', en: 'Cookies', uk: 'Печиво', ro: 'Biscuiți' },
-
-  // === MIĘSO I WĘDLINY ===
   { pl: 'Wędliny', en: 'Cold Cuts', uk: 'Ковбаси', ro: 'Mezeluri' },
   { pl: 'Mięso', en: 'Meat', uk: 'М\'ясо', ro: 'Carne' },
   { pl: 'Kiełbasy', en: 'Sausages', uk: 'Ковбаси', ro: 'Cârnați' },
   { pl: 'Drób', en: 'Poultry', uk: 'Птиця', ro: 'Pui' },
   { pl: 'Ryby', en: 'Fish', uk: 'Риба', ro: 'Pește' },
   { pl: 'Garmażeria', en: 'Deli', uk: 'Гастрономія', ro: 'Gastronomie' },
-
-  // === NABIAŁ ===
   { pl: 'Nabiał', en: 'Dairy', uk: 'Молочне', ro: 'Lactate' },
   { pl: 'Sery', en: 'Cheeses', uk: 'Сири', ro: 'Brânzeturi' },
   { pl: 'Mleko', en: 'Milk', uk: 'Молоко', ro: 'Lapte' },
   { pl: 'Jogurty', en: 'Yoghurts', uk: 'Йогурти', ro: 'Iaurturi' },
   { pl: 'Masło', en: 'Butter', uk: 'Масло', ro: 'Unt' },
   { pl: 'Jajka', en: 'Eggs', uk: 'Яйця', ro: 'Ouă' },
-
-  // === WARZYWA I OWOCE ===
   { pl: 'Warzywa', en: 'Vegetables', uk: 'Овочі', ro: 'Legume' },
   { pl: 'Owoce', en: 'Fruits', uk: 'Фрукти', ro: 'Fructe' },
   { pl: 'Zioła', en: 'Herbs', uk: 'Трави', ro: 'Ierburi' },
-
-  // === MROŻONKI ===
   { pl: 'Mrożonki', en: 'Frozen Food', uk: 'Заморозка', ro: 'Congelate' },
   { pl: 'Pierogi', en: 'Pierogi', uk: 'Вареники', ro: 'Pierogi' },
   { pl: 'Lody', en: 'Ice cream', uk: 'Морозиво', ro: 'Înghețată' },
-
-  // === SŁODYCZE I PRZEKĄSKI ===
   { pl: 'Słodycze', en: 'Sweets', uk: 'Солодощі', ro: 'Dulciuri' },
   { pl: 'Czekolady', en: 'Chocolates', uk: 'Шоколад', ro: 'Ciocolată' },
   { pl: 'Cukierki', en: 'Candies', uk: 'Цукерки', ro: 'Bomboane' },
-  { pl: 'Ciastka', en: 'Biscuits', uk: 'Печиво', ro: 'Biscuiți' },
   { pl: 'Przekąski', en: 'Snacks', uk: 'Снеки', ro: 'Gustări' },
   { pl: 'Chipsy', en: 'Crisps', uk: 'Чипси', ro: 'Chipsuri' },
   { pl: 'Orzechy', en: 'Nuts', uk: 'Горіхи', ro: 'Nuci' },
-
-  // === NAPOJE ===
   { pl: 'Napoje', en: 'Drinks', uk: 'Напої', ro: 'Băuturi' },
   { pl: 'Wody', en: 'Waters', uk: 'Води', ro: 'Ape' },
   { pl: 'Soki', en: 'Juices', uk: 'Соки', ro: 'Sucuri' },
   { pl: 'Napoje gazowane', en: 'Fizzy drinks', uk: 'Газовані напої', ro: 'Băuturi carbogazoase' },
   { pl: 'Kawa', en: 'Coffee', uk: 'Кава', ro: 'Cafea' },
   { pl: 'Herbata', en: 'Tea', uk: 'Чай', ro: 'Ceai' },
-
-  // === ALKOHOLE ===
   { pl: 'Alkohole', en: 'Alcohol', uk: 'Алкоголь', ro: 'Alcool' },
   { pl: 'Piwo', en: 'Beer', uk: 'Пиво', ro: 'Bere' },
   { pl: 'Wino', en: 'Wine', uk: 'Вино', ro: 'Vin' },
   { pl: 'Wódka', en: 'Vodka', uk: 'Горілка', ro: 'Vodcă' },
-
-  // === PRODUKTY SUCHE ===
   { pl: 'Makarony', en: 'Pasta', uk: 'Макарони', ro: 'Paste' },
   { pl: 'Ryż', en: 'Rice', uk: 'Рис', ro: 'Orez' },
   { pl: 'Kasze', en: 'Groats', uk: 'Крупи', ro: 'Crupe' },
@@ -993,34 +990,21 @@ const CATEGORY_DICTIONARY = [
   { pl: 'Cukier', en: 'Sugar', uk: 'Цукор', ro: 'Zahăr' },
   { pl: 'Płatki', en: 'Cereals', uk: 'Пластівці', ro: 'Cereale' },
   { pl: 'Konserwy', en: 'Canned Food', uk: 'Консерви', ro: 'Conserve' },
-
-  // === PRZYPRAWY, SOSY, DODATKI ===
   { pl: 'Przyprawy', en: 'Spices', uk: 'Спеції', ro: 'Condimente' },
   { pl: 'Sosy', en: 'Sauces', uk: 'Соуси', ro: 'Sosuri' },
   { pl: 'Oleje', en: 'Oils', uk: 'Олії', ro: 'Uleiuri' },
   { pl: 'Octy', en: 'Vinegars', uk: 'Оцти', ro: 'Oțeturi' },
   { pl: 'Miód', en: 'Honey', uk: 'Мед', ro: 'Miere' },
   { pl: 'Dżemy', en: 'Jams', uk: 'Джеми', ro: 'Dulcețuri' },
-
-  // === ZDROWIE ===
   { pl: 'Leki', en: 'Medicines', uk: 'Ліки', ro: 'Medicamente' },
   { pl: 'Suplementy', en: 'Supplements', uk: 'Добавки', ro: 'Suplimente' },
-  { pl: 'Zioła', en: 'Herbal remedies', uk: 'Трави', ro: 'Remedii pe bază de plante' },
-
-  // === KOSMETYKI I CHEMIA ===
   { pl: 'Kosmetyki', en: 'Cosmetics', uk: 'Косметика', ro: 'Cosmetice' },
   { pl: 'Chemia', en: 'Household', uk: 'Побутова хімія', ro: 'Produse casnice' },
   { pl: 'Środki czystości', en: 'Cleaning products', uk: 'Засоби для чищення', ro: 'Produse de curățenie' },
-
-  // === DLA DZIECI ===
   { pl: 'Dla dzieci', en: 'For Kids', uk: 'Для дітей', ro: 'Pentru copii' },
   { pl: 'Zabawki', en: 'Toys', uk: 'Іграшки', ro: 'Jucării' },
   { pl: 'Pieluchy', en: 'Nappies', uk: 'Підгузки', ro: 'Scutece' },
-
-  // === ZWIERZĘTA ===
   { pl: 'Karma dla zwierząt', en: 'Pet food', uk: 'Корм для тварин', ro: 'Hrană pentru animale' },
-
-  // === INNE ===
   { pl: 'Okazje', en: 'Bargains', uk: 'Акції', ro: 'Oferte' },
   { pl: 'Nowości', en: 'New arrivals', uk: 'Новинки', ro: 'Noutăți' },
   { pl: 'Promocje', en: 'Promotions', uk: 'Акції', ro: 'Promoții' }
@@ -1035,10 +1019,6 @@ function translateCategoryName(rawName, lang) {
   return rawName;
 }
 
-if(!localStorage.getItem('foodland_v9_reset')) {
-    localStorage.setItem('foodland_v9_reset', 'true');
-}
-
 const DEFAULT_SETTINGS = {
   theme: {'--bg-page':'#fcfaf8','--topbar-bg':'rgba(255,255,255,0.75)','--footer-bg':'rgba(255,255,255,0.95)','--text-main':'#2a2a2a','--btn-bg':'#d0021b'},
   layout: {
@@ -1046,7 +1026,7 @@ const DEFAULT_SETTINGS = {
     '--glass-blur':'0px', 
     '--sticky-header-padding':'1.5rem 2.5rem',
     '--header-font-size':'0.95rem',
-    '--header-height':'80px'
+    '--header-height':'90px'
   },
   contactData: { address: '145 High Street E, NE28 7RN Wallsend', phone: '+44 1234 567 890' },
   overrides: {}, statOverrides: {},
@@ -1069,7 +1049,7 @@ let renderPromosVersion = 0;
 let renderEventVersion = 0;
 let renderLogoVersion = 0;
 
-/* ===== INDEXED DB DLA OBRAZÓW ===== */
+/* ===== INDEXED DB ===== */
 let db;
 const DB_NAME = 'FoodLandDB';
 const DB_VERSION = 1;
@@ -1145,35 +1125,17 @@ function saveAdminState() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(adminState));
   } catch (e) {
-    if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+    if (e.name === 'QuotaExceededError') {
       localStorage.removeItem('foodland_analytics');
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(adminState));
-      } catch (e2) {
-        alert('Błąd: Przekroczono limit pamięci przeglądarki. Nie można zapisać zmian.');
-      }
-    } else {
-      console.error('Błąd zapisu:', e);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(adminState)); }
+      catch (e2) { alert('Błąd: Przekroczono limit pamięci.'); }
     }
   }
 }
 
-/* ===== INICJALIZACJA GRUP ZDJĘĆ ===== */
 function initImageGroups() {
   if (!adminState.images) adminState.images = { kategorie: [], promocje: [], event: [], logo: [] };
-
-  if (adminState.imagesInitialized) {
-    ['kategorie', 'promocje', 'event', 'logo'].forEach(group => {
-      if (Array.isArray(adminState.images[group])) {
-        adminState.images[group] = adminState.images[group].filter(item => {
-          if (item.file && !item.fileId) return false; 
-          return true;
-        });
-      }
-    });
-    saveAdminState();
-    return;
-  }
+  if (adminState.imagesInitialized) { saveAdminState(); return; }
 
   const defaultKategorie = ['pieczywo','pierogi','slodycze','warzywa','wedliny','napoje'].map((n, i) => ({
     id: 'cat_' + n, name: n, fileId: null, size: 100, order: i, active: true
@@ -1234,23 +1196,19 @@ function applyStats(lang) {
     uk:{v1:'1500+',l1:'Продуктів',v2:'2h',l2:'Безкоштовна парковка',v3:'7',l3:'Днів на тиждень'},
     ro:{v1:'1500+',l1:'Produse',v2:'2h',l2:'Parcare gratuită',v3:'7',l3:'Zile pe săptămână'}
   };
-  
   const plOverrides = adminState.statOverrides && adminState.statOverrides['pl'];
   let src = { ...base[lang] };
-  
   if (plOverrides) {
       if (plOverrides.v1 !== undefined) src.v1 = plOverrides.v1;
       if (plOverrides.v2 !== undefined) src.v2 = plOverrides.v2;
       if (plOverrides.v3 !== undefined) src.v3 = plOverrides.v3;
   }
-
   const langOverrides = adminState.statOverrides && adminState.statOverrides[lang];
   if (langOverrides) {
       if (langOverrides.l1 !== undefined) src.l1 = langOverrides.l1;
       if (langOverrides.l2 !== undefined) src.l2 = langOverrides.l2;
       if (langOverrides.l3 !== undefined) src.l3 = langOverrides.l3;
   }
-
   const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
   set('stat1-val', src.v1); set('stat2-val', src.v2); set('stat3-val', src.v3);
   set('stat1-label', src.l1); set('stat2-label', src.l2); set('stat3-label', src.l3);
@@ -1276,7 +1234,6 @@ function updateZoomButtonLabel() {
   }
 }
 
-/* ===== MAPA ===== */
 const SHOP_ADDRESS = "145 High St E, Wallsend NE28 7RN, UK";
 
 function updateMapLanguage(lang) {
@@ -1293,7 +1250,6 @@ function showRouteOnMap(lang) {
   }
 }
 
-/* ===== HOLIDAY BANNER ===== */
 function updateHolidayBanner() {
   const wrapper = document.getElementById('holidayBannerWrapper');
   const banner = document.getElementById('holidayBanner');
@@ -1473,16 +1429,13 @@ function applyTheme(themeId, mode) {
   adminState.themeName = themeId;
   adminState.themeMode = mode;
   adminState.theme = theme[mode];
-  
   document.documentElement.style.setProperty('--bg-page', adminState.theme['--bg-page']);
   document.documentElement.style.setProperty('--topbar-bg', adminState.theme['--topbar-bg']);
   document.documentElement.style.setProperty('--footer-bg', adminState.theme['--footer-bg']);
   document.documentElement.style.setProperty('--text-main', adminState.theme['--text-main']);
   document.documentElement.style.setProperty('--btn-bg', adminState.theme['--btn-bg']);
-
   const key = getFilterKey(themeId, mode);
   const f = (adminState.themeFilters && adminState.themeFilters[key]) || { saturate: 1, brightness: 1 };
-  
   const mainContent = document.getElementById('mainContent');
   if(mainContent) {
       mainContent.style.setProperty('--theme-saturate', f.saturate);
@@ -1490,7 +1443,6 @@ function applyTheme(themeId, mode) {
   }
 }
 
-/* ===== ZDJĘCIA – WSPÓLNA LOGIKA ===== */
 function getGroupImages(group) {
   if (!adminState.images) adminState.images = {};
   return adminState.images[group] || [];
@@ -1513,7 +1465,7 @@ async function renderImageList() {
   const items = getGroupImages(group).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
 
   if (!items.length) {
-    list.innerHTML = '<p style="font-size:0.75rem;color:#888;">Brak zdjęć w tej grupie. Dodaj pierwsze zdjęcie poniżej.</p>';
+    list.innerHTML = '<p style="font-size:0.75rem;color:#888;">Brak zdjęć w tej grupie.</p>';
     return;
   }
 
@@ -1521,28 +1473,22 @@ async function renderImageList() {
   for (const item of items) {
     const div = document.createElement('div');
     div.className = 'img-item';
-
     const isActive = item.active !== false;
     let imgSrc = '';
-    
     if (item.fileId) {
        try {
          const dbRecord = await getImageFromDB(item.fileId);
-         if (dbRecord && dbRecord.blob) {
-            imgSrc = URL.createObjectURL(dbRecord.blob);
-         }
+         if (dbRecord && dbRecord.blob) imgSrc = URL.createObjectURL(dbRecord.blob);
        } catch(e) {}
     }
-
     if (!imgSrc) {
       imgSrc = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
     }
-
     div.innerHTML = `
       <img src="${imgSrc}" alt="${item.name}" onerror="this.style.opacity=0.2" loading="lazy" decoding="async">
       <div class="img-meta">
         <strong>${item.name || 'Bez nazwy'}</strong>
-        <small>${item.fileId ? 'IndexedDB (Blob)' : 'Brak pliku'}</small>
+        <small>${item.fileId ? 'IndexedDB' : 'Brak pliku'}</small>
       </div>
       <div class="toggle-switch">
         <input type="checkbox" id="toggle_${item.id}" ${isActive ? 'checked' : ''}>
@@ -1552,33 +1498,23 @@ async function renderImageList() {
     `;
     list.appendChild(div);
 
-    const checkbox = div.querySelector('input[type="checkbox"]');
-    checkbox.addEventListener('change', (e) => {
+    div.querySelector('input[type="checkbox"]').addEventListener('change', (e) => {
       const originalList = getGroupImages(group);
       const originalItem = originalList.find(i => i.id === item.id);
-      if (originalItem) {
-        originalItem.active = e.target.checked;
-        saveGroupImages(group, originalList);
-      }
+      if (originalItem) { originalItem.active = e.target.checked; saveGroupImages(group, originalList); }
       if (group === 'kategorie') renderCategories();
       if (group === 'promocje') renderPromosSection();
       if (group === 'event') renderEventBanner();
       if (group === 'logo') renderLogo();
     });
 
-    const deleteBtn = div.querySelector('.btn-delete');
-    deleteBtn.addEventListener('click', async () => {
-      if (confirm('Czy na pewno chcesz usunąć to zdjęcie?')) {
-        if (item.fileId) {
-           try { await deleteImageFromDB(item.fileId); } catch(e) { console.error(e); }
-        }
-        let originalList = getGroupImages(group).slice();
-        originalList = originalList.filter(i => i.id !== item.id);
+    div.querySelector('.btn-delete').addEventListener('click', async () => {
+      if (confirm('Usunąć to zdjęcie?')) {
+        if (item.fileId) { try { await deleteImageFromDB(item.fileId); } catch(e) {} }
+        let originalList = getGroupImages(group).slice().filter(i => i.id !== item.id);
         originalList.forEach((el, idx) => { el.order = idx; });
         saveGroupImages(group, originalList);
-        
-        renderImageList(); 
-        
+        renderImageList();
         if (group === 'kategorie') renderCategories();
         if (group === 'promocje') renderPromosSection();
         if (group === 'event') renderEventBanner();
@@ -1596,38 +1532,22 @@ async function addNewImage() {
   const nameInput = document.getElementById('imgNewName');
   const f = fileInput?.files[0];
   if (!f) return alert('Wybierz plik zdjęcia.');
-  
   let name = (nameInput?.value || '').trim();
   if (!name) name = f.name.replace(/\.[^/.]+$/, '');
-  
   const id = 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
-  
   try {
     await saveImageToDB(id, f);
-    
     const items = getGroupImages(group).slice();
-    items.push({
-      id: id,
-      fileId: id,
-      name: name,
-      size: 100,
-      order: items.length,
-      active: true
-    });
+    items.push({ id, fileId: id, name, size: 100, order: items.length, active: true });
     saveGroupImages(group, items);
-    
     renderImageList();
-    
     if (group === 'kategorie') renderCategories();
     if (group === 'promocje') renderPromosSection();
     if (group === 'event') renderEventBanner();
     if (group === 'logo') renderLogo();
-
     if (fileInput) fileInput.value = '';
     if (nameInput) nameInput.value = '';
-  } catch(e) {
-    alert('Wystąpił błąd podczas zapisywania zdjęcia: ' + e);
-  }
+  } catch(e) { alert('Błąd zapisu: ' + e); }
 }
 
 function applyImageSettings() {
@@ -1639,50 +1559,64 @@ function applyImageSettings() {
   }
 }
 
+/* ===== WIELOPOZIOMOWY FALLBACK ZDJĘĆ ===== */
+function buildCandidatePaths(baseFolder, rawName) {
+  const safeName = rawName.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż]/g, '');
+  const original = rawName.replace(/\s+/g, '');
+  const candidates = [];
+  ['jpg','JPG','jpeg','JPEG','png','PNG','webp','WEBP'].forEach(ext => {
+    candidates.push(`./images/${baseFolder}/${safeName}.${ext}`);
+    candidates.push(`./images/${baseFolder}/${original}.${ext}`);
+    candidates.push(`./images/${baseFolder}/${rawName}.${ext}`);
+  });
+  return candidates;
+}
+
+async function loadImageWithFallback(imgEl, baseFolder, rawName, dbFileId) {
+  // 1) najpierw próbuj IndexedDB
+  if (dbFileId) {
+    try {
+      const dbRecord = await getImageFromDB(dbFileId);
+      if (dbRecord && dbRecord.blob) {
+        imgEl.src = URL.createObjectURL(dbRecord.blob);
+        return;
+      }
+    } catch(e) {}
+  }
+  // 2) fallback – wiele ścieżek
+  const candidates = buildCandidatePaths(baseFolder, rawName);
+  let idx = 0;
+  const tryNext = () => {
+    if (idx >= candidates.length) {
+      imgEl.onerror = null;
+      imgEl.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
+      return;
+    }
+    imgEl.src = candidates[idx++];
+  };
+  imgEl.onerror = tryNext;
+  tryNext();
+}
+
 async function renderCategories() {
   const grid = document.getElementById('catGrid');
   if (!grid) return;
-
   const myVersion = ++renderCategoriesVersion;
 
   let items = getGroupImages('kategorie').filter(img => img.active !== false);
   items.sort((a, b) => (a.order || 0) - (b.order || 0));
 
-  const prepared = [];
-  for (const item of items) {
-    const rawName = item.name || 'Kategoria';
-    const title = translateCategoryName(rawName, currentLang);
-    let imgSrc = '';
-    
-    if (item.fileId) {
-      try {
-        const dbRecord = await getImageFromDB(item.fileId);
-        if (dbRecord && dbRecord.blob) {
-          imgSrc = URL.createObjectURL(dbRecord.blob);
-        }
-      } catch (e) {}
-    }
-    
-    // Fallback dla Androida i innych – zdjęcie z folderu
-    if (!imgSrc) {
-        const safeName = rawName.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż]/g, '');
-        imgSrc = `./images/kategorie/${safeName}.jpg`;
-    }
-
-    prepared.push({ item, title, imgSrc });
-  }
-
-  if (myVersion !== renderCategoriesVersion) return;
-
   grid.innerHTML = '';
 
-  if (!prepared.length) {
-    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">Brak zdjęć w kategorii. Dodaj zdjęcia w panelu administratora.</p>';
+  if (!items.length) {
+    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">Brak zdjęć w kategorii.</p>';
     applyImageSettings();
     return;
   }
 
-  for (const { item, title, imgSrc } of prepared) {
+  for (const item of items) {
+    const rawName = item.name || 'Kategoria';
+    const title = translateCategoryName(rawName, currentLang);
     const div = document.createElement('div');
     div.className = 'cat-card';
     const inner = document.createElement('div');
@@ -1693,11 +1627,7 @@ async function renderCategories() {
     img.loading = 'lazy';
     img.decoding = 'async';
     img.setAttribute('referrerpolicy', 'no-referrer');
-    img.onerror = function () {
-      this.onerror = null;
-      this.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23eee"/%3E%3Ctext x="50" y="50" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="9" fill="%23999"%3EZDJ%C4%98CIE%3C/text%3E%3C/svg%3E';
-    };
-    img.src = imgSrc;
+    img.setAttribute('crossorigin', 'anonymous');
 
     inner.appendChild(img);
 
@@ -1706,55 +1636,35 @@ async function renderCategories() {
     ov.innerHTML = `<h3>${title}</h3>`;
     inner.appendChild(ov);
 
-    if (item.size && item.size !== 100) {
-      div.style.setProperty('--card-scale', item.size / 100);
-    }
-
+    if (item.size && item.size !== 100) div.style.setProperty('--card-scale', item.size / 100);
     div.appendChild(inner);
     grid.appendChild(div);
+
+    // asynchroniczne ładowanie z fallbackiem
+    loadImageWithFallback(img, 'kategorie', rawName, item.fileId);
   }
 
+  if (myVersion !== renderCategoriesVersion) return;
   applyImageSettings();
 }
 
 async function renderPromosSection() {
   const list = document.getElementById('promoList');
   if (!list) return;
-
   const myVersion = ++renderPromosVersion;
 
   const activePromos = getGroupImages('promocje')
     .filter(img => img.active !== false)
     .sort((a, b) => (a.order || 0) - (b.order || 0));
 
-  const prepared = [];
-  for (const promo of activePromos) {
-    let src = '';
-    if (promo.fileId) {
-      try {
-        const dbRecord = await getImageFromDB(promo.fileId);
-        if (dbRecord && dbRecord.blob) src = URL.createObjectURL(dbRecord.blob);
-      } catch (e) {}
-    }
-    
-    if (!src && promo.name) {
-        const safeName = promo.name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż]/g, '');
-        src = `./images/promocje/${safeName}.jpg`;
-    }
-
-    prepared.push({ promo, src });
-  }
-
-  if (myVersion !== renderPromosVersion) return;
-
   list.innerHTML = '';
 
-  if (!prepared.length) {
+  if (!activePromos.length) {
     list.innerHTML = '<p class="promo-empty">Brak aktualnych promocji.</p>';
     return;
   }
 
-  prepared.forEach(({ promo, src }, i) => {
+  activePromos.forEach((promo, i) => {
     const id = i + 1;
     const container = document.createElement('div');
     container.className = 'promo-banner-container';
@@ -1767,6 +1677,7 @@ async function renderPromosSection() {
     img.loading = 'lazy';
     img.decoding = 'async';
     img.setAttribute('referrerpolicy', 'no-referrer');
+    img.setAttribute('crossorigin', 'anonymous');
 
     img.onload = function () {
       this.classList.add('loaded');
@@ -1775,7 +1686,6 @@ async function renderPromosSection() {
     img.onerror = function () {
       this.style.display = 'none';
     };
-    if (src) img.src = src;
 
     const lens = document.createElement('div');
     lens.className = 'zoom-lens';
@@ -1784,6 +1694,8 @@ async function renderPromosSection() {
     container.appendChild(img);
     container.appendChild(lens);
     list.appendChild(container);
+
+    loadImageWithFallback(img, 'promocje', promo.name || 'gazetka', promo.fileId);
   });
 }
 
@@ -1791,104 +1703,73 @@ async function renderEventBanner() {
   const section = document.getElementById('eventBannerSection');
   const img = document.getElementById('eventBannerImg');
   if (!section || !img) return;
-
   const myVersion = ++renderEventVersion;
 
-  const activeEvents = getGroupImages('event')
-    .filter(img => img.active !== false)
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
-
+  const activeEvents = getGroupImages('event').filter(img => img.active !== false);
   if (activeEvents.length === 0 || !activeEvents[0]) {
     section.style.display = 'none';
     return;
   }
-
   const event = activeEvents[0];
-  let src = '';
-  if (event.fileId) {
-    try {
-      const dbRecord = await getImageFromDB(event.fileId);
-      if (dbRecord && dbRecord.blob) src = URL.createObjectURL(dbRecord.blob);
-    } catch (e) {}
-  }
-  
-  if (!src) {
-      src = `./images/event/baner.jpg`;
-  }
-
   if (myVersion !== renderEventVersion) return;
-
-  if (!src) {
-    section.style.display = 'none';
-    return;
-  }
 
   img.onload = () => { section.style.display = 'block'; };
   img.onerror = () => { section.style.display = 'none'; };
   img.setAttribute('referrerpolicy', 'no-referrer');
-  img.src = src;
+
+  if (event.fileId) {
+    try {
+      const dbRecord = await getImageFromDB(event.fileId);
+      if (dbRecord && dbRecord.blob) {
+        img.src = URL.createObjectURL(dbRecord.blob);
+        return;
+      }
+    } catch(e) {}
+  }
+  img.src = `./images/event/baner.jpg`;
 }
 
 async function renderLogo() {
   const logoImg = document.querySelector('.logo-img');
   if (!logoImg) return;
-
   const myVersion = ++renderLogoVersion;
 
-  const activeLogos = getGroupImages('logo')
-    .filter(img => img.active !== false)
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
-
+  const activeLogos = getGroupImages('logo').filter(img => img.active !== false);
   if (activeLogos.length === 0 || !activeLogos[0]) {
     logoImg.style.display = 'none';
     return;
   }
-
   const logo = activeLogos[0];
-  let src = '';
+  if (myVersion !== renderLogoVersion) return;
+
   if (logo.fileId) {
     try {
       const dbRecord = await getImageFromDB(logo.fileId);
-      if (dbRecord && dbRecord.blob) src = URL.createObjectURL(dbRecord.blob);
-    } catch (e) {}
+      if (dbRecord && dbRecord.blob) {
+        logoImg.style.display = 'block';
+        logoImg.src = URL.createObjectURL(dbRecord.blob);
+        return;
+      }
+    } catch(e) {}
   }
-  
-  if (!src) {
-      src = `./images/logo.jpg`;
-  }
-
-  if (myVersion !== renderLogoVersion) return;
-
-  if (!src) {
-    logoImg.style.display = 'none';
-    return;
-  }
-
   logoImg.style.display = 'block';
-  logoImg.onerror = () => { logoImg.style.display = 'none'; };
-  logoImg.src = src;
+  logoImg.src = `./images/logo.jpg`;
 }
 
-/* ===== LUPA ===== */
 function initZoom(containerId, imgId, lensId) {
   const container = document.getElementById(containerId);
   const img = document.getElementById(imgId);
   const lens = document.getElementById(lensId);
   if (!container || !img || !lens) return;
-
   lens.style.display = 'none';
   if (img.complete && img.naturalWidth > 0) {
     lens.style.backgroundImage = `url('${img.src}')`;
   } else {
-    img.addEventListener('load', () => {
-      lens.style.backgroundImage = `url('${img.src}')`;
-    }, { once: true });
+    img.addEventListener('load', () => { lens.style.backgroundImage = `url('${img.src}')`; }, { once: true });
   }
   lens.style.backgroundRepeat = 'no-repeat';
-
   if (container.dataset.zoomBound === '1') return;
   container.dataset.zoomBound = '1';
-
   container.addEventListener('mouseenter', () => {
     if (zoomEnabled && lens.style.backgroundImage) lens.style.display = 'block';
   });
@@ -1897,9 +1778,7 @@ function initZoom(containerId, imgId, lensId) {
     if (!zoomEnabled) { lens.style.display = 'none'; return; }
     const rect = img.getBoundingClientRect();
     let x = e.clientX - rect.left, y = e.clientY - rect.top;
-    if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
-      lens.style.display = 'none'; return;
-    }
+    if (x < 0 || y < 0 || x > rect.width || y > rect.height) { lens.style.display = 'none'; return; }
     lens.style.display = 'block';
     const lensW = lens.offsetWidth, lensH = lens.offsetHeight, zoom = 2.5;
     lens.style.backgroundSize = `${rect.width * zoom}px ${rect.height * zoom}px`;
@@ -1922,24 +1801,19 @@ if (zoomToggleTop) {
 (function(){
   const hamburger = document.getElementById('navHamburger');
   if (!hamburger) return;
-  // mobile: tap toggles .open
   hamburger.addEventListener('click', (e) => {
     if (e.target.tagName === 'A') return;
     hamburger.classList.toggle('open');
   });
-  // close on link click
   hamburger.querySelectorAll('.nav-dropdown a').forEach(a => {
-    a.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-    });
+    a.addEventListener('click', () => hamburger.classList.remove('open'));
   });
-  // close on outside click
   document.addEventListener('click', (e) => {
     if (!hamburger.contains(e.target)) hamburger.classList.remove('open');
   });
 })();
 
-/* ===== SECRET TRIGGER I LOGOWANIE ===== */
+/* ===== SECRET TRIGGER ===== */
 (function () {
   const SECRET = 'dnaldoof';
   let buffer = '', resetTimer = null, overFooter = false;
@@ -1982,7 +1856,6 @@ document.getElementById('adminCloseBtn').addEventListener('click', () => {
   document.getElementById('adminLoginModal').hidden = true;
 });
 
-/* ===== ODBLOKOWANIE HASŁA ===== */
 document.getElementById('forgotPassLink').addEventListener('click', () => {
   document.getElementById('adminLoginModal').hidden = true;
   document.getElementById('forgotModal').hidden = false;
@@ -1998,31 +1871,20 @@ document.getElementById('forgotSendBtn').addEventListener('click', () => {
   const email = (document.getElementById('forgotEmail').value || '').trim();
   const msg = document.getElementById('forgotMsg');
   const savedEmail = (adminState.credentials?.email || '').trim();
-  if (!email) {
-    msg.hidden = false;
-    msg.style.color = '#d0021b';
-    msg.textContent = 'Podaj adres e-mail.';
-    return;
-  }
+  if (!email) { msg.hidden = false; msg.style.color = '#d0021b'; msg.textContent = 'Podaj adres e-mail.'; return; }
   if (!savedEmail || savedEmail.toLowerCase() !== email.toLowerCase()) {
-    msg.hidden = false;
-    msg.style.color = '#d0021b';
-    msg.textContent = 'Podany e-mail nie pasuje do zapisanego konta administratora.';
+    msg.hidden = false; msg.style.color = '#d0021b';
+    msg.textContent = 'Podany e-mail nie pasuje do zapisanego konta.';
     return;
   }
   const cred = adminState.credentials;
   const subject = 'FoodLand – dane logowania administratora';
-  const body = `Aktualne dane logowania do panelu administratora FoodLand:\n\nLogin: ${cred.login}\nHasło: ${cred.password}\n\nZaleca się zmianę hasła po zalogowaniu.`;
-  
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.open(gmailUrl, '_blank');
-
-  msg.hidden = false;
-  msg.style.color = '#00843d';
-  msg.textContent = 'Otwarto nową kartę z gotową wiadomością e-mail (Gmail).';
+  const body = `Aktualne dane logowania:\n\nLogin: ${cred.login}\nHasło: ${cred.password}`;
+  window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+  msg.hidden = false; msg.style.color = '#00843d';
+  msg.textContent = 'Otwarto nową kartę z wiadomością (Gmail).';
 });
 
-/* ===== ZAMKNIĘCIE PANELU ===== */
 document.getElementById('adminPanelClose').addEventListener('click', () => {
   adminState = loadAdmin();
   initImageGroups();
@@ -2033,7 +1895,6 @@ document.getElementById('adminPanelClose').addEventListener('click', () => {
   renderPromosSection();
   renderEventBanner();
   renderLogo();
-  
   document.getElementById('adminPanel').hidden = true;
   document.body.classList.remove('admin-open');
   isLogged = false;
@@ -2044,12 +1905,8 @@ document.querySelectorAll('#adminTabs button').forEach(btn => {
     document.querySelectorAll('#adminTabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.admin-tabpage').forEach(p => p.classList.toggle('active', p.dataset.page === btn.dataset.tab));
-    if (btn.dataset.tab === 'images') {
-      renderImageList();
-    }
-    if (btn.dataset.tab === 'security') {
-      loadSecurityFields();
-    }
+    if (btn.dataset.tab === 'images') renderImageList();
+    if (btn.dataset.tab === 'security') loadSecurityFields();
   });
 });
 
@@ -2068,8 +1925,7 @@ document.querySelectorAll('.lang-edit-btn').forEach(btn => {
 const TEXT_ORDER = [
   'nav.categories', 'nav.promos', 'nav.contact',
   'hero.title1', 'hero.title2', 'hero.lead', 'hero.cta', 'hero.stat1', 'hero.stat2', 'hero.stat3',
-  'cat.title',
-  'promo.title',
+  'cat.title', 'promo.title',
   'contact.title', 'contact.address', 'contact.phone', 'contact.hours', 'contact.facebook',
   'refer.title', 'refer.desc', 'refer.send', 'refer.emailPlaceholder', 'footer.rights'
 ];
@@ -2084,9 +1940,7 @@ function renderTextFields() {
     if (adminState.overrides && adminState.overrides[editLang] && adminState.overrides[editLang][key] !== undefined) {
         currentVal = adminState.overrides[editLang][key];
     }
-    if (!currentVal && editLang !== 'pl') {
-        currentVal = BASE_TRANSLATIONS['en'][key] || '';
-    }
+    if (!currentVal && editLang !== 'pl') currentVal = BASE_TRANSLATIONS['en'][key] || '';
     const div = document.createElement('div');
     div.className = 'admin-field';
     div.innerHTML = `<label>${key} (${editLang.toUpperCase()})</label><textarea rows="2" data-key="${key}">${currentVal}</textarea>`;
@@ -2094,12 +1948,9 @@ function renderTextFields() {
     ta.addEventListener('input', () => {
       if (!adminState.overrides) adminState.overrides = {};
       if (!adminState.overrides[editLang]) adminState.overrides[editLang] = {};
-      
       adminState.overrides[editLang][key] = ta.value;
-
       if (!translations[editLang]) translations[editLang] = { ...BASE_TRANSLATIONS[editLang] };
       translations[editLang][key] = ta.value;
-      
       applyAllOverrides();
       setLang(currentLang);
     });
@@ -2110,14 +1961,11 @@ function renderTextFields() {
 ['stat1-val-input', 'stat2-val-input', 'stat3-val-input'].forEach((id, index) => {
   document.getElementById(id).addEventListener('input', (e) => {
     if (!adminState.statOverrides) adminState.statOverrides = {};
-    
     const val = e.target.value;
-    
     ['pl', 'en', 'uk', 'ro'].forEach(lang => {
         if (!adminState.statOverrides[lang]) adminState.statOverrides[lang] = {};
         adminState.statOverrides[lang][`v${index + 1}`] = val;
     });
-    
     applyStats(currentLang);
   });
 });
@@ -2125,16 +1973,12 @@ function renderTextFields() {
 function initStatsTracker() {
   const KEY_STATS = 'foodland_analytics';
   let stats = JSON.parse(localStorage.getItem(KEY_STATS)) || {
-    totalVisits: 0, uniqueVisits: 0, pageViews: 0,
-    browsers: {}, os: {}, devices: {}, referrers: {}, languages: {},
-    screenResolutions: {}, timezones: {}, connectionTypes: {}, colorSchemes: {},
-    firstVisit: null, lastVisit: null, avgSessionSeconds: 0, totalSessionSeconds: 0,
-    clicks: 0, scrollDepth: 0, formSubmissions: 0, referralEmails: 0,
-    promoViews: 0, categoryViews: 0, langSwitches: 0, adminLogins: 0,
-    maxScrollDepth: 0, avgScrollDepth: 0, bounceRate: 0, returningVisits: 0,
-    topPages: {}, errorCount: 0, promoClickCount: 0
+    totalVisits: 0, uniqueVisits: 0, pageViews: 0, browsers: {}, os: {}, devices: {},
+    referrers: {}, languages: {}, screenResolutions: {}, timezones: {}, connectionTypes: {},
+    colorSchemes: {}, firstVisit: null, lastVisit: null, clicks: 0,
+    maxScrollDepth: 0, avgScrollDepth: 0, returningVisits: 0,
+    formSubmissions: 0, referralEmails: 0, langSwitches: 0, adminLogins: 0, errorCount: 0
   };
-
   let uniqueId = localStorage.getItem('foodland_uid');
   if (!uniqueId) {
     uniqueId = 'user_' + Math.random().toString(36).substr(2, 9);
@@ -2144,23 +1988,18 @@ function initStatsTracker() {
   } else {
     stats.returningVisits = (stats.returningVisits || 0) + 1;
   }
-
-  const now = new Date().toISOString();
-  stats.lastVisit = now;
-
+  stats.lastVisit = new Date().toISOString();
   if (!sessionStorage.getItem('foodland_session')) {
     sessionStorage.setItem('foodland_session', 'active');
     stats.totalVisits++;
     stats.pageViews++;
     stats.clicks = (stats.clicks || 0) + 1;
-
     let browser = "Inne";
     if (navigator.userAgent.indexOf("Chrome") > -1) browser = "Chrome";
     else if (navigator.userAgent.indexOf("Firefox") > -1) browser = "Firefox";
     else if (navigator.userAgent.indexOf("Safari") > -1) browser = "Safari";
     else if (navigator.userAgent.indexOf("Edge") > -1) browser = "Edge";
     stats.browsers[browser] = (stats.browsers[browser] || 0) + 1;
-
     let os = "Inne";
     if (navigator.userAgent.indexOf("Win") > -1) os = "Windows";
     else if (navigator.userAgent.indexOf("Mac") > -1) os = "MacOS";
@@ -2168,35 +2007,21 @@ function initStatsTracker() {
     else if (navigator.userAgent.indexOf("Android") > -1) os = "Android";
     else if (navigator.userAgent.indexOf("like Mac") > -1) os = "iOS";
     stats.os[os] = (stats.os[os] || 0) + 1;
-
     let device = "Desktop";
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) device = "Mobile/Tablet";
     stats.devices[device] = (stats.devices[device] || 0) + 1;
-
     let ref = document.referrer ? new URL(document.referrer).hostname : 'Bezpośredni';
     if (ref.includes('google')) ref = 'Google';
     else if (ref.includes('facebook')) ref = 'Facebook';
     stats.referrers[ref] = (stats.referrers[ref] || 0) + 1;
-
-    let lang = navigator.language || 'nieznany';
-    stats.languages[lang] = (stats.languages[lang] || 0) + 1;
-
+    stats.languages[navigator.language || 'nieznany'] = 1;
     const res = `${screen.width}x${screen.height}`;
     stats.screenResolutions[res] = (stats.screenResolutions[res] || 0) + 1;
-
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'nieznana';
-    stats.timezones[tz] = (stats.timezones[tz] || 0) + 1;
-
-    const conn = navigator.connection ? navigator.connection.effectiveType || 'nieznane' : 'nieznane';
-    stats.connectionTypes[conn] = (stats.connectionTypes[conn] || 0) + 1;
-
+    stats.timezones[Intl.DateTimeFormat().resolvedOptions().timeZone || 'nieznana'] = 1;
+    stats.connectionTypes[(navigator.connection && navigator.connection.effectiveType) || 'nieznane'] = 1;
     const colorScheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    stats.colorSchemes[colorScheme] = (stats.colorSchemes[colorScheme] || 0) + 1;
-
-    stats.topPages['strona główna'] = (stats.topPages['strona główna'] || 0) + 1;
-  } else {
-    stats.pageViews++;
-  }
+    stats.colorSchemes[colorScheme] = 1;
+  } else { stats.pageViews++; }
 
   let maxScroll = 0;
   window.addEventListener('scroll', () => {
@@ -2210,18 +2035,11 @@ function initStatsTracker() {
   }, { passive: true });
 
   document.addEventListener('click', () => { stats.clicks = (stats.clicks || 0) + 1; });
-
   document.querySelectorAll('#lang button').forEach(btn => {
     btn.addEventListener('click', () => { stats.langSwitches = (stats.langSwitches || 0) + 1; });
   });
-
-  setInterval(() => {
-    localStorage.setItem(KEY_STATS, JSON.stringify(stats));
-  }, 5000);
-  window.addEventListener('beforeunload', () => {
-    localStorage.setItem(KEY_STATS, JSON.stringify(stats));
-  });
-
+  setInterval(() => { localStorage.setItem(KEY_STATS, JSON.stringify(stats)); }, 5000);
+  window.addEventListener('beforeunload', () => { localStorage.setItem(KEY_STATS, JSON.stringify(stats)); });
   localStorage.setItem(KEY_STATS, JSON.stringify(stats));
 }
 
@@ -2233,33 +2051,31 @@ function renderStats() {
     if(!obj || Object.keys(obj).length === 0) return 'Brak';
     return Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
   };
-
   const items = [
     { label: 'Całkowite Wizyty', value: stats.totalVisits || 0, big: true },
     { label: 'Unikalni Użytkownicy', value: stats.uniqueVisits || 0 },
     { label: 'Odsłony Strony', value: stats.pageViews || 0 },
     { label: 'Powroty', value: stats.returningVisits || 0 },
-    { label: 'Najczęstsza Przeglądarka', value: getTop(stats.browsers) },
-    { label: 'Najczęstszy System', value: getTop(stats.os) },
+    { label: 'Przeglądarka', value: getTop(stats.browsers) },
+    { label: 'System', value: getTop(stats.os) },
     { label: 'Urządzenie', value: getTop(stats.devices) },
-    { label: 'Źródło Ruchu', value: getTop(stats.referrers) },
-    { label: 'Język przeglądarki', value: getTop(stats.languages) },
+    { label: 'Źródło', value: getTop(stats.referrers) },
+    { label: 'Język', value: getTop(stats.languages) },
     { label: 'Rozdzielczość', value: getTop(stats.screenResolutions) },
-    { label: 'Strefa czasowa', value: getTop(stats.timezones) },
-    { label: 'Typ połączenia', value: getTop(stats.connectionTypes) },
-    { label: 'Motyw systemowy', value: getTop(stats.colorSchemes) },
+    { label: 'Strefa', value: getTop(stats.timezones) },
+    { label: 'Połączenie', value: getTop(stats.connectionTypes) },
+    { label: 'Motyw', value: getTop(stats.colorSchemes) },
     { label: 'Kliknięcia', value: stats.clicks || 0 },
-    { label: 'Maks. głębokość scrolla', value: (stats.maxScrollDepth || 0) + '%' },
-    { label: 'Śr. głębokość scrolla', value: (stats.avgScrollDepth || 0) + '%' },
-    { label: 'Zgłoszenia formularza', value: stats.formSubmissions || 0 },
-    { label: 'Wysłane polecenia', value: stats.referralEmails || 0 },
+    { label: 'Maks. scroll', value: (stats.maxScrollDepth || 0) + '%' },
+    { label: 'Śr. scroll', value: (stats.avgScrollDepth || 0) + '%' },
+    { label: 'Zgłoszenia', value: stats.formSubmissions || 0 },
+    { label: 'Polecenia', value: stats.referralEmails || 0 },
     { label: 'Zmiany języka', value: stats.langSwitches || 0 },
     { label: 'Logowania admina', value: stats.adminLogins || 0 },
-    { label: 'Błędy (JS)', value: stats.errorCount || 0 },
+    { label: 'Błędy', value: stats.errorCount || 0 },
     { label: 'Pierwsza wizyta', value: stats.firstVisit ? new Date(stats.firstVisit).toLocaleString() : '—' },
     { label: 'Ostatnia wizyta', value: stats.lastVisit ? new Date(stats.lastVisit).toLocaleString() : '—' }
   ];
-
   container.innerHTML = items.map((it, i) => {
     if (i === 0) return `<div class="stat-box" style="grid-column: span 2; background: #e8f4ea; border-color: #c3e6cb;"><h3 style="font-size: 1.8rem; color: #00843d;">${it.value}</h3><p>${it.label}</p></div>`;
     return `<div class="stat-box"><h3>${it.value}</h3><p>${it.label}</p></div>`;
@@ -2272,21 +2088,16 @@ function sendEmailReport() {
   if (!to) return;
   adminState.reportEmail = to;
   saveAdminState();
-
   const lines = Object.entries(stats).map(([k, v]) => {
     if (typeof v === 'object') return `${k}: ${JSON.stringify(v)}`;
     return `${k}: ${v}`;
   });
   const subject = 'Raport statystyk FoodLand – ' + new Date().toLocaleString();
   const body = 'Raport analityczny:\n\n' + lines.join('\n');
-  
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.open(gmailUrl, '_blank');
+  window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
 }
-
 document.getElementById('sendReportBtn')?.addEventListener('click', sendEmailReport);
 
-/* ===== BEZPIECZEŃSTWO ===== */
 function loadSecurityFields() {
   const cred = adminState.credentials || { login:'admin', password:'123', email:'' };
   document.getElementById('secLogin').value = cred.login || '';
@@ -2294,7 +2105,6 @@ function loadSecurityFields() {
   document.getElementById('secEmail').value = cred.email || '';
   const msg = document.getElementById('secMsg');
   if (msg) { msg.hidden = true; msg.textContent = ''; }
-  
   const secPass = document.getElementById('secPass');
   const toggleBtn = document.getElementById('toggleSecPassBtn');
   if(secPass) secPass.type = 'password';
@@ -2306,67 +2116,40 @@ document.getElementById('secSaveBtn')?.addEventListener('click', () => {
   const pass = (document.getElementById('secPass').value || '').trim();
   const email = (document.getElementById('secEmail').value || '').trim();
   const msg = document.getElementById('secMsg');
-  if (!login || !pass) {
-    msg.hidden = false;
-    msg.style.color = '#d0021b';
-    msg.textContent = 'Login i hasło nie mogą być puste.';
-    return;
-  }
+  if (!login || !pass) { msg.hidden = false; msg.style.color = '#d0021b'; msg.textContent = 'Login i hasło nie mogą być puste.'; return; }
   if (!adminState.credentials) adminState.credentials = {};
   adminState.credentials.login = login;
   adminState.credentials.password = pass;
   adminState.credentials.email = email;
   saveAdminState();
-  msg.hidden = false;
-  msg.style.color = '#00843d';
+  msg.hidden = false; msg.style.color = '#00843d';
   msg.textContent = 'Dane logowania zostały zapisane.';
 });
 
 document.getElementById('secSendMailBtn')?.addEventListener('click', () => {
   const email = (document.getElementById('secEmail').value || '').trim() || adminState.credentials?.email || '';
   const msg = document.getElementById('secMsg');
-  if (!email) {
-    msg.hidden = false;
-    msg.style.color = '#d0021b';
-    msg.textContent = 'Najpierw podaj adres e-mail administratora.';
-    return;
-  }
+  if (!email) { msg.hidden = false; msg.style.color = '#d0021b'; msg.textContent = 'Podaj adres e-mail administratora.'; return; }
   const login = (document.getElementById('secLogin').value || adminState.credentials?.login || '').trim();
   const pass = (document.getElementById('secPass').value || adminState.credentials?.password || '').trim();
-  if (!login || !pass) {
-    msg.hidden = false;
-    msg.style.color = '#d0021b';
-    msg.textContent = 'Login i hasło nie mogą być puste.';
-    return;
-  }
+  if (!login || !pass) { msg.hidden = false; msg.style.color = '#d0021b'; msg.textContent = 'Login i hasło nie mogą być puste.'; return; }
   if (!adminState.credentials) adminState.credentials = {};
   adminState.credentials.email = email;
   saveAdminState();
-
   const subject = 'FoodLand – nowe dane logowania administratora';
-  const body = `Nowe dane logowania do panelu administratora FoodLand:\n\nLogin: ${login}\nHasło: ${pass}\n\nZaleca się zmianę hasła po zalogowaniu.`;
-  
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.open(gmailUrl, '_blank');
-
-  msg.hidden = false;
-  msg.style.color = '#00843d';
-  msg.textContent = 'Otwarto nową kartę z gotową wiadomością e-mail (Gmail).';
+  const body = `Nowe dane logowania:\n\nLogin: ${login}\nHasło: ${pass}`;
+  window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+  msg.hidden = false; msg.style.color = '#00843d';
+  msg.textContent = 'Otwarto nową kartę z wiadomością (Gmail).';
 });
 
 document.getElementById('toggleSecPassBtn')?.addEventListener('click', () => {
     const secPass = document.getElementById('secPass');
     const toggleBtn = document.getElementById('toggleSecPassBtn');
-    if (secPass.type === 'password') {
-        secPass.type = 'text';
-        toggleBtn.textContent = '🙈';
-    } else {
-        secPass.type = 'password';
-        toggleBtn.textContent = '👁️';
-    }
+    if (secPass.type === 'password') { secPass.type = 'text'; toggleBtn.textContent = '🙈'; }
+    else { secPass.type = 'password'; toggleBtn.textContent = '👁️'; }
 });
 
-/* ===== WERSJE HTML ===== */
 const VERSIONS_KEY = 'foodland_versions';
 let versions = JSON.parse(localStorage.getItem(VERSIONS_KEY)) || [];
 
@@ -2385,19 +2168,10 @@ function renderVersions() {
 }
 
 window.loadVersion = function(index) {
-  if(confirm('Czy na pewno chcesz wczytać tę wersję? Spowoduje to nadpisanie bieżącej strony.')) {
-    document.open();
-    document.write(versions[index].html);
-    document.close();
-  }
+  if(confirm('Wczytać tę wersję?')) { document.open(); document.write(versions[index].html); document.close(); }
 };
-
 window.deleteVersion = function(index) {
-  if(confirm('Usunąć tę wersję?')) {
-    versions.splice(index, 1);
-    localStorage.setItem(VERSIONS_KEY, JSON.stringify(versions));
-    renderVersions();
-  }
+  if(confirm('Usunąć tę wersję?')) { versions.splice(index, 1); localStorage.setItem(VERSIONS_KEY, JSON.stringify(versions)); renderVersions(); }
 };
 
 document.getElementById('saveVersionBtn')?.addEventListener('click', () => {
@@ -2405,15 +2179,12 @@ document.getElementById('saveVersionBtn')?.addEventListener('click', () => {
   if (!name) return alert('Podaj nazwę wersji!');
   const html = document.documentElement.outerHTML;
   versions.unshift({ name, html, date: new Date().toLocaleString() });
-  
   try {
     localStorage.setItem(VERSIONS_KEY, JSON.stringify(versions));
     document.getElementById('versionName').value = '';
     renderVersions();
     alert('Wersja zapisana!');
-  } catch (e) {
-    alert('Błąd: Brak miejsca w pamięci (localStorage). Usuń stare wersje.');
-  }
+  } catch (e) { alert('Błąd: Brak miejsca w localStorage.'); }
 });
 
 document.getElementById('downloadHtmlBtn')?.addEventListener('click', () => {
@@ -2429,12 +2200,8 @@ document.getElementById('downloadHtmlBtn')?.addEventListener('click', () => {
 
 document.getElementById('importHtmlBtn')?.addEventListener('click', () => {
   const code = document.getElementById('importHtmlArea').value;
-  if(code) {
-    if(confirm('Czy na pewno chcesz nadpisać bieżący kod?')) {
-      document.open();
-      document.write(code);
-      document.close();
-    }
+  if(code && confirm('Nadpisać bieżący kod?')) {
+    document.open(); document.write(code); document.close();
   }
 });
 
@@ -2448,7 +2215,6 @@ if(titleSizeRange) {
     adminState.layout['--section-title-size'] = val + 'rem';
   });
 }
-
 const blurRange = document.getElementById('blurRange');
 if(blurRange) {
   blurRange.addEventListener('input', (e) => {
@@ -2459,7 +2225,6 @@ if(blurRange) {
     adminState.layout['--glass-blur'] = val + 'px';
   });
 }
-
 const stickyPadRange = document.getElementById('stickyPadRange');
 if(stickyPadRange) {
   stickyPadRange.addEventListener('input', (e) => {
@@ -2471,7 +2236,6 @@ if(stickyPadRange) {
     adminState.layout['--sticky-header-padding'] = padValue;
   });
 }
-
 const headerFontSizeRange = document.getElementById('headerFontSizeRange');
 if(headerFontSizeRange) {
   headerFontSizeRange.addEventListener('input', (e) => {
@@ -2482,7 +2246,6 @@ if(headerFontSizeRange) {
     adminState.layout['--header-font-size'] = val + 'rem';
   });
 }
-
 const headerHeightRange = document.getElementById('headerHeightRange');
 if(headerHeightRange) {
   headerHeightRange.addEventListener('input', (e) => {
@@ -2501,13 +2264,11 @@ function renderAdminPanel() {
   renderVersions();
   applyThemeAndLayout();
   applyContactData();
-  
   const titleSize = adminState.layout['--section-title-size'] || '2.6rem';
   const blurSize = adminState.layout['--glass-blur'] || '0px';
   const stickyPad = adminState.layout['--sticky-header-padding'] || '1.5rem 2.5rem';
   const headerFontSize = adminState.layout['--header-font-size'] || '0.95rem';
-  const headerHeight = adminState.layout['--header-height'] || '80px';
-  
+  const headerHeight = adminState.layout['--header-height'] || '90px';
   if(document.getElementById('titleSizeRange')) {
       document.getElementById('titleSizeRange').value = parseFloat(titleSize);
       document.getElementById('titleSizeVal').textContent = titleSize;
@@ -2522,22 +2283,17 @@ function renderAdminPanel() {
       document.getElementById('stickyPadVal').textContent = padVal + 'rem';
   }
   if(document.getElementById('headerFontSizeRange')) {
-      const val = parseFloat(headerFontSize);
-      document.getElementById('headerFontSizeRange').value = val;
+      document.getElementById('headerFontSizeRange').value = parseFloat(headerFontSize);
       document.getElementById('headerFontSizeVal').textContent = headerFontSize;
   }
   if(document.getElementById('headerHeightRange')) {
-      const val = parseInt(headerHeight);
-      document.getElementById('headerHeightRange').value = val;
+      document.getElementById('headerHeightRange').value = parseInt(headerHeight);
       document.getElementById('headerHeightVal').textContent = headerHeight;
   }
-
   document.getElementById('stat1-val-input').value = (adminState.statOverrides?.[editLang]?.v1) || '1500+';
   document.getElementById('stat2-val-input').value = (adminState.statOverrides?.[editLang]?.v2) || '2h';
   document.getElementById('stat3-val-input').value = (adminState.statOverrides?.[editLang]?.v3) || '7';
-  
   renderTextFields();
-
   renderImageList();
   const lay = adminState.imageLayout || { cols: 250, ratio: '16/9' };
   if (document.getElementById('imgCols')) {
@@ -2567,21 +2323,17 @@ function applyThemeAndLayout() {
   applyTheme(adminState.themeName, adminState.themeMode);
 }
 
-/* ===== ZAPIS NA STAŁE ===== */
 document.getElementById('adminCommit')?.addEventListener('click', () => {
   saveAdminState();
-  alert('Zmiany zostały zapisane na stałe w localStorage (obrazy w IndexedDB).');
+  alert('Zmiany zostały zapisane na stałe.');
 });
 
-// INICJALIZACJA APLIKACJI
 window.addEventListener('DOMContentLoaded', async () => {
   await initDB();
-  
   initStatsTracker();
   initImageGroups();
   applyAllOverrides();
   setLang('pl');
-  
   await renderEventBanner();
   await renderLogo();
   await renderPromosSection();
@@ -2594,14 +2346,10 @@ window.addEventListener('DOMContentLoaded', async () => {
       showRouteOnMap(currentLang);
     });
   }
-
   const groupSelect = document.getElementById('imgGroupSelect');
   if (groupSelect) {
-    groupSelect.addEventListener('change', () => {
-      renderImageList();
-    });
+    groupSelect.addEventListener('change', () => renderImageList());
   }
-
   document.getElementById('imgAddBtn')?.addEventListener('click', addNewImage);
 
   const bindRange = (id, valId, key, unit, cb) => {
@@ -2618,7 +2366,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     adminState.imageLayout.cols = v;
     applyImageSettings();
   });
-
   document.getElementById('imgRatio')?.addEventListener('change', (e) => {
     if (!adminState.imageLayout) adminState.imageLayout = { cols: 250, ratio: '16/9' };
     adminState.imageLayout.ratio = e.target.value;
@@ -2630,11 +2377,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     referSendBtn.addEventListener('click', () => {
       const email = document.getElementById('referEmail').value.trim();
       const msg = document.getElementById('referMsg');
-      if (!email) {
-        msg.textContent = 'Podaj adres e-mail.';
-        msg.style.color = '#d0021b';
-        return;
-      }
+      if (!email) { msg.textContent = 'Podaj adres e-mail.'; msg.style.color = '#d0021b'; return; }
       const subject = 'Polecam FoodLand – Polski Sklep w Wallsend';
       const body = 'Cześć! Polecam Ci polski sklep FoodLand w Wallsend. Odwiedź: ' + window.location.href;
       window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -2644,6 +2387,5 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 });
 </script>
-
 
 <div></div></body></html>
