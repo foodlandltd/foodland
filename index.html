@@ -67,6 +67,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer}
   
   --admin-width: 380px;
   --img-perspective: 0px;
+  --content-max-width: 1000px; /* NOWA ZMIENNA - Wspólna szerokość dla bloków */
 }
 .font-logo{font-family:var(--font-heading);font-weight:900;letter-spacing:-0.03em;}
 .glass{
@@ -270,10 +271,19 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 }
 .sticky-header h2{font-size:var(--section-title-size);font-weight:900;color:var(--text-main);}
 
-.hero-copy{max-width:850px;padding:4rem 3rem;border-radius:var(--radius);margin:0 auto;display:flex;flex-direction:column;align-items:center;background:var(--glass-bg);}
+/* HERO - dopasowany do szerokości gazetek */
+.hero-copy{
+  max-width: var(--content-max-width); /* Użycie zmiennej */
+  width: 100%;
+  padding:4rem 3rem;
+  border-radius:var(--radius);
+  margin:0 auto;
+  display:flex;flex-direction:column;align-items:center;
+  background:var(--glass-bg);
+}
 .hero h1{font-size:clamp(2.4rem,5vw,4rem);line-height:1.1;margin-bottom:1.5rem;}
 .hero h1 .highlight{color:var(--red);}
-.hero-lead{font-size:1.15rem;line-height:1.8;margin-bottom:2.5rem;color:var(--text-muted);}
+.hero-lead{font-size:1.15rem;line-height:1.8;margin-bottom:2.5rem;color:var(--text-muted);white-space: pre-line;}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:1rem 2.2rem;border-radius:var(--radius-pill);font-weight:700;font-size:.95rem;}
 .btn-primary{background:var(--btn-bg);color:var(--btn-text);}
 .btn-secondary{background:var(--panel-inner);color:var(--text-main);}
@@ -282,11 +292,14 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .hero-stats div strong{display:block;font-size:1.8rem;font-weight:900;color:var(--red);}
 .hero-stats div span{font-size:.75rem;text-transform:uppercase;font-weight:700;color:var(--text-muted);}
 
+/* SIATKA KATEGORII - dopasowana do szerokości gazetek */
 .cat-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); /* Zmieniono z 250px na 220px, by na PC wchodziły 4 kolumny */
   gap:1.5rem;
   perspective:var(--img-perspective, 0px);
+  max-width: var(--content-max-width); /* Użycie zmiennej */
+  margin: 0 auto; /* Wyśrodkowanie */
 }
 .cat-card{
   position:relative;
@@ -320,10 +333,28 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
   line-height:1.25;
 }
 
+/* EVENT BANNER - dopasowany do szerokości gazetek */
 #eventBannerSection { padding: 0 4vw; margin-top: -2rem; margin-bottom: 2rem; display: none; }
-#eventBannerImg { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); object-fit: contain; max-height: none; display: block; }
+#eventBannerImg { 
+  width: 100%; 
+  max-width: var(--content-max-width); /* Użycie zmiennej */
+  margin: 0 auto; /* Wyśrodkowanie */
+  height: auto; 
+  border-radius: var(--radius); 
+  box-shadow: var(--shadow); 
+  object-fit: contain; 
+  max-height: none; 
+  display: block; 
+}
 
-.promo-list { display: flex; flex-direction: column; gap: 2rem; }
+/* PROMOCJE - to jest nasz wzorzec szerokości */
+.promo-list { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 2rem; 
+  max-width: var(--content-max-width); /* Użycie zmiennej */
+  margin: 0 auto; /* Wyśrodkowanie */
+}
 .promo-banner-container{
   position:relative;
   border-radius:var(--radius);
@@ -346,7 +377,7 @@ section{position:relative;padding:8rem 4vw 6rem;z-index:1;}
 .zoom-lens{position:absolute;width:300px;height:300px;border-radius:var(--radius);border:4px solid #fff;box-shadow:0 20px 40px rgba(0,0,0,0.4);pointer-events:none;display:none;background-repeat:no-repeat;z-index:100;}
 .promo-empty { text-align:center; color:var(--text-muted); padding: 2rem; font-size: .95rem; }
 
-.contact-content{padding:3rem;border-radius:var(--radius);}
+.contact-content{padding:3rem;border-radius:var(--radius); max-width: var(--content-max-width); margin: 0 auto;}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
 .contact-item{display:flex;gap:1rem;padding:1rem;border-radius:var(--radius-sm);margin-bottom:0.8rem;background:var(--panel-inner);}
 .contact-item .icon{width:40px;height:40px;background:var(--red);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
@@ -545,12 +576,16 @@ input:checked + .slider:before { transform: translateX(20px); }
           <span data-i18n="hero.title1">Polskie smaki</span><br>
           <span class="highlight" data-i18n="hero.title2">w Wallsend</span>
         </h1>
-        <p class="hero-lead" data-i18n="hero.lead">Serdecznie zapraszamy do naszego polskiego sklepu w Wallsend k. Newcastle. Znajdziecie tu 1500+ produktów, świeże wędliny, sery, pieczywo, pierogi oraz polskie leki i warzywa. Darmowy parking do 2 godzin tuż obok.</p>
+        <p class="hero-lead" data-i18n="hero.lead">Witaj w Foodland – Twoim ulubionym markecie pełnym autentycznych smaków Europy Wschodniej!
+Stworzyliśmy to miejsce z pasji do dobrego jedzenia i tęsknoty za tradycyjnymi potrawami. Codziennie dbamy o to, aby na nasze półki trafiały wyłącznie najświeższe polskie, rumuńskie i ukraińskie produkty – od chrupiącego pieczywa, przez tradycyjne wędliny i sery, aż po kultowe słodycze i regionalne specjały, których próżno szukać w zwykłych supermarketach.
+Odkryj nasz ogromny wybór asortymentu, w którym każdy znajdzie coś dla siebie – niezależnie od tego, czy planujesz wystawny rodzinny obiad, czy masz ochotę na małą przekąskę z rodzinnych stron.
+Robienie zakupów u nas to czysta przyjemność i pełna wygoda. Nie musisz się spieszyć ani martwić o samochód – tuż obok sklepu czeka na Ciebie bezpłatny, 2-godzinny parking.
+Wejdź do świata prawdziwych smaków i poczuj się jak w domu. Zapraszamy na zakupy do Foodland!</p>
         <div class="hero-actions">
           <a href="#promocje" class="btn btn-primary" data-i18n="hero.cta">Zobacz ofertę</a>
         </div>
         <div class="hero-stats">
-          <div><strong id="stat1-val">1500+</strong><span id="stat1-label" data-i18n="hero.stat1">Produktów</span></div>
+          <div><strong id="stat1-val">2500+</strong><span id="stat1-label" data-i18n="hero.stat1">Produktów</span></div>
           <div><strong id="stat2-val">2h</strong><span id="stat2-label" data-i18n="hero.stat2">Darmowy parking</span></div>
           <div><strong id="stat3-val">7</strong><span id="stat3-label" data-i18n="hero.stat3">Dni w tygodniu</span></div>
         </div>
@@ -567,7 +602,7 @@ input:checked + .slider:before { transform: translateX(20px); }
   <section class="categories" id="kategorie">
     <div class="section-content">
       <div class="sticky-header glass" id="headerKategorie"><h2 class="font-logo" data-i18n="cat.title">Co znajdziesz w FoodLand</h2></div>
-      <div class="cat-grid" id="catGrid" data-ratio="16/9" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));"></div>
+      <div class="cat-grid" id="catGrid" data-ratio="16/9" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));"></div>
     </div>
   </section>
 
@@ -811,7 +846,7 @@ const translations = {
   pl: {
     'nav.categories': 'Kategorie', 'nav.promos': 'Promocje', 'nav.contact': 'Kontakt',
     'hero.title1': 'Polskie smaki', 'hero.title2': 'w Wallsend',
-    'hero.lead': 'Serdecznie zapraszamy do naszego polskiego sklepu w Wallsend k. Newcastle. Znajdziecie tu 1500+ produktów, świeże wędliny, sery, pieczywo, pierogi oraz polskie leki i warzywa. Darmowy parking do 2 godzin tuż obok.',
+    'hero.lead': 'Witaj w Foodland – Twoim ulubionym markecie pełnym autentycznych smaków Europy Wschodniej!\nStworzyliśmy to miejsce z pasji do dobrego jedzenia i tęsknoty za tradycyjnymi potrawami. Codziennie dbamy o to, aby na nasze półki trafiały wyłącznie najświeższe polskie, rumuńskie i ukraińskie produkty – od chrupiącego pieczywa, przez tradycyjne wędliny i sery, aż po kultowe słodycze i regionalne specjały, których próżno szukać w zwykłych supermarketach.\nOdkryj nasz ogromny wybór asortymentu, w którym każdy znajdzie coś dla siebie – niezależnie od tego, czy planujesz wystawny rodzinny obiad, czy masz ochotę na małą przekąskę z rodzinnych stron.\nRobienie zakupów u nas to czysta przyjemność i pełna wygoda. Nie musisz się spieszyć ani martwić o samochód – tuż obok sklepu czeka na Ciebie bezpłatny, 2-godzinny parking.\nWejdź do świata prawdziwych smaków i poczuj się jak w domu. Zapraszamy na zakupy do Foodland!',
     'hero.cta': 'Zobacz ofertę',
     'hero.stat1': 'Produktów', 'hero.stat2': 'Darmowy parking', 'hero.stat3': 'Dni w tygodniu',
     'cat.title': 'Co znajdziesz w FoodLand',
@@ -852,7 +887,7 @@ const translations = {
   en: {
     'nav.categories': 'Categories', 'nav.promos': 'Promotions', 'nav.contact': 'Contact',
     'hero.title1': 'Polish flavours', 'hero.title2': 'in Wallsend',
-    'hero.lead': 'Welcome to our Polish shop in Wallsend near Newcastle. We offer 1500+ products, fresh meats, cheeses, bread, pierogi, Polish medicines and vegetables. Free parking for up to 2 hours right next door.',
+    'hero.lead': 'Welcome to Foodland – your favourite market full of authentic Eastern European flavours!\nWe created this place out of a passion for good food and a longing for traditional dishes. Every day we make sure that our shelves stock only the freshest Polish, Romanian, and Ukrainian products – from crusty bread, through traditional cold cuts and cheeses, to iconic sweets and regional specialities that you won\'t find in ordinary supermarkets.\nDiscover our huge selection of products, where everyone will find something for themselves – whether you\'re planning a lavish family dinner or just fancy a small snack from your home country.\nShopping with us is pure pleasure and full convenience. You don\'t have to rush or worry about your car – right next to the shop there is free 2-hour parking waiting for you.\nStep into the world of real flavours and feel at home. We invite you to shop at Foodland!',
     'hero.cta': 'See offers',
     'hero.stat1': 'Products', 'hero.stat2': 'Free parking', 'hero.stat3': 'Days a week',
     'cat.title': 'What you will find at FoodLand',
@@ -893,7 +928,7 @@ const translations = {
   uk: {
     'nav.categories': 'Категорії', 'nav.promos': 'Акції', 'nav.contact': 'Контакти',
     'hero.title1': 'Польські смаки', 'hero.title2': 'у Волсенді',
-    'hero.lead': 'Ласкаво просимо до нашого польського магазину в Волсенді поблизу Ньюкасла. У нас понад 1500 продуктів, свіжі ковбаси, сири, хліб, вареники, польські ліки та овочі.',
+    'hero.lead': 'Ласкаво просимо до Foodland – вашого улюбленого маркету, повного автентичних смаків Східної Європи!\nМи створили це місце з пристрасті до хорошої їжі та туги за традиційними стравами. Щодня ми дбаємо про те, щоб на наших полицях були лише найсвіжіші польські, румунські та українські продукти – від хрусткого хліба, традиційних ковбас і сирів до культових солодощів і регіональних делікатесів, яких не знайти у звичайних супермаркетах.\nВідкрийте для себе наш величезний вибір асортименту, де кожен знайде щось для себе – незалежно від того, чи ви плануєте урочисту сімейну вечерю, чи вам хочеться легкої закуски з рідних країв.\nРобити покупки у нас – це чисте задоволення та повний комфорт. Вам не потрібно поспішати або хвилюватися про машину – поруч із магазином на вас чекає безкоштовна 2-годинна парковка.\nЗануртеся у світ справжніх смаків і відчуйте себе як удома. Запрошуємо за покупками до Foodland!',
     'hero.cta': 'Переглянути пропозиції',
     'hero.stat1': 'Продуктів', 'hero.stat2': 'Безкоштовна парковка', 'hero.stat3': 'Днів на тиждень',
     'cat.title': 'Що ви знайдете у FoodLand',
@@ -934,7 +969,7 @@ const translations = {
   ro: {
     'nav.categories': 'Categorii', 'nav.promos': 'Promoții', 'nav.contact': 'Contact',
     'hero.title1': 'Arome poloneze', 'hero.title2': 'în Wallsend',
-    'hero.lead': 'Vă invităm la magazinul nostru polonez din Wallsend lângă Newcastle. Oferim peste 1500 de produse, cârnați proaspeți, brânzeturi, pâine, pierogi, medicamente poloneze și legume.',
+    'hero.lead': 'Bine ați venit la Foodland – magazinul dvs. preferat plin de arome autentice din Europa de Est!\nAm creat acest loc din pasiune pentru mâncarea bună și dorul de preparatele tradiționale. În fiecare zi ne asigurăm că pe rafturile noastre ajung doar cele mai proaspete produse poloneze, românești și ucrainene – de la pâine crocantă, prin mezeluri și brânzeturi tradiționale, până la dulciuri emblematice și specialități regionale pe care nu le veți găsi în supermarketurile obișnuite.\nDescoperiți selecția noastră uriașă de produse, în care fiecare va găsi ceva pentru sine – indiferent dacă plănuiți o cină festivă în familie sau pur și simplu poftiți la o gustare mică din țara natală.\nCumpărăturile la noi sunt o plăcere pură și o comoditate deplină. Nu trebuie să vă grăbiți sau să vă faceți griji cu privire la mașină – chiar lângă magazin vă așteaptă o parcare gratuită de 2 ore.\nIntrați în lumea aromelor reale și simțiți-vă ca acasă. Vă invităm la cumpărături la Foodland!',
     'hero.cta': 'Vezi ofertele',
     'hero.stat1': 'Produse', 'hero.stat2': 'Parcare gratuită', 'hero.stat3': 'Zile pe săptămână',
     'cat.title': 'Ce veți găsi la FoodLand',
@@ -1360,10 +1395,10 @@ function applyAllOverrides() { Object.keys(BASE_TRANSLATIONS).forEach(lang => ap
 
 function applyStats(lang) {
   const base = {
-    pl:{v1:'1500+',l1:'Produktów',v2:'2h',l2:'Darmowy parking',v3:'7',l3:'Dni w tygodniu'},
-    en:{v1:'1500+',l1:'Products',v2:'2h',l2:'Free parking',v3:'7',l3:'Days a week'},
-    uk:{v1:'1500+',l1:'Продуктів',v2:'2h',l2:'Безкоштовна парковка',v3:'7',l3:'Днів на тиждень'},
-    ro:{v1:'1500+',l1:'Produse',v2:'2h',l2:'Parcare gratuită',v3:'7',l3:'Zile pe săptămână'}
+    pl:{v1:'2500+',l1:'Produktów',v2:'2h',l2:'Darmowy parking',v3:'7',l3:'Dni w tygodniu'},
+    en:{v1:'2500+',l1:'Products',v2:'2h',l2:'Free parking',v3:'7',l3:'Days a week'},
+    uk:{v1:'2500+',l1:'Продуктів',v2:'2h',l2:'Безкоштовна парковка',v3:'7',l3:'Днів на тиждень'},
+    ro:{v1:'2500+',l1:'Produse',v2:'2h',l2:'Parcare gratuită',v3:'7',l3:'Zile pe săptămână'}
   };
   const plOverrides = adminState.statOverrides && adminState.statOverrides['pl'];
   let src = { ...base[lang] };
@@ -2449,7 +2484,7 @@ function renderAdminPanel() {
       document.getElementById('headerHeightRange').value = parseInt(headerHeight);
       document.getElementById('headerHeightVal').textContent = headerHeight;
   }
-  document.getElementById('stat1-val-input').value = (adminState.statOverrides?.[editLang]?.v1) || '1500+';
+  document.getElementById('stat1-val-input').value = (adminState.statOverrides?.[editLang]?.v1) || '2500+';
   document.getElementById('stat2-val-input').value = (adminState.statOverrides?.[editLang]?.v2) || '2h';
   document.getElementById('stat3-val-input').value = (adminState.statOverrides?.[editLang]?.v3) || '7';
   renderTextFields();
