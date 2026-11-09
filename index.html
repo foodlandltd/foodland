@@ -1201,16 +1201,21 @@ function buildCandidatePaths(baseFolder, rawName, group) {
   const raw = String(rawName || '').trim();
   
   if (group === 'kategorie') {
-    const map = {
-      'wędliny': 'wedliny', 'słodycze': 'slodycze', 'napoje': 'napoje', 
-      'mrożonki': 'mrozonki', 'nabiał': 'nabial', 'ciasta': 'ciasta', 'ciastka': 'ciastka',
-      'przetwory': 'przetwory'
-    };
-    let safeName = raw.toLowerCase().trim();
-    if (map[safeName]) safeName = map[safeName];
+    // Automatycznie usuwamy polskie znaki i spacje, żeby dopasować do nazw plików na GitHubie
+    let safeName = raw.toLowerCase().trim()
+      .replace(/ą/g, 'a')
+      .replace(/ć/g, 'c')
+      .replace(/ę/g, 'e')
+      .replace(/ł/g, 'l')
+      .replace(/ń/g, 'n')
+      .replace(/ó/g, 'o')
+      .replace(/ś/g, 's')
+      .replace(/ź/g, 'z')
+      .replace(/ż/g, 'z')
+      .replace(/\s+/g, '');
+
     return [`./images/kategorie/${safeName}.jpg?v=2`];
   }
-
   const safe = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9ąćęłńóśźż_-]/g, '');
   const out = [];
   out.push(`./images/${baseFolder}/${raw}.jpg?v=2`);
