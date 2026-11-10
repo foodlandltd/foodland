@@ -213,13 +213,16 @@ body.admin-open .header { right: var(--admin-width); }
 #holidayBannerWrapper { position: relative; display: none; align-items: center; justify-content:center; flex-shrink:0; max-width:100%;}
 #holidayBannerWrapper::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 16px; }
 #holidayBanner {
-  display: flex; align-items: center; gap: 0.5rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.1rem;
   background: var(--red-light); color: var(--red);
-  padding: 0.22rem 0.7rem; border-radius: var(--radius-pill);
+  padding: 0.25rem 0.8rem; border-radius: var(--radius-pill);
   font-size: 0.68rem; font-weight: 700; cursor: help; white-space: nowrap;
   max-width: 100%; overflow: hidden; text-overflow: ellipsis;
   animation: fadeIn 0.5s ease; border: 1px solid rgba(208, 2, 27, 0.2);
+  text-align: center;
+  line-height: 1.3;
 }
+#holidayBanner > div { display: block; width: 100%; text-align: center; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 #holidayDropdown {
   position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%);
@@ -612,6 +615,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 <div id="mainContent" style="--theme-saturate: 1; --theme-brightness: 1;">
    <section class="hero" id="o-nas">
     <div class="section-content">
+      <div class="sticky-header glass" id="headerONas" style="padding:0.9rem 1.5rem;"><h2 class="font-logo" data-i18n="nav.about">O NAS</h2></div>
       <img src="./images/hero/baner.jpg" alt="Polskie, rumuńskie i ukraińskie produkty w FoodLand" class="hero-banner-img">
       <div class="hero-copy">
         <h1 class="font-logo">
@@ -637,20 +641,20 @@ Wejdź do świata prawdziwych smaków i poczuj się jak w domu. Zapraszamy na za
 
   <section id="eventBannerSection" style="display: block;">
     <div class="section-content">
-      <img id="eventBannerImg" src="./images/event/baner.jpg" alt="Event">
+      <img id="eventBannerImg" src="./images/event/event.jpg" alt="Event">
     </div>
   </section>
 
   <section class="categories" id="kategorie">
     <div class="section-content">
-      <div class="sticky-header glass" id="headerKategorie"><h2 class="font-logo" data-i18n="cat.title">Co znajdziesz w FoodLand</h2></div>
+      <div class="sticky-header glass" id="headerKategorie" style="padding:0.9rem 1.5rem;"><h2 class="font-logo" data-i18n="cat.title">Co znajdziesz w FoodLand</h2></div>
       <div class="cat-grid" id="catGrid" data-ratio="16/9" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));"></div>
     </div>
   </section>
 
   <section class="promos" id="promocje">
     <div class="section-content">
-      <div class="sticky-header glass" style="margin-bottom:2rem;" id="headerPromocje">
+      <div class="sticky-header glass" style="margin-bottom:2rem;padding:0.9rem 1.5rem;" id="headerPromocje">
         <h2 class="font-logo" data-i18n="promo.title">Aktualne promocje</h2>
       </div>
       <div class="promo-list" id="promoList"></div>
@@ -659,7 +663,7 @@ Wejdź do świata prawdziwych smaków i poczuj się jak w domu. Zapraszamy na za
 
   <section class="contact" id="kontakt">
     <div class="section-content">
-      <div class="sticky-header glass" id="headerKontakt"><h2 class="font-logo" data-i18n="contact.title">Kontakt</h2></div>
+      <div class="sticky-header glass" id="headerKontakt" style="padding:0.9rem 1.5rem;"><h2 class="font-logo" data-i18n="contact.title">Kontakt</h2></div>
       <div class="contact-content glass">
         <div class="contact-grid">
           <div class="contact-data">
@@ -691,7 +695,10 @@ Wejdź do świata prawdziwych smaków i poczuj się jak w domu. Zapraszamy na za
 
   <footer class="footer">
     <div class="footer-inner">
-      <p>© 2026 <span class="font-logo secret-trigger" id="secretFooterLogo" style="color:var(--red);font-size:1.2rem;">FoodLand</span> shops. <span data-i18n="footer.rights">Wszelkie prawa zastrzeżone.</span></p>
+      <p>
+        <span data-i18n="footer.aiDisclaimer">Niektóre zdjęcia zostały wygenerowane przez AI i mogą odbiegać od realiów.</span><br>
+        © 2026 <span class="font-logo secret-trigger" id="secretFooterLogo" style="color:var(--red);font-size:1.2rem;">FoodLand</span> shops. <span data-i18n="footer.rights">Wszelkie prawa zastrzeżone.</span>
+      </p>
     </div>
   </footer>
 </div>
@@ -797,6 +804,7 @@ Wejdź do świata prawdziwych smaków i poczuj się jak w domu. Zapraszamy na za
           <option value="promocje">Promocje</option>
           <option value="event">Baner eventowy</option>
           <option value="logo">Logo</option>
+          <option value="tlo">Tło domeny</option>
         </select>
       </div>
       <div id="imgList" style="display:flex;flex-direction:column;gap:0.6rem;"></div>
@@ -901,6 +909,7 @@ const translations = {
     'refer.title': 'Poleć nas znajomemu', 'refer.desc': 'Wpisz adres e-mail znajomego – wyślemy mu link do naszej strony.', 'refer.send': 'Poleć',
     'refer.emailPlaceholder': 'znajomy@email.com',
     'footer.rights': 'Wszelkie prawa zastrzeżone.',
+    'footer.aiDisclaimer': 'Niektóre zdjęcia zostały wygenerowane przez AI i mogą odbiegać od realiów.',
     'admin.login.title': 'Panel administratora', 'admin.login.user': 'Login', 'admin.login.pass': 'Hasło', 'admin.login.err': 'Błędne dane logowania.', 'admin.login.btn': 'Zaloguj', 'admin.login.cancel': 'Anuluj',
     'admin.login.forgot': 'Zapomniałem hasła',
     'admin.forgot.title': 'Odzyskiwanie hasła', 'admin.forgot.desc': 'Podaj zapisany adres e-mail administratora. Wyślemy na niego aktualny login i hasło.', 'admin.forgot.email': 'admin@email.com', 'admin.forgot.send': 'Wyślij', 'admin.forgot.cancel': 'Anuluj',
@@ -913,7 +922,8 @@ const translations = {
     'admin.images.section': 'Zarządzanie zdjęciami', 'admin.images.group': 'Grupa zdjęć', 'admin.images.add': 'Dodaj nowe zdjęcie', 'admin.images.file': 'Plik (jpg/png/webp)', 'admin.images.name': 'Nazwa / podpis', 'admin.images.addBtn': 'Dodaj zdjęcie',
     'admin.images.layout': 'Układ siatki kategorii', 'admin.images.cols': 'Min. szerokość kolumny (px)', 'admin.images.ratio': 'Proporcje kafelka',
     'admin.sec.title': 'Dane logowania administratora', 'admin.sec.login': 'Login', 'admin.sec.pass': 'Nowe hasło', 'admin.sec.email': 'Adres e-mail administratora', 'admin.sec.save': 'Zapisz dane logowania', 'admin.sec.sendMail': 'Wyślij nowe hasło na e-mail', 'admin.sec.info': 'Uwaga: dane są zapisywane w localStorage przeglądarki. Wysyłka e-mail odbywa się przez klienta pocztowego (mailto).',
-    'holiday.upcoming': 'Nadchodzi: {name} za {days} dni',
+    'holiday.upcomingTitle': 'Nadchodzące Święta:',
+    'holiday.upcoming': '{name} za {days} dni',
     'holiday.days': 'dni',
     'holiday.pl.constitution.name': 'Święto Konstytucji 3 Maja', 'holiday.pl.constitution.desc': 'Narodowe święto Polski upamiętniające uchwalenie Konstytucji 3 maja 1791 roku.', 'holiday.pl.constitution.url': 'https://pl.wikipedia.org/wiki/Konstytucja_3_maja',
     'holiday.pl.independence.name': 'Narodowe Święto Niepodległości', 'holiday.pl.independence.desc': 'Święto państwowe obchodzone 11 listopada dla upamiętnienia odzyskania przez Polskę niepodległości w 1918 roku.', 'holiday.pl.independence.url': 'https://pl.wikipedia.org/wiki/Narodowe_Święto_Niepodległości',
@@ -942,6 +952,7 @@ const translations = {
     'refer.title': 'Recommend us to a friend', 'refer.desc': 'Enter your friend\'s e-mail – we will send them a link to our site.', 'refer.send': 'Recommend',
     'refer.emailPlaceholder': 'friend@email.com',
     'footer.rights': 'All rights reserved.',
+    'footer.aiDisclaimer': 'Some images were generated by AI and may differ from reality.',
     'admin.login.title': 'Admin Panel', 'admin.login.user': 'Login', 'admin.login.pass': 'Password', 'admin.login.err': 'Invalid credentials.', 'admin.login.btn': 'Log in', 'admin.login.cancel': 'Cancel',
     'admin.login.forgot': 'Forgot password',
     'admin.forgot.title': 'Password recovery', 'admin.forgot.desc': 'Enter the saved administrator e-mail. We will send the current login and password to it.', 'admin.forgot.email': 'admin@email.com', 'admin.forgot.send': 'Send', 'admin.forgot.cancel': 'Cancel',
@@ -954,7 +965,8 @@ const translations = {
     'admin.images.section': 'Image management', 'admin.images.group': 'Image group', 'admin.images.add': 'Add new image', 'admin.images.file': 'File (jpg/png/webp)', 'admin.images.name': 'Name / caption', 'admin.images.addBtn': 'Add image',
     'admin.images.layout': 'Category grid layout', 'admin.images.cols': 'Min. column width (px)', 'admin.images.ratio': 'Tile aspect ratio',
     'admin.sec.title': 'Administrator credentials', 'admin.sec.login': 'Login', 'admin.sec.pass': 'New password', 'admin.sec.email': 'Administrator e-mail address', 'admin.sec.save': 'Save credentials', 'admin.sec.sendMail': 'Send new password to e-mail', 'admin.sec.info': 'Note: data is stored in browser localStorage. E-mail is sent via your mail client (mailto).',
-    'holiday.upcoming': 'Upcoming: {name} in {days} days',
+    'holiday.upcomingTitle': 'Upcoming Holidays:',
+    'holiday.upcoming': '{name} in {days} days',
     'holiday.days': 'days',
     'holiday.pl.constitution.name': 'Constitution Day', 'holiday.pl.constitution.desc': 'Polish national holiday commemorating the adoption of the Constitution of 3 May 1791.', 'holiday.pl.constitution.url': 'https://en.wikipedia.org/wiki/Constitution_of_3_May_1791',
     'holiday.pl.independence.name': 'Independence Day', 'holiday.pl.independence.desc': 'National holiday celebrated on 11 November to mark Poland regaining independence in 1918.', 'holiday.pl.independence.url': 'https://en.wikipedia.org/wiki/National_Independence_Day_(Poland)',
@@ -983,6 +995,7 @@ const translations = {
     'refer.title': 'Порадьте нас друзям', 'refer.desc': 'Введіть e-mail друга – ми надішлемо йому посилання на наш сайт.', 'refer.send': 'Порадити',
     'refer.emailPlaceholder': 'друг@email.com',
     'footer.rights': 'Усі права захищені.',
+    'footer.aiDisclaimer': 'Деякі зображення були згенеровані ШІ і можуть відрізнятися від реальності.',
     'admin.login.title': 'Панель адміністратора', 'admin.login.user': 'Логін', 'admin.login.pass': 'Пароль', 'admin.login.err': 'Неправильні дані.', 'admin.login.btn': 'Увійти', 'admin.login.cancel': 'Скасувати',
     'admin.login.forgot': 'Забув пароль',
     'admin.forgot.title': 'Відновлення пароля', 'admin.forgot.desc': 'Введіть збережену електронну адресу адміністратора. Ми надішлемо на неї поточний логін і пароль.', 'admin.forgot.email': 'admin@email.com', 'admin.forgot.send': 'Надіслати', 'admin.forgot.cancel': 'Скасувати',
@@ -995,7 +1008,8 @@ const translations = {
     'admin.images.section': 'Керування зображеннями', 'admin.images.group': 'Група зображень', 'admin.images.add': 'Додати нове зображення', 'admin.images.file': 'Файл (jpg/png/webp)', 'admin.images.name': 'Назва / підпис', 'admin.images.addBtn': 'Додати зображення',
     'admin.images.layout': 'Макет сітки категорій', 'admin.images.cols': 'Мін. ширина колонки (px)', 'admin.images.ratio': 'Пропорції плитки',
     'admin.sec.title': 'Дані для входу адміністратора', 'admin.sec.login': 'Логін', 'admin.sec.pass': 'Новий пароль', 'admin.sec.email': 'Електронна адреса адміністратора', 'admin.sec.save': 'Зберегти дані', 'admin.sec.sendMail': 'Надіслати новий пароль на e-mail', 'admin.sec.info': 'Увага: дані зберігаються в localStorage браузера. E-mail надсилається через поштовий клієнт (mailto).',
-    'holiday.upcoming': 'Наближається: {name} через {days} днів',
+    'holiday.upcomingTitle': 'Наближаються свята:',
+    'holiday.upcoming': '{name} через {days} днів',
     'holiday.days': 'днів',
     'holiday.pl.constitution.name': 'День Конституції Польщі', 'holiday.pl.constitution.desc': 'Національне свято Польщі на честь ухвалення Конституції 3 травня 1791 року.', 'holiday.pl.constitution.url': 'https://uk.wikipedia.org/wiki/Конституція_3_травня_1791',
     'holiday.pl.independence.name': 'День Незалежності Польщі', 'holiday.pl.independence.desc': 'Державне свято, що відзначається 11 листопада.', 'holiday.pl.independence.url': 'https://uk.wikipedia.org/wiki/День_незалежності_Польщі',
@@ -1024,6 +1038,7 @@ const translations = {
     'refer.title': 'Recomandă-ne unui prieten', 'refer.desc': 'Introdu e-mailul prietenului – îi vom trimite un link către site-ul nostru.', 'refer.send': 'Recomandă',
     'refer.emailPlaceholder': 'prieten@email.com',
     'footer.rights': 'Toate drepturile rezervate.',
+    'footer.aiDisclaimer': 'Unele imagini au fost generate de AI și pot diferi de realitate.',
     'admin.login.title': 'Panou Administrator', 'admin.login.user': 'Login', 'admin.login.pass': 'Parolă', 'admin.login.err': 'Date incorecte.', 'admin.login.btn': 'Conectare', 'admin.login.cancel': 'Anulare',
     'admin.login.forgot': 'Am uitat parola',
     'admin.forgot.title': 'Recuperare parolă', 'admin.forgot.desc': 'Introdu adresa de e-mail salvată a administratorului. Vom trimite loginul și parola actuală.', 'admin.forgot.email': 'admin@email.com', 'admin.forgot.send': 'Trimite', 'admin.forgot.cancel': 'Anulare',
@@ -1036,7 +1051,8 @@ const translations = {
     'admin.images.section': 'Gestionare imagini', 'admin.images.group': 'Grup de imagini', 'admin.images.add': 'Adaugă imagine nouă', 'admin.images.file': 'Fișier (jpg/png/webp)', 'admin.images.name': 'Nume / legendă', 'admin.images.addBtn': 'Adaugă imagine',
     'admin.images.layout': 'Aspect grilă categorii', 'admin.images.cols': 'Lățime min. coloană (px)', 'admin.images.ratio': 'Proporții dale',
     'admin.sec.title': 'Date de autentificare administrator', 'admin.sec.login': 'Login', 'admin.sec.pass': 'Parolă nouă', 'admin.sec.email': 'Adresă e-mail administrator', 'admin.sec.save': 'Salvează datele', 'admin.sec.sendMail': 'Trimite parola nouă pe e-mail', 'admin.sec.info': 'Notă: datele sunt stocate în localStorage. E-mailul este trimis prin clientul poștal (mailto).',
-    'holiday.upcoming': 'Urmează: {name} în {days} zile',
+    'holiday.upcomingTitle': 'Sărbători apropiate:',
+    'holiday.upcoming': '{name} în {days} zile',
     'holiday.days': 'zile',
     'holiday.pl.constitution.name': 'Ziua Constituției Poloniei', 'holiday.pl.constitution.desc': 'Sărbătoare națională a Poloniei care comemorează adoptarea Constituției din 3 mai 1791.', 'holiday.pl.constitution.url': 'https://ro.wikipedia.org/wiki/Constituția_din_3_mai_1791',
     'holiday.pl.independence.name': 'Ziua Independenței Poloniei', 'holiday.pl.independence.desc': 'Sărbătoare națională celebrată pe 11 noiembrie.', 'holiday.pl.independence.url': 'https://ro.wikipedia.org/wiki/Ziua_Independenței_Poloniei',
@@ -1165,7 +1181,7 @@ const DEFAULT_SETTINGS = {
   themeName: 'default', themeMode: 'light',
   themeFilters: {},
   reportEmail: '',
-  images: { kategorie: [], promocje: [], event: [], logo: [] },
+  images: { kategorie: [], promocje: [], event: [], logo: [], tlo: [] },
   imageLayout: { cols: 250, ratio: '16/9' },
   imagesInitialized: false
 };
@@ -1336,7 +1352,8 @@ function loadAdmin() {
       const parsed = JSON.parse(raw);
       if (!parsed.themeFilters) parsed.themeFilters = {};
       if (!parsed.reportEmail) parsed.reportEmail = '';
-      if (!parsed.images) parsed.images = { kategorie: [], promocje: [], event: [], logo: [] };
+      if (!parsed.images) parsed.images = { kategorie: [], promocje: [], event: [], logo: [], tlo: [] };
+      if (!parsed.images.tlo) parsed.images.tlo = [];
       if (!parsed.imageLayout) parsed.imageLayout = { cols: 250, ratio: '16/9' };
       if (parsed.imageLayout.ratio !== '16/9') parsed.imageLayout.ratio = '16/9';
       if (!parsed.credentials) parsed.credentials = { login: 'admin', password: '123', email: '' };
@@ -1347,7 +1364,7 @@ function loadAdmin() {
       if (!parsed.layout['--header-height']) parsed.layout['--header-height'] = '162px';
       
       if (!parsed.version5) {
-          parsed.images = { kategorie: [], promocje: [], event: [], logo: [] };
+          parsed.images = { kategorie: [], promocje: [], event: [], logo: [], tlo: [] };
           parsed.imagesInitialized = false; 
           parsed.version5 = true; 
       }
@@ -1373,7 +1390,8 @@ function saveAdminState() {
 }
 
 function initImageGroups() {
-  if (!adminState.images) adminState.images = { kategorie: [], promocje: [], event: [], logo: [] };
+  if (!adminState.images) adminState.images = { kategorie: [], promocje: [], event: [], logo: [], tlo: [] };
+  if (!adminState.images.tlo) adminState.images.tlo = [];
   if (adminState.imagesInitialized) { saveAdminState(); return; }
 
   const defaultKategorie = CATEGORY_DICTIONARY.map((cat, i) => ({
@@ -1396,10 +1414,13 @@ function initImageGroups() {
     ];
   }
   if (!adminState.images.event || adminState.images.event.length === 0) {
-    adminState.images.event = [{ id:'event_baner', name:'baner', fileId: null, size:100, order:0, active: true }];
+    adminState.images.event = [{ id:'event_baner', name:'event', fileId: null, size:100, order:0, active: true }];
   }
   if (!adminState.images.logo || adminState.images.logo.length === 0) {
     adminState.images.logo = [{ id:'logo', name:'logo', fileId: null, size:100, order:0, active: true }];
+  }
+  if (!adminState.images.tlo || adminState.images.tlo.length === 0) {
+    adminState.images.tlo = [{ id:'tlo_baner', name:'tlo.jpg', fileId: null, size:100, order:0, active: true }];
   }
   adminState.imagesInitialized = true;
   saveAdminState();
@@ -1531,8 +1552,11 @@ function updateHolidayBanner() {
   if (upcoming.length > 0) {
     const next = upcoming[0];
     const holidayName = translations[currentLang]?.[next.key + '.name'] || next.key;
-    const msgTemplate = translations[currentLang]?.['holiday.upcoming'] || 'Upcoming: {name} in {days} days.';
-    banner.textContent = msgTemplate.replace('{name}', holidayName).replace('{days}', next.daysLeft);
+    const titleText = translations[currentLang]?.['holiday.upcomingTitle'] || 'Nadchodzące Święta:';
+    const msgTemplate = translations[currentLang]?.['holiday.upcoming'] || '{name} za {days} dni';
+    const msg = msgTemplate.replace('{name}', holidayName).replace('{days}', next.daysLeft);
+    
+    banner.innerHTML = `<div>${titleText}</div><div>${msg}</div>`;
     wrapper.style.display = 'flex';
 
     const daysText = translations[currentLang]?.['holiday.days'] || 'dni';
@@ -1748,6 +1772,7 @@ async function renderImageList() {
       if (group === 'promocje') renderPromosSection();
       if (group === 'event') renderEventBanner();
       if (group === 'logo') renderLogo();
+      if (group === 'tlo') renderTlo();
     });
 
     div.querySelector('.btn-delete').addEventListener('click', async () => {
@@ -1761,6 +1786,7 @@ async function renderImageList() {
         if (group === 'promocje') renderPromosSection();
         if (group === 'event') renderEventBanner();
         if (group === 'logo') renderLogo();
+        if (group === 'tlo') renderTlo();
       }
     });
   }
@@ -1787,6 +1813,7 @@ async function addNewImage() {
     if (group === 'promocje') renderPromosSection();
     if (group === 'event') renderEventBanner();
     if (group === 'logo') renderLogo();
+    if (group === 'tlo') renderTlo();
     if (fileInput) fileInput.value = '';
     if (nameInput) nameInput.value = '';
   } catch(e) { alert('Błąd zapisu: ' + e); }
@@ -1851,7 +1878,7 @@ async function renderCategories() {
       testImg.onerror = () => {
         div.style.display = 'none'; 
       };
-     testImg.src = candidatePaths[0] + '?v=4';
+      testImg.src = candidatePaths[0];
     } else {
       div.style.display = 'none';
     }
@@ -1933,7 +1960,7 @@ async function renderEventBanner() {
       }
     } catch(e) {}
   }
-  img.src = `./images/event/baner.jpg`;
+  img.src = `./images/event/event.jpg`;
 }
 
 async function renderLogo() {
@@ -1963,6 +1990,36 @@ async function renderLogo() {
   logoImg.style.display = 'block';
   logoImg.src = `./images/logo.jpg`;
 }
+
+async function renderTlo() {
+  const myVersion = ++renderEventVersion; // Reuse same version counter logic
+  const activeTlo = getGroupImages('tlo').filter(img => img.active !== false);
+  
+  let bgUrl = `./images/tlo/tlo.jpg`;
+  
+  if (activeTlo.length > 0 && activeTlo[0]) {
+    const tlo = activeTlo[0];
+    if (tlo.fileId) {
+      try {
+        const dbRecord = await getImageFromDB(tlo.fileId);
+        if (dbRecord && dbRecord.blob) {
+          bgUrl = URL.createObjectURL(dbRecord.blob);
+        }
+      } catch(e) {}
+    } else if (tlo.name) {
+        bgUrl = `./images/tlo/${tlo.name}`;
+    }
+  }
+  
+  if (myVersion !== renderEventVersion) return;
+  
+  document.body.style.backgroundImage = `url('${bgUrl}')`;
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.backgroundPosition = 'center';
+  document.body.style.backgroundAttachment = 'fixed';
+  document.body.style.backgroundRepeat = 'no-repeat';
+}
+
 function initZoom(containerId, imgId, lensId) {
   const container = document.getElementById(containerId);
   const img = document.getElementById(imgId);
@@ -2100,6 +2157,7 @@ document.getElementById('adminPanelClose').addEventListener('click', () => {
   renderPromosSection();
   renderEventBanner();
   renderLogo();
+  renderTlo();
   document.getElementById('adminPanel').hidden = true;
   document.body.classList.remove('admin-open');
   isLogged = false;
@@ -2133,7 +2191,7 @@ const TEXT_ORDER = [
   'cat.title', 'promo.title',
   'contact.title', 'contact.address', 'contact.hours', 'contact.facebook',
   'contact.hours.weekdays', 'contact.hours.saturday', 'contact.hours.sunday',
-  'refer.title', 'refer.desc', 'refer.send', 'refer.emailPlaceholder', 'footer.rights'
+  'refer.title', 'refer.desc', 'refer.send', 'refer.emailPlaceholder', 'footer.rights', 'footer.aiDisclaimer'
 ];
 
 function renderTextFields() {
@@ -2559,6 +2617,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   await renderEventBanner();
   await renderLogo();
   await renderPromosSection();
+  await renderTlo();
   applyImageSettings();
 
   const mapRouteBtn = document.getElementById('mapRouteBtn');
