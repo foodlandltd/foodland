@@ -429,8 +429,8 @@ text-align:center;}
 .map-btn-route { margin-top: 10px; background: var(--btn-bg); color: #fff; padding: 1rem; border-radius: var(--radius-sm); font-weight: 700; text-align: center; text-decoration: none; display: block; transition: background 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; }
 .map-btn-route:hover { background: #a00015; }
 
-.footer{padding:2rem 4vw;border-top:1px solid rgba(0,0,0,.1);position:relative;z-index:50;background:var(--footer-bg);text-align:center;}
-.footer p{font-size:.9rem;color:var(--text-muted);}
+.footer{padding:1rem 4vw;border-top:1px solid rgba(0,0,0,.1);position:relative;z-index:50;background:var(--footer-bg);text-align:center;}
+.footer p{font-size:.6rem;color:var(--text-muted);}
 /* Sekretny trigger - brak kursora łapki */
 .secret-trigger{
   cursor:default;
@@ -538,6 +538,10 @@ input:checked + .slider:before { transform: translateX(20px); }
   .hero-copy{padding:2rem 1.2rem;}
   .hero-stats{gap:1.5rem;}
   .lang-switch button{padding:.3rem .55rem;font-size:.72rem;}
+  
+  /* ZMNIEJSZENIE NAGŁÓWKÓW SEKCJI O 50% NA MOBILE */
+  .sticky-header { padding: 0.6rem 1rem !important; margin-bottom: 1.5rem !important; }
+  .sticky-header h2 { font-size: calc(var(--section-title-size) * 0.5); }
 }
 @media(max-width:700px){
   :root{--header-height:113px;--logo-height:113px;}
@@ -554,7 +558,11 @@ input:checked + .slider:before { transform: translateX(20px); }
   .hero h1{font-size:2rem;}
   .hero-lead{font-size:1rem;}
   section{padding:5rem 4vw 4rem;}
-  .sticky-header{padding:1rem 1.2rem;margin-bottom:2rem;top:calc(var(--header-height) + 12px);}
+  
+  /* DODATKOWE ZMNIEJSZENIE NA MAŁYCH EKRANACH */
+  .sticky-header { padding: 0.5rem 0.8rem !important; top:calc(var(--header-height) + 12px) !important; }
+  .sticky-header h2 { font-size: calc(var(--section-title-size) * 0.45); }
+  
   .contact-content{padding:1.2rem;}
   .promo-banner-container{padding:0.5rem;}
 }
@@ -569,7 +577,10 @@ input:checked + .slider:before { transform: translateX(20px); }
   .hero-stats{gap:1rem;}
   .cat-grid{grid-template-columns:1fr 1fr !important;gap:0.8rem;}
   .cat-card-caption{font-size:0.8rem;}
-  .sticky-header{top:calc(var(--header-height) + 8px);padding:0.8rem 1rem;}
+  
+  /* NAJMNIEJSZE EKRANY */
+  .sticky-header { padding: 0.4rem 0.7rem !important; top:calc(var(--header-height) + 8px) !important; }
+  .sticky-header h2 { font-size: calc(var(--section-title-size) * 0.4); }
 }
 </style>
 </head>
@@ -697,7 +708,7 @@ Wejdź do świata prawdziwych smaków i poczuj się jak w domu. Zapraszamy na za
     <div class="footer-inner">
       <p>
         <span data-i18n="footer.aiDisclaimer">Niektóre zdjęcia zostały wygenerowane przez AI i mogą odbiegać od realiów.</span><br>
-        © 2026 <span class="font-logo secret-trigger" id="secretFooterLogo" style="color:var(--red);font-size:1.2rem;">FoodLand</span> shops. <span data-i18n="footer.rights">Wszelkie prawa zastrzeżone.</span>
+        © 2026 <span class="font-logo secret-trigger" id="secretFooterLogo" style="color:var(--red);font-size:0.8rem;">FoodLand</span> shops. <span data-i18n="footer.rights">Wszelkie prawa zastrzeżone.</span>
       </p>
     </div>
   </footer>
